@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Fast Food Fast</title>
+    <link rel="shortcut icon" type="image/png" href="./assets/images/favicon.ico" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="./assets/css/style.css" type="text/css" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="header">
+        <img src="./assets/images/emblem.png" alt="Snow" class="logo">
+        <div class="container">
+            <h1>Fast Food Fast</h1>
+            <p>Get the difference in the Wonderful Taste.</p>
+        </div>
+    </div>
+
+    <div class="topnav">
+        <a href="#"><i class="fa fa-facebook-square"></i></a>
+        <a href="#"><i class="fa fa-twitter"></i></a>
+        <a href="#"><i class="fa fa-instagram"></i></a>
+        <form class="login">
+            <span class='my-login small'><input id="lemail" type="email" placeholder="email" required></span>
+            <span class='my-login small'><input id="lpassword" type="password" placeholder="password" required></span>
+            <span class='small'><input id="login-click" type="button" value="LOGIN" onclick="RunLoginValidate()"></span>
+        </form>
+    </div>
+
+    <div class="row">
+        <div class="leftcolumn">
+            <div class="card main-card">
+                <h1>Are You Hungry ?</h1>
+                <h5>You don't have to wait</h5>
+                <p>Order for your meals online now</p>
+            </div>
+        </div>
+        <div class="rightcolumn">
+            <div class="card .signup">
+                <p class="form_label">SIGN UP FORM</p>
+                <form id="signup">
+                    <p>
+                        <input id="Sname" type="text" placeholder="enter your name" required>
+                    </p>
+                    <p>
+                        <input id="semail" type="email" placeholder="enter Email" required>
+                    </p>
+                    <p>
+                        <input id="sphone" type="text" placeholder="phone number" pattern = "[0-9]{11,}">
+                    </p>
+                    <p>
+                        <input id="spassword" type="password" placeholder="**********" required>
+                    </p>
+                    <p>
+                        <input id="confirmPassword" type="password" placeholder="**********" required>
+                    </p>
+                    <p>
+                        <input type="button" value="LOGIN" onclick="checkForm()">
+                    </p>
+                </form>
+            </div>
+            <div class="card">
+                <h3 class="form_label">Tasty Foods</h3>
+                <div class="fakeimg">
+                    <div>
+                        <img class="img-valign" src="http://www.placehold.it/70x70" alt="" />
+                        <span class="food-desc">chicken pizza</span>
+                    </div>
+                </div>
+                <div class="fakeimg">
+                    <div>
+                        <img class="img-valign" src="http://www.placehold.it/70x70" alt="" />
+                        <span class="food-desc">chicken pizza</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <h3>Andela Copyright@2018</h3>
+    </div>
+
+</body>
+<script type="text/javascript" src="./assets/js/form.js"></script>
+</html>
