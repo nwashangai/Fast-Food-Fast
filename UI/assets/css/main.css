@@ -299,12 +299,36 @@ ul#food .price {
     width: 21%;
 }
 
+.cell-11 {
+    width: 6%;
+    text-align: center;
+}
+
+.cell-12 {
+    width: 21%;
+}
+
+.cell-13 {
+    width: 32%;
+}
+
+.cell-14 {
+    width: 27%;
+}
+
+.cell-15 {
+    text-align: center;
+    width: 14%;
+}
+
 .deliver {
     background: rgb(201, 201, 67) !important;
 }
 
  .status,
- .completed {
+ .completed,
+ .waiting,
+ .declined {
      min-width: 30px !important;
      width: 20%;
      float: center;
@@ -331,6 +355,23 @@ ul#food .price {
  }
  .decline {
      background: #333 !important;
+  }
+
+  .waiting,
+  .declined {
+      width: 100%;
+  }
+
+  .waiting {
+      color: blue;
+      font-style: italic;
+  }
+  .declined {
+      color: #333;
+  }
+
+  .data-display {
+      color: #333
   }
 
  .order-display {
@@ -406,11 +447,11 @@ ul#food .price {
     .table-row {
         padding-bottom: 8px
     }
-    .cell-1,
-    .cell-2,
-    .cell-3,
-    .cell-4,
-    .cell-5,
+    .cell-1, .cell-11,
+    .cell-2, .cell-12,
+    .cell-3, .cell-13,
+    .cell-4, .cell-14,
+    .cell-5, .cell-15,
     .cell-6 {
         width: 100%;
     }
@@ -448,5 +489,11 @@ ul#food .price {
         min-height: 150px;
         height: auto;
         float: none;
+    }
+    .order-display {
+        width: 30%;
+    }
+    .order-data {
+        width: 70%;
     }
 }
