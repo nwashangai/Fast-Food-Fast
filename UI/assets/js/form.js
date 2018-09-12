@@ -5,3 +5,10 @@ const checkForm = () => {
         return false;
     }
 }
+
+const checkOrderForm = () => {
+    if (!document.getElementById('food-data').checkValidity()) {
+        alert('nooo');
+        return false;
+    }
+}

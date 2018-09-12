@@ -223,6 +223,11 @@ ul#food .price {
     margin-left: 5px;
 }
 
+.order {
+    background-color: yellowgreen !important;
+    margin-left: 5px;
+}
+
 .big {
     font-weight: bold;
 }
@@ -312,6 +317,36 @@ ul#food .price {
  .completed {
     text-align: center;
     color: yellowgreen;
+ }
+
+ .order-display {
+     display: block;
+     width: 20%;
+     float: left;
+     text-align: right;
+ }
+
+ .order-data {
+     width: 80%;
+     float: left;
+     text-align: left !important;
+     padding-left: 10%;
+ }
+
+ .order-cell {
+     width: 100% !important;
+     text-align: center;
+ }
+
+ #food-data #table-body {
+     display: block !important;
+ }
+
+ #food-data .table-row {
+     display: block !important;
+ }
+ .order-cell .order-display {
+     font-weight: bold;
  }
 /* Media Queries */
 
