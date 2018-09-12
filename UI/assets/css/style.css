@@ -1,0 +1,274 @@
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            padding: 10px;
+            background: #a33131;
+        }
+
+        /* Header/Blog Title */
+
+        .header {
+            background-image: url('../images/fastfood-banner.jpg');
+            padding: 30px;
+            text-align: left;
+            font: 15px/1.5 Arial, Helvetica, sans-serif;
+            color: rgb(250, 249, 249);
+        }
+
+        .logo {
+            float: right;
+            height: 30%;
+            width: 10%;
+            top: 0px;
+        }
+
+        .header h1 {
+            font-size: 50px;
+        }
+
+        /* Style the top navigation bar */
+
+        .topnav {
+            overflow: hidden;
+            background-color: #333;
+        }
+
+        /* Style the topnav links */
+
+        .topnav a, .login {
+            float: left;
+            display: block;
+            color: rgb(255, 248, 248);
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        .topnav .login {
+            float: right;
+        }
+
+        /* Change color on hover */
+
+        .topnav a:hover {
+            background-color: rgb(235, 72, 72);
+            color: black;
+        }
+
+        .login {
+            padding-right: 5px;
+        }
+
+        /* Create two unequal columns that floats next to each other */
+
+        .leftcolumn {
+            float: left;
+            text-align: left;
+            width: 75%;
+        }
+
+        /* Right column */
+
+        .rightcolumn {
+            float: left;
+            width: 25%;
+            margin-top: 20px;
+            background-image: url('../images/vertical.jpeg');
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            padding-left: 20px;
+        }
+
+        /* Fake image */
+
+        .fakeimg {
+            background-color: #aaa;
+            width: 100%;
+            height: 88px;
+            padding: 5px;
+        }
+        .img-valign {
+            vertical-align: middle;
+            margin-bottom: 0.75em;
+        }
+        .food-desc {
+            word-wrap: break-word;
+            font-size: 15px;
+        }
+
+        /* Add a card effect for articles */
+
+        .card {
+            padding: 14px;
+            margin-top: 20px;
+        }
+        
+        .main-card {
+            height: 700px;
+            padding: 15%;
+            font-size: 2em;
+            color: white;
+            background: url('../images/burrito-chicken.jpg');
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+        }
+
+        .main-card img {
+            width: 100%;
+        }
+
+        .signup {
+            background-color: rgba(235, 72, 72);
+        }
+
+        input[type="text"],
+        input[type="password"],
+        input[type="email"],
+        input[type="number"],
+        input[type="file"],
+        textarea {
+            width: 96%;
+            height: 40px;
+            border-radius: 4px;
+            font-size: 17px;
+            padding-left: 5px;
+            border: 1px solid rgb(240, 174, 143);
+        }
+
+        .form_label {
+            color: white;
+            font-weight: bold;
+            font-size: 25px;
+        }
+
+        .inputfile {
+            width: 0.1px;
+            height: 0.1px;
+            opacity: 0;
+            overflow: hidden;
+            position: absolute;
+            z-index: -1;
+        }
+
+        .inputfile+label {
+            font-size: 1em;
+            font-weight: 700;
+            color: white;
+            background-color: #a33131;
+            display: inline-block;
+            cursor: pointer;
+            width: 96%;
+            height: 40px;
+            padding: 8px;
+            text-align: center;
+            border-radius: 2px;
+        }
+
+        .inputfile:focus+label,
+        .inputfile+label:hover {
+            opacity: 0.8;
+        }
+
+        input[type="button"] {
+            min-width: 50px;
+            padding:3px;
+            border: 0px;
+            border-radius: 5px;
+            color: white;
+            background-color: #a33131;
+            font-weight: bold;
+            font-size: 20px;
+            width: 96%;
+            height: 40px;
+        }
+
+        input[type="button"]:hover {
+            cursor: pointer;
+            opacity: 0.8;
+        }
+
+        textarea {
+            height: 75px;
+        }
+
+        #login-click {
+            margin-left: 30px;
+            width: 18%;
+            height: 30px;
+        }
+
+        .my-login > input[type="email"],
+        .my-login > input[type="password"] {
+             width: 25%;
+             height: 30px;
+             margin-left: 10px;
+        }
+
+        /* Clear floats after the columns */
+
+        .row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        /* Footer */
+
+        .footer {
+            color: white;
+            padding: 0.1px;
+            text-align: center;
+            background: rgba(51, 51, 51, 0.356);
+            margin-top: 20px;
+        }
+
+         @media screen and (min-width: 801px) {
+             .login {
+                 margin-right: 0%;
+             }
+         }
+
+        /* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other */
+
+        @media screen and (max-width: 800px) {
+            .leftcolumn,
+            .rightcolumn {
+                width: 100%;
+                padding: 0;
+            }
+            .my-login {
+                height: 30px;
+            }
+            .my-login>input[type="text"],
+            .my-login>input[type="password"] {
+                margin-top: 4%;
+                width: 100%;
+                height: 30px;
+            }
+            #login-click {
+                float: right;
+                margin-top: 4%;
+                width: 100%;
+                height: 30px;
+            }
+            .small {
+                width: 100% !important;
+            }
+        }
+
+        /* Responsive layout - when the screen is less than 400px wide, make the navigation links stack on top of each other instead of next to each other */
+
+        @media screen and (max-width: 400px) {
+            .topnav a {
+                float: none;
+                width: 100%;
+            }
+
+            .main-card {
+                height: 500px;
+                font-size: 1.3em;
+            }
+        }
