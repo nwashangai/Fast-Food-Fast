@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Fast Food Fast</title>
+    <link rel="shortcut icon" type="image/png" href="./assets/images/favicon.ico" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="stylesheet" href="./assets/css/main.css">
+    <link rel="stylesheet" href="./assets/css/modal.css">
+</head>
+
+<body>
+    <header class="header">
+        <img src="./assets/images/emblem.png" alt="Snow" class="logo">
+        <div class="container">
+            <h1>Fast Food Fast</h1>
+            <p>Get the difference in the Wonderful Taste.</p>
+        </div>
+    </header>
+
+    <section id="nav-bar">
+        <div class="container">
+            <h1>Administrator</h1>
+            <form>
+                <nav>
+                    <ul class="tabs">
+                        <li id="food-tab" class="tablinks" onclick="openTab(event, 'food-content')">
+                            <i class="fa fa-cutlery"></i> Foods
+                        </li>
+                        <li id="order-tab" class="tablinks" onclick="openTab(event, 'order-content')">
+                            <i class="fa fa-file-text"></i> Orders
+                        </li>
+                        <li  id="setting-tab" class="tablinks" onclick="">
+                            <i class="fa fa-cog"></i> Settings
+                        </li>
+                    </ul>
+                </nav>
+            </form>
+        </div>
+    </section>
+
+    <section id="main">
+        <div class="container">
+
+            <article id="main-col">
+                <div class="tab-contents" id="food-content">
+                    <h1 class="page-title"><i class="fa fa-plus-circle" onclick="document.getElementById('add-food').style.display='block'"></i> <span id="new">New</span></h1>
+                    <ul id="food">
+                        <li>
+                            <span class="my-food">
+                                <img src="./assets/images/burger-bacon-snack-fast-food-47320.jpeg" alt="Snow">
+                            </span>
+                            <span class="in-text">
+                                <h3>Burger bacon snacks</h3>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus mi augue, viverra sit amet ultricies
+                                    at, vulputate id lorem. Nulla facilisi.</p>
+                                <p class="price"><span class="big">Price:</span> N1,000 <span><input type="button" class="delete" value="Delete"><input type="button" value="Edit"></span></p>
+                            </span>
+                        </li>
+                        <li>
+                            <span class="my-food">
+                                <img src="./assets/images/toasted.jpeg" alt="Snow">
+                            </span>
+                            <span class="in-text">
+                                <h3>Toasted bread & potato chips</h3>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus mi augue, viverra sit amet ultricies
+                                    at, vulputate id lorem. Nulla facilisi.</p>
+                                <p class="price"><span class="big">Price:</span> N1,000 <span><input type="button" class="delete" value="Delete"><input type="button" value="Edit"></span></p>
+                            </span>
+                        </li>
+                        <li>
+                            <span class="my-food">
+                                <img src="./assets/images/fried plantain.jpeg" alt="Snow">
+                            </span>
+                            <span class="in-text">
+                                <h3>Fried plantain</h3>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus mi augue, viverra sit amet ultricies
+                                    at, vulputate id lorem. Nulla facilisi.</p>
+                                <p class="price"><span class="big">Price:</span> N1,000 <span><input type="button" class="delete" value="Delete"><input type="button" value="Edit"></span></p>
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="tab-contents" id="order-content">
+                    <div id="table-wrap">
+                        <div id="table-caption">Users Orders</div>
+                        <div id="table-header">
+                            <div class="table-header-cell cell-1">
+                                #
+                            </div>
+                            <div class="table-header-cell cell-2">
+                                Name
+                            </div>
+                            <div class="table-header-cell cell-3">
+                                Address
+                            </div>
+                            <div class="table-header-cell cell-4">
+                                Food
+                            </div>
+                            <div class="table-header-cell cell-5">
+                                Phone
+                            </div>
+                            <div class="table-header-cell cell-6">
+                                Status
+                            </div>
+                        </div>
+                        <div id="table-body">
+                            <div class="table-row">
+                                <div class="table-body-cell  cell-1">
+                                    <span class="small-display">#id :</span> <span class="data">1</span>
+                                </div>
+                                <div class="table-body-cell cell-2">
+                                    <span class="small-display">Name :</span><span class="data">John Doe</span>
+                                </div>
+                                <div class="table-body-cell cell-3">
+                                    <span class="small-display">Address :</span><span class="data">51 pedro road, Lagos</span>
+                                </div>
+                                <div class="table-body-cell cell-4">
+                                    <span class="small-display">Food :</span><span class="data">Burger bacon snacks</span>
+                                </div>
+                                <div class="table-body-cell cell-5">
+                                    <span class="small-display">Phone :</span><span class="data">08012345678</span>
+                                </div>
+                                <div class="table-body-cell cell-6">
+                                    <input type="button" value="Deliver" class="status deliver">
+                                </div>
+                            </div>
+                            <div class="table-row">
+                                <div class="table-body-cell cell-1">
+                                    <span class="small-display">#id :</span> <span class="data">2</span>
+                                </div>
+                                <div class="table-body-cell cell-2">
+                                    <span class="small-display">Name :</span><span class="data">Mike williams</span>
+                                </div>
+                                <div class="table-body-cell cell-3">
+                                     <span class="small-display">Address :</span><span class="data">22 kingston avenue, Lagos</span>
+                                </div>
+                                <div class="table-body-cell cell-4">
+                                     <span class="small-display">Food :</span><span class="data">Fried plantain</span>
+                                </div>
+                                <div class="table-body-cell cell-5">
+                                    <span class="small-display">Phone :</span><span class="data">09098365417</span>
+                                </div>
+                                <div class="table-body-cell cell-6">
+                                    <input type="button" value="Accept" class="status accept">
+                                    <input type="button" value="Decline" class="status decline">
+                                </div>
+                            </div>
+                            <div class="table-row">
+                                <div class="table-body-cell cell-1">
+                                    <span class="small-display">#id :</span> <span class="data">3</span>
+                                </div>
+                                <div class="table-body-cell cell-2">
+                                    <span class="small-display">Name :</span><span class="data">Victor</span>
+                                </div>
+                                <div class="table-body-cell cell-3">
+                                    <span class="small-display">Address :</span><span class="data">6 adenkule street, ikeja Lagos</span>
+                                </div>
+                                <div class="table-body-cell cell-4">
+                                     <span class="small-display">Food :</span><span class="data">Fried plantain</span>
+                                </div>
+                                <div class="table-body-cell cell-5">
+                                    <span class="small-display">Phone :</span><span class="data">07036835614</span>
+                                </div>
+                                <div class="table-body-cell cell-6">
+                                    <span class="completed">Completed</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <aside id="sidebar">
+                <div class="dark">
+                    <h2>Profile Info</h2>
+                    <form class="profile">
+                        <div>
+                            <label>Name</label>
+                            <br>
+                            <p>John Doe</p>
+                        </div>
+                        <div>
+                            <label>Email</label>
+                            <br>
+                            <p>johndoe@example.com</p>
+                        </div>
+                        <div>
+                            <label>Phone</label>
+                            <br>
+                            <p>08012345676</p>
+                        </div>
+                    </form>
+                </div>
+            </aside>
+        </div>
+    </section>
+
+    <!--Add food Modal-->
+    <div id="add-food" class="modal">
+        <div class="modal-content">
+            <span onclick="document.getElementById('add-food').style.display='none'" class="close">&times;</span>
+            <h1>Add Food</h1>
+            <form id="food-data">
+                <span>
+                    <label for="foodName">
+                        <b>Food Name</b>
+                    </label>
+                    <input type="text" placeholder="Enter Food Name" name="foodName" required>
+                </span><br/><br/>
+                <span>
+                    <label for="avatar">
+                        <b>Avatar</b>
+                    </label>
+                    <input type="file" placeholder="Enter Avatar" name="avatar" id="avatar" class="inputfile" data-multiple-caption="{count} files selected" required>
+                    <label for="avatar">
+                        <b id="upload"><i class="fa fa-upload"></i> Choose file</b>
+                    </label>
+                </span><br/><br/>
+                <span>
+                    <label for="desc">
+                        <b>Description</b>
+                    </label>
+                    <textarea placeholder="Description" name="desc" required></textarea>
+                </span><br/><br/>
+                <span>
+                    <label for="price">
+                        <b>Price</b>
+                    </label>
+                    <input type="number" placeholder="Enter Food price" name="price" required>
+                </span><br/><br/>
+            </form>
+        </div>
+    </div>
+
+    <div class="footer">
+        <h3>Andela Copyright@2018</h3>
+    </div>
+</body>
+<script type="text/javascript" src="./assets/js/script.js"></script>
+
+</html>
