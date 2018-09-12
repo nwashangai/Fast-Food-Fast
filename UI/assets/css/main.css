@@ -8,7 +8,7 @@ body {
 /* Global */
 
 .container {
-    width: 90%;
+    width: 95%;
     margin: auto;
     overflow: hidden;
 }
@@ -136,11 +136,12 @@ aside#sidebar {
     margin-top: 10px;
 }
 
-aside#sidebar .quote label {
+aside#sidebar .profile label {
     font-size: 14px;
+    font-weight: bold;
 }
 
-aside#sidebar .quote p {
+aside#sidebar .profile p {
     font-size: 17px;
 }
 
@@ -278,7 +279,7 @@ ul#food .price {
 }
 
 .cell-2 {
-    width: 22%;
+    width: 15%;
 }
 
 .cell-3 {
@@ -290,11 +291,12 @@ ul#food .price {
 }
 
 .cell-5 {
-    width: 15%;
+    width: 13%;
 }
 
 .cell-6 {
-    width: 12%;
+    text-align: center;
+    width: 21%;
 }
 
 .deliver {
@@ -319,17 +321,29 @@ ul#food .price {
     color: yellowgreen;
  }
 
+ .accept,
+ .decline {
+     width: 48% !important;
+ }
+
+ .accept {
+     background: #a33131 !important;
+ }
+ .decline {
+     background: #333 !important;
+  }
+
  .order-display {
      display: block;
      width: 20%;
      float: left;
-     text-align: right;
+     text-align: left;
  }
 
  .order-data {
      width: 80%;
      float: left;
-     text-align: left !important;
+     text-align: right !important;
      padding-left: 10%;
  }
 
@@ -348,6 +362,13 @@ ul#food .price {
  .order-cell .order-display {
      font-weight: bold;
  }
+ #food-data label {
+     color: rgb(102, 95, 95)
+ }
+
+ #upload {
+     color: wheat;
+ }
 /* Media Queries */
 
 @media(max-width: 768px) {
@@ -363,6 +384,9 @@ ul#food .price {
         text-align: center;
         width: 100%;
     }
+    .profile div {
+        text-align: left;
+    }
     header {
         padding-bottom: 20px;
     }
@@ -370,7 +394,7 @@ ul#food .price {
         margin-top: 40px;
     }
     #nav-bar button,
-    .quote button {
+    .profile button {
         display: block;
         width: 100%;
     }
@@ -419,6 +443,7 @@ ul#food .price {
         float: none;
     }
     .in-text {
+        text-align: left;
         width: 100%;
         min-height: 150px;
         height: auto;
