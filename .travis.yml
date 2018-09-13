@@ -1,0 +1,19 @@
+services:
+  - postgresql
+dist: trusty
+language: node_js
+node_js:
+  - "stable"
+cache:
+  directories:
+    - "node_modules"
+addons:
+  postgresql: "9.5"
+before_script:
+  - travis_wait npm install
+  - npm install codeclimate-test-reporter -g
+script:
+  - ./node_modules/mocha/bin/mocha --recursive './test/' --compilers js:babel-core/register --exit
+after_success:
+  - npm run cover
+  - npm run coveralls
