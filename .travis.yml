@@ -20,4 +20,7 @@ script:
 after_success:
   - npm run cover
   - npm run coveralls
+<<<<<<< HEAD
   - codeclimate-test-reporter < ./coverage/lcov.info
+=======
+>>>>>>> 0832cc37fd56f6f317c613eba92c94a4156d3634
