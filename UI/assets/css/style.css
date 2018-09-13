@@ -110,7 +110,7 @@
             height: 700px;
             padding: 15%;
             font-size: 2em;
-            color: white;
+            color: #03edf5;
             background: url('../images/burrito-chicken.jpg');
             background-repeat: no-repeat;
             background-size: 100% 100%;
@@ -242,11 +242,12 @@
             .my-login {
                 height: 30px;
             }
-            .my-login>input[type="text"],
+            .my-login>input[type="email"],
             .my-login>input[type="password"] {
                 margin-top: 4%;
                 width: 100%;
                 height: 30px;
+                margin-left: auto;
             }
             #login-click {
                 float: right;
