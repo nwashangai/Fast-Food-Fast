@@ -9,6 +9,9 @@ cache:
     - "node_modules"
 addons:
   postgresql: "9.5"
+  code_climate:
+        repo_token:
+          secure: "db3d67198bc95a577c6ba82351ae6c4167a45b070acd20da99cc9373c97331e1"
 before_script:
   - travis_wait npm install
   - npm install codeclimate-test-reporter -g
