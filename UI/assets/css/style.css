@@ -4,7 +4,7 @@
 
         body {
             font-family: 'Comic Sans MS', cursive, sans-serif;
-            padding: 10px;
+            margin: 0px;
             background: #a33131;
         }
 
@@ -75,8 +75,8 @@
         .rightcolumn {
             float: left;
             width: 25%;
-            margin-top: 20px;
-            background-image: url('../images/vertical.jpeg');
+            margin-top: 12%;
+            background: rgba(0, 0, 0, 0.425);
             background-repeat: no-repeat;
             background-size: 100% 100%;
             padding-left: 20px;
@@ -110,8 +110,7 @@
             height: 700px;
             padding: 15%;
             font-size: 2em;
-            color: #03edf5;
-            background: url('../images/burrito-chicken.jpg');
+            color: white;
             background-repeat: no-repeat;
             background-size: 100% 100%;
         }
@@ -203,6 +202,11 @@
             height: 30px;
         }
 
+        #signup input[type='button'] {
+            background: rgb(81, 188, 238);
+            color: #333;
+        }
+
         .my-login > input[type="email"],
         .my-login > input[type="password"] {
              width: 25%;
@@ -216,6 +220,20 @@
             content: "";
             display: table;
             clear: both;
+        }
+
+        #background {
+            width: 100%;
+            background: url('../images/burrito-chicken.jpg');
+            width: 98%;
+            margin-left: 1%;
+        }
+
+        #overlay {
+            width: 100%;
+            height: 100%;
+            padding-right: 5%;
+            background: rgba(51, 51, 51, 0.384);
         }
 
         /* Footer */
@@ -251,6 +269,9 @@
                 width: 100%;
                 height: 30px;
                 margin-left: auto;
+            }
+            #overlay {
+                padding-right: 0%;
             }
             #login-click {
                 float: right;

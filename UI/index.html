@@ -30,51 +30,38 @@
         </form>
     </div>
 
-    <div class="row">
-        <div class="leftcolumn">
-            <div class="card main-card">
-                <h1>Are You Hungry ?</h1>
-                <h5>You don't have to wait</h5>
-                <p>Order for your meals online now</p>
-            </div>
-        </div>
-        <div class="rightcolumn">
-            <div class="card .signup">
-                <p class="form_label">SIGN UP FORM</p>
-                <form id="signup">
-                    <p>
-                        <input id="Sname" type="text" placeholder="enter your name" required>
-                    </p>
-                    <p>
-                        <input id="semail" type="email" placeholder="enter Email" required>
-                    </p>
-                    <p>
-                        <input id="sphone" type="text" placeholder="phone number" pattern = "[0-9]{11,}">
-                    </p>
-                    <p>
-                        <input id="spassword" type="password" placeholder="**********" required>
-                    </p>
-                    <p>
-                        <input id="confirmPassword" type="password" placeholder="**********" required>
-                    </p>
-                    <p>
-                        <input type="button" value="LOGIN" onclick="checkForm()">
-                    </p>
-                </form>
-            </div>
-            <div class="card">
-                <h3 class="form_label">Tasty Foods</h3>
-                <div class="fakeimg">
-                    <div>
-                        <img class="img-valign" src="http://www.placehold.it/70x70" alt="" />
-                        <span class="food-desc">chicken pizza</span>
-                    </div>
+    <div id="background">
+        <div class="row" id="overlay">
+            <div class="leftcolumn">
+                <div class="card main-card">
+                    <h1>Kitchen for all</h1>
+                    <h5>Don't wait</h5>
+                    <p>Order for your meals online now</p>
                 </div>
-                <div class="fakeimg">
-                    <div>
-                        <img class="img-valign" src="http://www.placehold.it/70x70" alt="" />
-                        <span class="food-desc">chicken pizza</span>
-                    </div>
+            </div>
+            <div class="rightcolumn">
+                <div class="card .signup">
+                    <p class="form_label">SIGN UP FORM</p>
+                    <form id="signup">
+                        <p>
+                            <input id="Sname" type="text" placeholder="name" required>
+                        </p>
+                        <p>
+                            <input id="semail" type="email" placeholder="email" required>
+                        </p>
+                        <p>
+                            <input id="sphone" type="text" placeholder="phone" pattern = "[0-9]{11,}">
+                        </p>
+                        <p>
+                            <input id="spassword" type="password" placeholder="******" required>
+                        </p>
+                        <p>
+                            <input id="confirmPassword" type="password" placeholder="******" required>
+                        </p>
+                        <p>
+                            <input type="button" value="SIGNUP" onclick="checkForm()">
+                        </p>
+                    </form>
                 </div>
             </div>
         </div>
