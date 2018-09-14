@@ -195,8 +195,11 @@
         }
 
         #login-click {
-            margin-left: 30px;
-            width: 18%;
+            background: rgb(81, 188, 238);
+            color: #333;
+            border-radius: 2px;
+            margin-left: 25px;
+            width: 20%;
             height: 30px;
         }
 
