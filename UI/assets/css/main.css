@@ -305,7 +305,7 @@ ul#food .price {
 }
 .table-body-cell {
     display: table-cell;
-    padding: 4px;
+    padding: 5px;
     text-overflow: ellipsis;
 }
 .small-display {
