@@ -186,14 +186,16 @@ article#main-col {
     width: 65%;
 }
 
-article#main-col i {
-    font-size: 50px;
-    color: rgb(99, 219, 99);
+.add-btn {
+    border-radius: 3px;
+    background-color: rgb(99, 219, 99);
 }
-
+.add-btn:hover {
+    cursor: pointer;
+}
 #new {
-    font-size: 35px;
-    color: white;
+    font-size: 30px;
+    color: #a33131;
 }
 
 .page-title > i:hover, .tablinks:hover {
