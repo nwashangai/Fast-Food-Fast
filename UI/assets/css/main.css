@@ -1,6 +1,5 @@
 body {
     font: 15px/1.5 Arial, Helvetica, sans-serif;
-    padding: 10px;
     margin: 0;
     background-color: #a33131;
 }
@@ -144,7 +143,42 @@ aside#sidebar .profile label {
 aside#sidebar .profile p {
     font-size: 17px;
 }
-
+.food-category {
+    width: 38%;
+    padding: 3px;
+    color: #333;
+    padding-left: 8px;
+    background: #cccccc;
+    border-radius: 3px;
+    float: right;
+    overflow: hidden;
+}
+.food-category i {
+    font-size: 1.17em !important;
+    color: #333 !important;
+    padding: 3px;
+}
+.food-category:hover {
+    cursor: pointer;
+    background: #b3adad;
+}
+.food-category select {
+    background: transparent;
+    border: none;
+    font-size: 14px;
+    height: 29px;
+    padding: 5px;
+    /* If you add too much padding here, the options won't show in IE */
+    width: 95%;
+}
+.food-category select option {
+    width: 100%;
+    background: #b3adad;
+    padding: 3px;
+}
+.right {
+    float: right;
+}
 /* Main-col */
 
 article#main-col {
@@ -430,6 +464,10 @@ ul#food .price {
     }
     header {
         padding-bottom: 20px;
+    }
+    .food-category{
+        float: none;
+        width: 100%;
     }
     #showcase h1 {
         margin-top: 40px;
