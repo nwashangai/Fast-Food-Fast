@@ -133,7 +133,7 @@
             height: 40px;
             border-radius: 4px;
             font-size: 17px;
-            padding-left: 5px;
+            padding-left: 2%;
             border: 1px solid rgb(240, 174, 143);
         }
 
@@ -191,6 +191,7 @@
 
         textarea {
             height: 75px;
+            padding: 3%;
         }
 
         #login-click {
