@@ -212,15 +212,6 @@
                     <input type="text" placeholder="Enter Food Name" name="foodName" required>
                 </span><br/><br/>
                 <span>
-                    <label for="avatar">
-                        <b>Avatar</b>
-                    </label>
-                    <input type="file" placeholder="Enter Avatar" name="avatar" id="avatar" class="inputfile" data-multiple-caption="{count} files selected" required>
-                    <label for="avatar">
-                        <b id="upload"><i class="fa fa-upload"></i> Choose file</b>
-                    </label>
-                </span><br/><br/>
-                <span>
                     <label for="desc">
                         <b>Description</b>
                     </label>
@@ -231,6 +222,18 @@
                         <b>Price</b>
                     </label>
                     <input type="number" placeholder="Enter Food price" name="price" required>
+                </span><br/><br/>
+                <span>
+                    <label for="avatar">
+                        <b>Food image</b>
+                    </label>
+                    <input type="file" placeholder="Enter Avatar" name="avatar" id="avatar" class="inputfile" data-multiple-caption="{count} files selected" required>
+                    <label for="avatar">
+                        <b id="upload"><i class="fa fa-upload"></i> Choose file</b>
+                    </label>
+                </span><br/><br/>
+                <span>
+                    <input type="button" value="ADD FOOD" onclick="checkOrderForm()">
                 </span><br/><br/>
             </form>
         </div>
