@@ -8,6 +8,10 @@ class OrderController {
     order.push(request.body);
     response.status(200).json({ status: 'success', message: 'Order placed', entry: request.body });
   }
+
+  getOrders(request, response) {
+    response.status(200).json({ status: 'success', data: order });
+  }
 }
 
 module.exports = new OrderController();

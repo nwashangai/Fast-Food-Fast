@@ -18,11 +18,8 @@ const order = {
 };
 
 describe('Fast-Food-Fast', () => {
-  /*
-  * Test the /GET route
-  */
   describe('Test endpoint to place order', () => {
-    it('it should Reject default', (done) => {
+    it('it should place order', (done) => {
       chai.request(app)
         .post('/api/v1/orders')
         .send(order)
@@ -32,6 +29,19 @@ describe('Fast-Food-Fast', () => {
           res.body.should.have.property('status', 'success');
           res.body.should.have.property('message', 'Order placed');
           res.body.should.have.property('entry');
+          done();
+        });
+    });
+  });
+  describe('Test endpoint get orders', () => {
+    it('it should get list of orders', (done) => {
+      chai.request(app)
+        .get('/api/v1/orders')
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.type.should.equal('application/json');
+          res.body.should.have.property('status', 'success');
+          res.body.should.have.property('data');
           done();
         });
     });
