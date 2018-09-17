@@ -4,8 +4,8 @@
   "private": true,
   "main": "app.js",
   "scripts": {
-    "start": "babel-node ./src/app.js",
-    "dev": "babel-node ./src/app.js",
+    "start": "babel-node src/app.js",
+    "dev": "babel-node src/app.js",
     "test": "mocha --recursive './test/' --compilers js:babel-core/register --exit",
     "cover": "nyc npm run test && nyc report --reporter=lcov --reporter=text-lcov npm test",
     "coveralls": "nyc report --reporter=lcov --reporter=text-lcov | ./node_modules/coveralls/bin/coveralls.js"
