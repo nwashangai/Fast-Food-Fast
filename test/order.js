@@ -68,5 +68,41 @@ describe('Fast-Food-Fast', () => {
           done();
         });
     });
+    it('it should successfully update order given an Id', (done) => {
+      chai.request(app)
+        .put('/api/v1/orders/3')
+        .send({ status: 'accepted' })
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.type.should.equal('application/json');
+          res.body.should.have.property('status', 'success')
+          res.body.should.have.property('update');
+          done();
+        });
+    });
+    it('it should reject invalid status', (done) => {
+      chai.request(app)
+        .put('/api/v1/orders/2')
+        .send({ status: 'finished' })
+        .end((err, res) => {
+          res.should.have.status(400);
+          res.type.should.equal('application/json');
+          res.body.should.have.property('status', 'error');
+          res.body.should.have.property('message', 'invalid status');
+          done();
+        });
+    });
+    it('it should reject invalid ID', (done) => {
+      chai.request(app)
+        .put('/api/v1/orders/230')
+        .send({ status: 'accepted' })
+        .end((err, res) => {
+          res.should.have.status(400);
+          res.type.should.equal('application/json');
+          res.body.should.have.property('status', 'error');
+          res.body.should.have.property('message', 'invalid order ID');
+          done();
+        });
+    });
   });
 });
