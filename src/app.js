@@ -21,4 +21,4 @@ app.use((req, res, next) => {
 
 app.listen(process.env.PORT || 3000, () => {});
 
-module.exports = app; // for testing
+module.exports = app;
