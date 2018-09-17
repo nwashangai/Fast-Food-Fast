@@ -10,7 +10,12 @@ class OrderController {
   }
 
   getOrders(request, response) {
-    response.status(200).json({ status: 'success', data: order });
+    if (request.params.id) {
+      const userOrder = order.filter(order => order.id === request.params.id);
+      response.status(200).json({ status: 'success', data: userOrder });
+    } else {
+      response.status(200).json({ status: 'success', data: order });
+    }
   }
 }
 

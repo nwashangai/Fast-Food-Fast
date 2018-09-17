@@ -45,5 +45,28 @@ describe('Fast-Food-Fast', () => {
           done();
         });
     });
+    it('it should get a specific order', (done) => {
+      chai.request(app)
+        .get('/api/v1/orders/1')
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.type.should.equal('application/json');
+          res.body.should.have.property('status', 'success');
+          res.body.should.have.property('data');
+          done();
+        });
+    });
+    it('it should get empty order', (done) => {
+      chai.request(app)
+        .get('/api/v1/orders/335')
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.type.should.equal('application/json');
+          res.body.should.have.property('status', 'success');
+          res.body.should.have.property('data');
+          res.body.data.should.be.empty;
+          done();
+        });
+    });
   });
 });
