@@ -10,6 +10,8 @@ body {
     width: 95%;
     margin: auto;
     overflow: hidden;
+    min-height: 90%;
+    margin-bottom: 10px;
 }
 
 ul {
