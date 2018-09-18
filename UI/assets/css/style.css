@@ -4,8 +4,9 @@
 
         body {
             font-family: 'Comic Sans MS', cursive, sans-serif;
-            padding: 10px;
+            margin: 0px;
             background: #a33131;
+            height: 90%;
         }
 
         /* Header/Blog Title */
@@ -34,11 +35,12 @@
         .topnav {
             overflow: hidden;
             background-color: #333;
+            font: 15px/1.5 Arial, Helvetica, sans-serif;
         }
 
         /* Style the topnav links */
 
-        .topnav a, .login {
+        .topnav h1, .login {
             float: left;
             display: block;
             color: rgb(255, 248, 248);
@@ -49,9 +51,20 @@
 
         .topnav .login {
             float: right;
+            margin-top: 1%;
         }
 
-        /* Change color on hover */
+        .topnav h1 {
+            padding: 0%;
+            padding-left: 2%;
+        }
+        .topnav h1:hover {
+            cursor: pointer;
+        }
+        #logo {
+            width: 30px;
+            height: 70%;
+        }
 
         .topnav a:hover {
             background-color: rgb(235, 72, 72);
@@ -75,8 +88,8 @@
         .rightcolumn {
             float: left;
             width: 25%;
-            margin-top: 20px;
-            background-image: url('../images/vertical.jpeg');
+            margin-top: 8%;
+            background: rgba(0, 0, 0, 0.425);
             background-repeat: no-repeat;
             background-size: 100% 100%;
             padding-left: 20px;
@@ -107,11 +120,10 @@
         }
         
         .main-card {
-            height: 700px;
+            height: 600px;
             padding: 15%;
             font-size: 2em;
-            color: #03edf5;
-            background: url('../images/burrito-chicken.jpg');
+            color: white;
             background-repeat: no-repeat;
             background-size: 100% 100%;
         }
@@ -134,7 +146,7 @@
             height: 40px;
             border-radius: 4px;
             font-size: 17px;
-            padding-left: 5px;
+            padding-left: 2%;
             border: 1px solid rgb(240, 174, 143);
         }
 
@@ -157,7 +169,7 @@
             font-size: 1em;
             font-weight: 700;
             color: white;
-            background-color: #a33131;
+            background-color: #1c1563;
             display: inline-block;
             cursor: pointer;
             width: 96%;
@@ -192,12 +204,21 @@
 
         textarea {
             height: 75px;
+            padding: 3%;
         }
 
         #login-click {
-            margin-left: 30px;
-            width: 18%;
+            background: rgb(81, 188, 238);
+            color: #333;
+            border-radius: 2px;
+            margin-left: 25px;
+            width: 20%;
             height: 30px;
+        }
+
+        #signup input[type='button'] {
+            background: rgb(81, 188, 238);
+            color: #333;
         }
 
         .my-login > input[type="email"],
@@ -207,6 +228,12 @@
              margin-left: 10px;
         }
 
+        select {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            text-indent: 1px;
+            text-overflow: '';
+        }
         /* Clear floats after the columns */
 
         .row:after {
@@ -215,14 +242,33 @@
             clear: both;
         }
 
+        #background {
+            width: 100%;
+            background: url('../images/burrito-chicken.jpg');
+            width: 98%;
+            margin-left: 1%;
+        }
+
+        #overlay {
+            width: 100%;
+            height: 100%;
+            padding-right: 5%;
+            background: rgba(51, 51, 51, 0.384);
+        }
+        #food-content,
+        #order-content {
+            min-height: 600px;
+        }
         /* Footer */
 
         .footer {
+            position: relative;
+            width: 100%;
+            bottom: 0%;
             color: white;
             padding: 0.1px;
             text-align: center;
             background: rgba(51, 51, 51, 0.356);
-            margin-top: 20px;
         }
 
          @media screen and (min-width: 801px) {
@@ -242,12 +288,19 @@
             .my-login {
                 height: 30px;
             }
+            .topnav h1 {
+                padding: 0%;
+                padding-left: 6%;
+            }
             .my-login>input[type="email"],
             .my-login>input[type="password"] {
                 margin-top: 4%;
                 width: 100%;
                 height: 30px;
                 margin-left: auto;
+            }
+            #overlay {
+                padding-right: 0%;
             }
             #login-click {
                 float: right;
