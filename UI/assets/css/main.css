@@ -244,6 +244,13 @@ ul#food .price {
     color: #a33131;
 }
 
+#no-data {
+    text-align: center;
+    font-size: 40px;
+    font-weight: bold;
+    color: white;
+}
+
 .my-food img {
     width:30%;
     height: 150px;
@@ -462,7 +469,7 @@ ul#food .price {
     article#main-col,
     aside#sidebar {
         float: none;
-        text-align: center;
+        text-align: unset;
         width: 100%;
     }
     .profile div {
