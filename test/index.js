@@ -8,11 +8,8 @@ chai.should();
 chai.use(chaiHttp);
 
 describe('Fast-Food-Fast', () => {
-  /*
-  * Test the /GET route
-  */
-  describe('/GET /', () => {
-    it('it should Reject default', (done) => {
+  describe('Default route', () => {
+    it('it should Reject the default route', (done) => {
       chai.request(app)
         .get('/')
         .end((err, res) => {
