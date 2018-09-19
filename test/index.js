@@ -1,17 +1,16 @@
-const chai = require('chai');
-const chaiHttp = require('chai-http');
-const app = require('../src/app');
-const should = chai.should();
+import chai from 'chai';
+import 'babel-polyfill';
+import chaiHttp from 'chai-http';
 
+import app from '../src/app';
+
+chai.should();
 chai.use(chaiHttp);
 
-describe('Diary', () => {
-  /*
-  * Test the /GET route
-  */
-  describe('/GET /', () => {
-    it('it should Reject default', (done) => {
-      chai.request('http://localhost:3000')
+describe('Fast-Food-Fast', () => {
+  describe('Default route', () => {
+    it('it should Reject the default route when user enters default route', (done) => {
+      chai.request(app)
         .get('/')
         .end((err, res) => {
           res.should.have.status(404);
