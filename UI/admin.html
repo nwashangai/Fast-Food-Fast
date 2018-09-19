@@ -13,13 +13,6 @@
 </head>
 
 <body>
-    <header class="header">
-        <img src="./assets/images/emblem.png" alt="Snow" class="logo">
-        <div class="container">
-            <h1>Fast Food Fast</h1>
-            <p>Get the difference in the Wonderful Taste.</p>
-        </div>
-    </header>
 
     <section id="nav-bar">
         <div class="container">
@@ -47,7 +40,7 @@
 
             <article id="main-col">
                 <div class="tab-contents" id="food-content">
-                    <h1 class="page-title"><i class="fa fa-plus-circle" onclick="document.getElementById('add-food').style.display='block'"></i> <span id="new">New</span></h1>
+                    <h1 class="page-title"><button class="add-btn big" onclick="document.getElementById('add-food').style.display='block'"><span id="new">+ New</span></button></h1>
                     <ul id="food">
                         <li>
                             <span class="my-food">
@@ -212,15 +205,6 @@
                     <input type="text" placeholder="Enter Food Name" name="foodName" required>
                 </span><br/><br/>
                 <span>
-                    <label for="avatar">
-                        <b>Avatar</b>
-                    </label>
-                    <input type="file" placeholder="Enter Avatar" name="avatar" id="avatar" class="inputfile" data-multiple-caption="{count} files selected" required>
-                    <label for="avatar">
-                        <b id="upload"><i class="fa fa-upload"></i> Choose file</b>
-                    </label>
-                </span><br/><br/>
-                <span>
                     <label for="desc">
                         <b>Description</b>
                     </label>
@@ -231,6 +215,18 @@
                         <b>Price</b>
                     </label>
                     <input type="number" placeholder="Enter Food price" name="price" required>
+                </span><br/><br/>
+                <span>
+                    <label for="image">
+                        <b>Food image</b>
+                    </label>
+                    <input type="file" name="image" id="image" class="inputfile" data-multiple-caption="{count} files selected" required>
+                    <label for="image">
+                        <b id="upload"><i class="fa fa-upload"></i> Choose file</b>
+                    </label>
+                </span><br/><br/>
+                <span>
+                    <input type="button" value="ADD FOOD" onclick="checkOrderForm()">
                 </span><br/><br/>
             </form>
         </div>

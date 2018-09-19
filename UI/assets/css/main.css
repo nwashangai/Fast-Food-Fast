@@ -1,6 +1,5 @@
 body {
     font: 15px/1.5 Arial, Helvetica, sans-serif;
-    padding: 10px;
     margin: 0;
     background-color: #a33131;
 }
@@ -11,6 +10,8 @@ body {
     width: 95%;
     margin: auto;
     overflow: hidden;
+    min-height: 90%;
+    margin-bottom: 10px;
 }
 
 ul {
@@ -144,7 +145,42 @@ aside#sidebar .profile label {
 aside#sidebar .profile p {
     font-size: 17px;
 }
-
+.food-category {
+    width: 38%;
+    padding: 3px;
+    color: #333;
+    padding-left: 8px;
+    background: #cccccc;
+    border-radius: 3px;
+    float: right;
+    overflow: hidden;
+}
+.food-category i {
+    font-size: 1.17em !important;
+    color: #333 !important;
+    padding: 3px;
+}
+.food-category:hover {
+    cursor: pointer;
+    background: #b3adad;
+}
+.food-category select {
+    background: transparent;
+    border: none;
+    font-size: 14px;
+    height: 29px;
+    padding: 5px;
+    /* If you add too much padding here, the options won't show in IE */
+    width: 95%;
+}
+.food-category select option {
+    width: 100%;
+    background: #b3adad;
+    padding: 3px;
+}
+.right {
+    float: right;
+}
 /* Main-col */
 
 article#main-col {
@@ -152,14 +188,16 @@ article#main-col {
     width: 65%;
 }
 
-article#main-col i {
-    font-size: 50px;
-    color: rgb(99, 219, 99);
+.add-btn {
+    border-radius: 3px;
+    background-color: rgb(99, 219, 99);
 }
-
+.add-btn:hover {
+    cursor: pointer;
+}
 #new {
-    font-size: 35px;
-    color: white;
+    font-size: 30px;
+    color: #a33131;
 }
 
 .page-title > i:hover, .tablinks:hover {
@@ -204,6 +242,13 @@ ul#food li {
 ul#food .price {
     padding-bottom: 5px;
     color: #a33131;
+}
+
+#no-data {
+    text-align: center;
+    font-size: 40px;
+    font-weight: bold;
+    color: white;
 }
 
 .my-food img {
@@ -269,6 +314,8 @@ ul#food .price {
 }
 .table-body-cell {
     display: table-cell;
+    padding: 5px;
+    text-overflow: ellipsis;
 }
 .small-display {
     display: none;
@@ -422,7 +469,7 @@ ul#food .price {
     article#main-col,
     aside#sidebar {
         float: none;
-        text-align: center;
+        text-align: unset;
         width: 100%;
     }
     .profile div {
@@ -430,6 +477,10 @@ ul#food .price {
     }
     header {
         padding-bottom: 20px;
+    }
+    .food-category{
+        float: none;
+        width: 100%;
     }
     #showcase h1 {
         margin-top: 40px;
@@ -457,6 +508,7 @@ ul#food .price {
     }
 
     .table-body-cell {
+        padding: 0%;
         display: block;
         border-bottom: 0.5px solid #a33131;
     }

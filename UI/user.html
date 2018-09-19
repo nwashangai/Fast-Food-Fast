@@ -13,17 +13,10 @@
 </head>
 
 <body>
-    <header class="header">
-        <img src="./assets/images/emblem.png" alt="Snow" class="logo">
-        <div class="container">
-            <h1>Fast Food Fast</h1>
-            <p>Get the difference in the Wonderful Taste.</p>
-        </div>
-    </header>
 
     <section id="nav-bar">
         <div class="container">
-            <h1>Welcome! John</h1>
+            <h1>Welcome John!</h1>
             <form>
                 <nav>
                     <ul class="tabs">
@@ -44,41 +37,19 @@
 
             <article id="main-col">
                 <div class="tab-contents" id="food-content">
-                    <h1 class="page-title"><span id="new">Tasty Foods</span></h1>
+<h1 class="page-title">
+    <span id="new">Tasty Foods</span>
+    <div class="food-category right">
+        <select id="category-selected" onchange="filterCategory()">
+            <option value="Protein">Protein</option>
+            <option value="vegetables">Vegetables</option>
+            <option value="Fruits">Fruits</option>
+        </select>
+        <i class="fa fa-angle-right right"></i>
+    </div>
+</h1>
                     <ul id="food">
-                        <li>
-                            <span class="my-food">
-                                <img src="./assets/images/burger-bacon-snack-fast-food-47320.jpeg" alt="Snow">
-                            </span>
-                            <span class="in-text">
-                                <h3>Burger bacon snacks</h3>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus mi augue, viverra sit amet ultricies
-                                    at, vulputate id lorem. Nulla facilisi.</p>
-                                <p class="price"><span class="big">Price:</span> N1,000 <span><input type="button" class="order" onclick="document.getElementById('add-food').style.display='block'" value="Order"></span></p>
-                            </span>
-                        </li>
-                        <li>
-                            <span class="my-food">
-                                <img src="./assets/images/toasted.jpeg" alt="Snow">
-                            </span>
-                            <span class="in-text">
-                                <h3>Toasted bread & potato chips</h3>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus mi augue, viverra sit amet ultricies
-                                    at, vulputate id lorem. Nulla facilisi.</p>
-                                <p class="price"><span class="big">Price:</span> N1,000 <span><input type="button" class="order" onclick="document.getElementById('add-food').style.display='block'" value="Order"></span></p>
-                            </span>
-                        </li>
-                        <li>
-                            <span class="my-food">
-                                <img src="./assets/images/fried plantain.jpeg" alt="Snow">
-                            </span>
-                            <span class="in-text">
-                                <h3>Fried plantain</h3>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus mi augue, viverra sit amet ultricies
-                                    at, vulputate id lorem. Nulla facilisi.</p>
-                                <p class="price"><span class="big">Price:</span> N1,000 <span><input type="button" class="order" onclick="document.getElementById('add-food').style.display='block'" value="Order"></span></p>
-                            </span>
-                        </li>
+                        
                     </ul>
                 </div>
                 <div class="tab-contents" id="order-content">
@@ -242,5 +213,6 @@
 </body>
 <script type="text/javascript" src="./assets/js/script.js"></script>
 <script type="text/javascript" src="./assets/js/form.js"></script>
+<script type="text/javascript" src="./assets/js/userStore.js"></script>
 
 </html>
