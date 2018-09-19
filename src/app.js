@@ -19,8 +19,6 @@ app.use((req, res, next) => {
   res.send({ error: '404 Sorry the page has not yet been defined try /api/v1/' });
 });
 
-app.listen(process.env.PORT || 3000, () => {
-  console.log('server started at port 3000');
-});
+app.listen(process.env.PORT || 3000, () => {});
 
-module.exports = app; // for testing
+export default app;

@@ -1,6 +1,5 @@
-module.exports = {
+export default {
   development: {
-    // DATABASE_URL: 'postgres://postgres:andela@localhost:5432/myDiary',
     PORT: process.env.PORT,
     SECRET: '',
     POOL: {

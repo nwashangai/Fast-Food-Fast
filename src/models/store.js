@@ -1,6 +1,5 @@
-import { image } from '../resource/base64encode';
 
-exports.order = [
+export const order = [
   {
     id: '1',
     userId: '1',
@@ -10,7 +9,7 @@ exports.order = [
       { foodId: '3', qty: 1 },
     ],
     date: '2018-09-15T20:02:09.451Z',
-    staus: 'accepted',
+    status: 'accepted',
   },
   {
     id: '2',
@@ -20,7 +19,7 @@ exports.order = [
       { foodId: '2', qty: 1 },
     ],
     date: '2018-09-15T20:02:09.451Z',
-    staus: 'declined',
+    status: 'declined',
   },
   {
     id: '3',
@@ -29,11 +28,11 @@ exports.order = [
       { foodId: '1', qty: 3 },
     ],
     date: '2018-09-15T20:02:09.451Z',
-    staus: 'pending',
+    status: 'pending',
   },
 ];
 
-exports.user = [
+export const user = [
   {
     id: '1',
     name: 'john doe',
@@ -48,25 +47,22 @@ exports.user = [
   },
 ]
 
-exports.food = [
+export const food = [
   {
     id: '1',
     name: 'Chinese Chips',
-    photo: image[0],
     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus mi augue, viverra sit amet ultricies at, vulputate id lorem. Nulla facilisi.',
     price: 270,
   },
   {
     id: '2',
     name: 'Chinese source',
-    photo: image[0],
     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus mi augue, viverra sit amet ultricies at, vulputate id lorem. Nulla facilisi.',
     price: 270,
   },
   {
     id: '3',
     name: 'Chinese meli',
-    photo: image[0],
     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus mi augue, viverra sit amet ultricies at, vulputate id lorem. Nulla facilisi.',
     price: 270,
   },
