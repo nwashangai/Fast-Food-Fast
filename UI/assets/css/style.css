@@ -80,14 +80,14 @@
         .leftcolumn {
             float: left;
             text-align: left;
-            width: 75%;
+            width: 70%;
         }
 
         /* Right column */
 
         .rightcolumn {
             float: left;
-            width: 25%;
+            width: 30%;
             margin-top: 8%;
             background: rgba(0, 0, 0, 0.425);
             background-repeat: no-repeat;
@@ -223,7 +223,7 @@
 
         .my-login > input[type="email"],
         .my-login > input[type="password"] {
-             width: 25%;
+             width: 33%;
              height: 30px;
              margin-left: 10px;
         }

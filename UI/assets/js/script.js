@@ -23,7 +23,6 @@ window.onclick = (event) => {
     }
 }
 
-/********************************file input count***************************************/
 /**
  * resource link ref
  * https://tympanus.net/codrops/2015/09/15/styling-customizing-file-inputs-smart-way/
@@ -45,4 +44,7 @@ Array.prototype.forEach.call(inputs, (input) => {
             label.innerHTML = labelVal;
     });
 });
-/******************************************************************************************/
+
+const logout = () => {
+    window.location.replace("index.html");
+}

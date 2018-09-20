@@ -26,8 +26,8 @@
                         <li id="order-tab" class="tablinks" onclick="openTab(event, 'order-content')">
                             <i class="fa fa-file-text"></i> Orders
                         </li>
-                        <li  id="setting-tab" class="tablinks" onclick="">
-                            <i class="fa fa-cog"></i> Settings
+                        <li id="order-tab" class="tablinks" onclick="logout()">
+                            <i class="fa fa-sign-out"></i> Logout
                         </li>
                     </ul>
                 </nav>
@@ -125,7 +125,7 @@
                                     <span class="small-display">Phone :</span><span class="data">08012345678</span>
                                 </div>
                                 <div class="table-body-cell cell-6">
-                                    <input type="button" value="Deliver" class="status deliver">
+                                    <input type="button" value="Deliver" onclick="deliver(event)" class="status deliver">
                                 </div>
                             </div>
                             <div class="table-row">
@@ -144,9 +144,9 @@
                                 <div class="table-body-cell cell-5">
                                     <span class="small-display">Phone :</span><span class="data">09098365417</span>
                                 </div>
-                                <div class="table-body-cell cell-6">
-                                    <input type="button" value="Accept" class="status accept">
-                                    <input type="button" value="Decline" class="status decline">
+                                <div class="table-body-cell cell-6"  id="is-accepted">
+                                    <input type="button" value="Accept" onclick="accepted(event)" class="status accept">
+                                    <input type="button" value="Decline" onclick="decline(event)" class="status decline">
                                 </div>
                             </div>
                             <div class="table-row">
