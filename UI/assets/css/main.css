@@ -469,18 +469,25 @@ ul#food .price {
      text-align: center;
  }
 
- #food-data #table-body {
+ #food-data #table-body,
+ #cart-data #table-body {
      display: block !important;
  }
 
- #food-data .table-row {
+ #food-data .table-row,
+ #cart-data .table-row {
      display: block !important;
  }
  .order-cell .order-display {
      font-weight: bold;
  }
- #food-data label {
+ #food-data label,
+ #cart-data label {
      color: rgb(102, 95, 95)
+ }
+
+ #cart-data .order-data {
+    padding-right: 5% !important;
  }
 
  #upload {

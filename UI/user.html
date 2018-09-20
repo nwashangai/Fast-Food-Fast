@@ -26,6 +26,9 @@
                         <li id="order-tab" class="tablinks" onclick="openTab(event, 'order-content')">
                             <i class="fa fa-file-text"></i> Order History
                         </li>
+                        <li id="order-tab" class="tablinks" onclick="logout()">
+                            <i class="fa fa-sign-out"></i> Logout
+                        </li>
                     </ul>
                 </nav>
             </form>
@@ -173,9 +176,9 @@
     <!--Add food Modal-->
     <div id="order-food" class="modal">
         <div class="modal-content">
-            <span onclick="document.getElementById('add-food').style.display='none'" class="close">&times;</span>
+            <span onclick="document.getElementById('order-food').style.display='none'" class="close">&times;</span>
             <h1>Order Food</h1>
-            <form id="food-data">
+            <form id="cart-data">
                 <span>
                     <div id="table-body">
                         <div class="table-row">

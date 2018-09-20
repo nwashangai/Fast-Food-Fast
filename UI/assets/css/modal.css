@@ -55,16 +55,25 @@
 
 
 #food-data {
-    padding: 10%;
+    padding: 5%;
     padding-top: 3%;
+    padding-right: 0%;
 }
 
-#food-data span {
+#cart-data {
+    padding: 5%;
+    padding-top: 3%;
+    padding-right: 1%;
+}
+
+#food-data span,
+#cart-data span {
     margin-bottom: 5%;
 }
 
-#food-data input, textarea{
-    font-size: 15px;
+#food-data input,
+#cart-data input, textarea {
+    font-size: 13px;
 }
 
 .modal-content h1 {

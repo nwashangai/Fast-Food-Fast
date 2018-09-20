@@ -95,6 +95,17 @@ const distintOptions = () => {
     document.getElementById('category-selected').innerHTML = result;
 }
 
+const accepted = (evt) => {
+    evt.currentTarget.parentElement.innerHTML = '<input type="button" value="Deliver" onclick="deliver(event)" class="status deliver">';
+}
+
+const decline = (evt) => {
+    evt.currentTarget.parentElement.innerHTML = '<span class="declined">Declined</span>';
+}
+
+const deliver = (evt) => {
+    evt.currentTarget.parentElement.innerHTML = '<span class="completed">Completed</span>';
+}
 const filterCategory = () => {
     getFoods(document.getElementById("category-selected").value);
 }

@@ -45,7 +45,7 @@ const getFoods = (foodCategory = 'vegetables') => {
 
 const makeOrder = () => {
     if (cart.length > 0) {
-        document.getElementById('add-food').style.display = 'block';
+        document.getElementById('order-food').style.display = 'block';
     } else {
         alert('please select a food item');
     }
