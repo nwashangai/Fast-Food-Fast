@@ -6,7 +6,7 @@ import updateOrder from '../utils/updateOrder';
 export class OrderController {
   makeOrder(request, response) {
     const userOrder = Object.assign(request.body, {
-      id: uuid(process.env.SECRET_KEY, uuid.URL),
+      id: uuid(process.env.URL, uuid.URL),
       dateTime: new Date(),
       status: 'pending'
     });

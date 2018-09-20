@@ -30,12 +30,33 @@ npm start
 ```
 Kudos :+1: now your API server is running at http://localhost:3000/
 
+## Features
+* User can place a new order for food.
+* User can get a list of orders.
+* User can fetch a specific order.
+* User can update the order status.
+
 ## Running the tests
 
 To run mocha test
 ```
 npm run test
 ```
+
+## Endpoints
+<table>
+<tr><th>HTTP verbs</th><th>Route Endpoints</th><th>Function</th><th>Payload</th></tr>
+<tr><td>GET</td><td>api/v1/orders</td><td>Get all orders</td><td>None</td></tr>
+<tr><td>GET</td><td>api/v1/orders/:orderId</td><td>Get a specific order</td><td>None</td></tr>
+<tr><td>POST</td><td>api/v1/orders</td><td>Post a user order</td><td>
+"id": string,<br/>
+"userId": string,<br/>
+"order": [<br/>
+    {"foodId": string, "qty": number}<br/>
+  ]</td></tr>
+<tr><td>PUT</td><td>api/v1/orders/:orderId</td><td>Update order with the given orderId</td><td>"status": string</td></tr>
+</table>
+
 ## Viewing the UI
 
 To view the UI template, open the UI/index.html or UI/user.html or UI/admin.html from the root directory on your browser
