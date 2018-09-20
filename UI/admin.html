@@ -203,7 +203,7 @@
     <div id="add-food" class="modal">
         <div class="modal-content">
             <span onclick="document.getElementById('add-food').style.display='none'" class="close">&times;</span>
-            <h1>Add Food</h1>
+            <h1 id="my-title">Add Food</h1>
             <form id="food-data">
                 <input type="hidden" id="hidden" name="hidden">
                 <span>
@@ -242,27 +242,25 @@
                 <span id="my-submit">
                     
                 </span><br/><br/>
-                <span>
-                    <label for="image">
-                        <b>Food image</b>
-                    </label>
-                    <input type="file" name="image" id="image" class="inputfile" data-multiple-caption="{count} files selected" required>
-                    <label for="image">
-                        <b id="upload"><i class="fa fa-upload"></i> Choose file</b>
-                    </label>
-                </span><br/><br/>
-                <span>
-                    <input type="button" value="ADD FOOD" onclick="checkOrderForm()">
-                </span><br/><br/>
             </form>
         </div>
     </div>
-
+    <div id="alert" class="popup">
+        <div class="popup-content">
+            <h2 id="title"></h2>
+            <div id="msg" class="content">
+                
+            </div>
+            <span class="alert-btn"><input type="button" value="Ok" id="close-btn" class="status accept"></span>
+        </div>
+    </div>
     <div class="footer">
         <h3>Andela Copyright@2018</h3>
     </div>
 </body>
 <script type="text/javascript" src="./assets/js/script.js"></script>
+<script type="text/javascript" src="./assets/js/form.js"></script>
 <script type="text/javascript" src="./assets/js/adminStore.js"></script>
+<script type="text/javascript" src="./assets/js/click.js"></script>
 
 </html>

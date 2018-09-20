@@ -6,7 +6,7 @@
             font-family: 'Comic Sans MS', cursive, sans-serif;
             margin: 0px;
             background: #a33131;
-            height: 90%;
+            height: 100%;
         }
 
         /* Header/Blog Title */
@@ -245,8 +245,8 @@
         #background {
             width: 100%;
             background: url('../images/burrito-chicken.jpg');
-            width: 98%;
-            margin-left: 1%;
+            width: 100%;
+            margin-left: 0%;
         }
 
         #overlay {
@@ -257,7 +257,7 @@
         }
         #food-content,
         #order-content {
-            min-height: 600px;
+            height: 100vh;
         }
         /* Footer */
 
@@ -280,6 +280,11 @@
         /* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other */
 
         @media screen and (max-width: 800px) {
+            #food-content,
+            #order-content {
+                height: 100vh;
+                margin-bottom: 300px;
+            }
             .leftcolumn,
             .rightcolumn {
                 width: 100%;

@@ -8,6 +8,7 @@
     <link rel="shortcut icon" type="image/png" href="./assets/images/favicon.ico" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="./assets/css/style.css" type="text/css" rel="stylesheet" />
+    <link href="./assets/css/modal.css" type="text/css" rel="stylesheet" />
 </head>
 
 <body>
@@ -16,7 +17,7 @@
         <h1><img src="./assets/images/emblem.png" alt="Snow" id="logo"> Fast Food Fast</h1>
         <form class="login" id="login-form">
             <span class='my-login small'><input id="lemail" type="email" placeholder="email" required></span>
-            <span class='my-login small'><input id="lpassword" type="password" placeholder="password" required></span>
+            <span class='my-login small'><input id="lpassword" type="password" placeholder="password"></span>
             <span class='small'><input id="login-click" type="button" value="LOGIN" onclick="checkForm()"></span>
         </form>
     </div>
@@ -35,19 +36,19 @@
                     <p class="form_label">SIGN UP FORM</p>
                     <form id="signup">
                         <p>
-                            <input id="Sname" type="text" placeholder="name" required>
+                            <input id="Sname" type="text" placeholder="name">
                         </p>
                         <p>
-                            <input id="semail" type="email" placeholder="email" required>
+                            <input id="semail" type="email" placeholder="email">
                         </p>
                         <p>
-                            <input id="sphone" type="text" placeholder="phone" pattern = "[0-9]{11,}">
+                            <input id="sphone" type="text" placeholder="phone" pattern = "[0-9]{11,}" required>
                         </p>
                         <p>
-                            <input id="spassword" type="password" placeholder="******" required>
+                            <input id="spassword" type="password" placeholder="******">
                         </p>
                         <p>
-                            <input id="confirmPassword" type="password" placeholder="******" required>
+                            <input id="confirmPassword" type="password" placeholder="******">
                         </p>
                         <p>
                             <input type="button" value="SIGNUP" onclick="checkSignUpForm()">
@@ -57,11 +58,20 @@
             </div>
         </div>
     </div>
-
+    <div id="alert" class="popup">
+        <div class="popup-content">
+            <h2 id="title"></h2>
+            <div id="msg" class="content">
+                
+            </div>
+            <span class="alert-btn"><input type="button" value="Ok" id="close-btn" class="status accept"></span>
+        </div>
+    </div>
     <div class="footer">
         <h3>Andela Copyright@2018</h3>
     </div>
 
 </body>
 <script type="text/javascript" src="./assets/js/form.js"></script>
+<script type="text/javascript" src="./assets/js/click.js"></script>
 </html>

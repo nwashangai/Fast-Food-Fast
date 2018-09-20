@@ -1,5 +1,3 @@
-const modal = document.getElementById('add-food');
-
 document.getElementById('food-content').style.display = 'block';
 document.getElementById('food-tab').className += ' active';
 
@@ -17,11 +15,6 @@ const openTab = (evt, tab) => {
     evt.currentTarget.className += ' active';
 }
 
-window.onclick = (event) => {
-    if (event.target == modal) {
-        modal.style.display = 'none';
-    }
-}
 
 /**
  * resource link ref

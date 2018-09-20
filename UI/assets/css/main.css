@@ -2,6 +2,7 @@ body {
     font: 15px/1.5 Arial, Helvetica, sans-serif;
     margin: 0;
     background-color: #a33131;
+    height: 100vh;
 }
 
 /* Global */
@@ -208,6 +209,7 @@ textarea {
 /* Main-col */
 
 article#main-col {
+    position: relative;
     float: right;
     width: 65%;
 }
@@ -496,6 +498,8 @@ ul#food .price {
 /* Media Queries */
 
 @media(max-width: 768px) {
+    article#main-col {
+    }
     header #branding,
     header nav,
     header nav li,

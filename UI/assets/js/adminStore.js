@@ -32,7 +32,7 @@ const getFoods = (foodCategory = 'vegetables') => {
                 +`<span class="in-text"><h3>${item.name}</h3>`
                 +`<p>${item.description}</p>`
                 +`<p class="price"><span class="big">Price:</span> ₦ ${item.price} <span>`
-                +`<input type="button" class="delete" value="Delete">`
+                +`<input type="button" class="delete" onclick="deleteItem('${item.id}', '${item.category}')" value="Delete">`
                 +`<input type="button" onclick="edit('${item.id}')" value="Edit"></span></p>`
                 +`</span></li>`
       });
@@ -47,24 +47,25 @@ const findItem = (id) => {
 
 const updateFood = () => {
     if (!document.getElementById('food-data').checkValidity()) {
-        alert('please provide correct input values')
+        popup('Error', 'please provide correct input values');
         return false;
     }
     document.getElementById('add-food').style.display = 'none';
-    alert('update successful');
+    popup('success', 'update successful');
 }
 
 const addFood = () => {
     if (!document.getElementById('food-data').checkValidity()) {
-        alert('please provide correct input values')
+        popup('Error', 'please provide correct input values');
         return false;
     }
     document.getElementById('add-food').style.display = 'none';
-    alert('food added successfully');
+    popup('success', 'food added successfully');
 }
 
 const newItem = () => {
     document.getElementById("food-data").reset();
+    document.getElementById('my-title').innerHTML = 'Add Food';
     document.getElementById('my-submit').innerHTML = '<input type="button" value="ADD FOOD" onclick="addFood()">';
     document.getElementById('add-food').style.display = 'block';
 }
@@ -77,6 +78,7 @@ const edit = (id) => {
     document.getElementById('foodCategory').value = editItem.category;
     document.getElementById('desc').value = editItem.description;
     document.getElementById('foodPrice').value = editItem.price;
+    document.getElementById('my-title').innerHTML = 'Edit Food';
     document.getElementById('my-submit').innerHTML = '<input type="button" value="UPDATE FOOD" onclick="updateFood()">';
     document.getElementById('add-food').style.display = 'block'
 }
@@ -108,6 +110,12 @@ const deliver = (evt) => {
 }
 const filterCategory = () => {
     getFoods(document.getElementById("category-selected").value);
+}
+
+const deleteItem = (id, fdCategory) => {
+    const index = foods.findIndex(item => item.id === id);
+    foods.splice(index, 1);
+    getFoods(fdCategory);
 }
 
 getFoods();

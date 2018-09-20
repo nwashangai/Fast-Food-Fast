@@ -47,16 +47,16 @@ const makeOrder = () => {
     if (cart.length > 0) {
         document.getElementById('order-food').style.display = 'block';
     } else {
-        alert('please select a food item');
+        popup('Error', 'please select a food item');
     }
 }
 
 const sendOrder = () => {
     if (document.getElementById('address').value.trim() === '') {
-        alert('please provide your address');
+        popup('Error', 'please provide your address');
     } else {
-        document.getElementById('add-food').style.display = 'none';
-        alert('Order sent successfully');
+        document.getElementById('order-food').style.display = 'none';
+        popup('Success', 'Order sent successfully');
     }
 }
 
