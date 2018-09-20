@@ -1,3 +1,4 @@
+let cart = [];
 const foods = [
     {
         id: '1',
@@ -23,7 +24,7 @@ const foods = [
     }
 ];
 
-const getFoods = (foodCategory = 'vagetables') => {
+const getFoods = (foodCategory = 'vegetables') => {
   let items = '';
   const foodFiltered = foods.filter(item => item.category === foodCategory);
   if (foodFiltered.length < 1) {
@@ -34,13 +35,71 @@ const getFoods = (foodCategory = 'vagetables') => {
                 +`<span class="in-text"><h3>${item.name}</h3>`
                 +`<p>${item.description}</p>`
                 +`<p class="price"><span class="big">Price:</span> ₦ ${item.price} <span>`
-                +`<input type="button" class="order" onclick="document.getElementById('add-food').style.display='block'" value="Order"></span></p>`
+                +`<input type="button" class="order animate" onclick="pushOrder('${item.id}')" value="Add"></span></p>`
                 +`</span></li>`
       });
       document.getElementById('food').innerHTML = items;
       document.getElementById("category-selected").value = foodCategory;
   }
 }
+
+const makeOrder = () => {
+    if (cart.length > 0) {
+        document.getElementById('add-food').style.display = 'block';
+    } else {
+        alert('please select a food item');
+    }
+}
+
+const sendOrder = () => {
+    if (document.getElementById('address').value.trim() === '') {
+        alert('please provide your address');
+    } else {
+        document.getElementById('add-food').style.display = 'none';
+        alert('Order sent successfully');
+    }
+}
+
+const findItem = (id) => {
+    return foods.find(item => item.id === id);
+}
+
+const refreshCart = () => {
+    let cartItems = '', total = 0;
+    cart.forEach((item) => {
+        total += item.subTotal;
+        cartItems += `<p><span>${item.name}</span>`
+                +`<span class="cart-price">`
+                +`<span class="cart-currency">₦</span>`
+                +`<span class="digit">${item.price}</span></span>`
+                +`<span class="qty">${item.qty}</span></p>`
+    });
+    document.getElementById('cart-content').innerHTML = cartItems;
+    document.getElementById('total').innerHTML = total;
+}
+
+const pushOrder = (id) => {
+    let track = 0;
+    cart.forEach((item) => {
+        if (item.id === id) {
+            item.qty += 1;
+            item.subTotal = item.price * item.qty;
+            track = 1;
+        }
+    });
+    if (track === 0) {
+        const newCart = findItem(id);
+        newCart.qty = 1;
+        newCart.subTotal = newCart.price * newCart.qty;
+        cart.push(newCart);
+    }
+    refreshCart();
+}
+
+const clearCart = () => {
+    cart = [];
+    refreshCart();
+};
 
 const distintOptions = () => {
     const check = {};

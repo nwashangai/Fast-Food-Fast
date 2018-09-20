@@ -40,7 +40,14 @@
 
             <article id="main-col">
                 <div class="tab-contents" id="food-content">
-                    <h1 class="page-title"><button class="add-btn big" onclick="document.getElementById('add-food').style.display='block'"><span id="new">+ New</span></button></h1>
+                    <h1 class="page-title">
+                        <button class="add-btn big" onclick="newItem()"><span id="new">+ New</span></button>
+                        <div class="food-category right">
+                            <select id="category-selected" onchange="filterCategory()">
+                            </select>
+                            <i class="fa fa-angle-right right"></i>
+                        </div>
+                    </h1>
                     <ul id="food">
                         <li>
                             <span class="my-food">
@@ -198,23 +205,42 @@
             <span onclick="document.getElementById('add-food').style.display='none'" class="close">&times;</span>
             <h1>Add Food</h1>
             <form id="food-data">
+                <input type="hidden" id="hidden" name="hidden">
                 <span>
                     <label for="foodName">
                         <b>Food Name</b>
                     </label>
-                    <input type="text" placeholder="Enter Food Name" name="foodName" required>
+                    <input type="text" placeholder="Enter Food Name" id="foodName" name="foodName" required>
+                </span><br/><br/>
+                <span>
+                    <label for="foodName">
+                        <b>Food Category</b>
+                    </label>
+                    <input type="text" placeholder="Enter Category" id="foodCategory" name="foodCategory" required>
                 </span><br/><br/>
                 <span>
                     <label for="desc">
                         <b>Description</b>
                     </label>
-                    <textarea placeholder="Description" name="desc" required></textarea>
+                    <textarea placeholder="Description" id="desc" name="desc" required></textarea>
                 </span><br/><br/>
                 <span>
                     <label for="price">
                         <b>Price</b>
                     </label>
-                    <input type="number" placeholder="Enter Food price" name="price" required>
+                    <input type="number" placeholder="Enter Food price" id="foodPrice" name="foodPrice" required>
+                </span><br/><br/>
+                <span>
+                    <label for="image">
+                        <b>Food image</b>
+                    </label>
+                    <input type="file" name="image" id="image" class="inputfile" data-multiple-caption="{count} files selected">
+                    <label for="image">
+                        <b id="upload"><i class="fa fa-upload"></i> Choose file</b>
+                    </label>
+                </span><br/><br/>
+                <span id="my-submit">
+                    
                 </span><br/><br/>
                 <span>
                     <label for="image">
@@ -237,5 +263,6 @@
     </div>
 </body>
 <script type="text/javascript" src="./assets/js/script.js"></script>
+<script type="text/javascript" src="./assets/js/adminStore.js"></script>
 
 </html>
