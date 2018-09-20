@@ -14,10 +14,10 @@
 
     <div class="topnav">
         <h1><img src="./assets/images/emblem.png" alt="Snow" id="logo"> Fast Food Fast</h1>
-        <form class="login">
+        <form class="login" id="login-form">
             <span class='my-login small'><input id="lemail" type="email" placeholder="email" required></span>
             <span class='my-login small'><input id="lpassword" type="password" placeholder="password" required></span>
-            <span class='small'><input id="login-click" type="button" value="LOGIN" onclick="RunLoginValidate()"></span>
+            <span class='small'><input id="login-click" type="button" value="LOGIN" onclick="checkForm()"></span>
         </form>
     </div>
 
@@ -50,7 +50,7 @@
                             <input id="confirmPassword" type="password" placeholder="******" required>
                         </p>
                         <p>
-                            <input type="button" value="SIGNUP" onclick="checkForm()">
+                            <input type="button" value="SIGNUP" onclick="checkSignUpForm()">
                         </p>
                     </form>
                 </div>

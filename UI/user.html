@@ -37,17 +37,14 @@
 
             <article id="main-col">
                 <div class="tab-contents" id="food-content">
-<h1 class="page-title">
-    <span id="new">Tasty Foods</span>
-    <div class="food-category right">
-        <select id="category-selected" onchange="filterCategory()">
-            <option value="Protein">Protein</option>
-            <option value="vegetables">Vegetables</option>
-            <option value="Fruits">Fruits</option>
-        </select>
-        <i class="fa fa-angle-right right"></i>
-    </div>
-</h1>
+                    <h1 class="page-title">
+                        <span id="new">Tasty Foods</span>
+                        <div class="food-category right">
+                            <select id="category-selected" onchange="filterCategory()">
+                            </select>
+                            <i class="fa fa-angle-right right"></i>
+                        </div>
+                    </h1>
                     <ul id="food">
                         
                     </ul>
@@ -142,32 +139,39 @@
             </article>
 
             <aside id="sidebar">
-                <div class="dark">
-                    <h2>Profile Info</h2>
-                    <form class="profile">
-                        <div>
-                            <label>Name</label>
-                            <br>
-                            <p>John Doe</p>
-                        </div>
-                        <div>
-                            <label>Email</label>
-                            <br>
-                            <p>johndoe@example.com</p>
-                        </div>
-                        <div>
-                            <label>Phone</label>
-                            <br>
-                            <p>08012345676</p>
-                        </div>
-                    </form>
+                <div class="dark" id="user-cart">
+                    <h2>Food cart
+                    <span id="cart-control">
+                        <input type="button" class="order" id="clear" onclick="clearCart()" value="Clear">
+                        <input type="button" class="order" onclick="makeOrder()" value="Order">
+                    </span>
+                    </h2>
+                    <h4>Foods
+                        <span class="cart-price">
+                            <span class="digit">
+                                <i class="fa fa-shopping-cart"></i>
+                            </span>
+                        </span>
+                        <span class="qty">Qty</span>
+                    </h4>
+                    <span id="cart-content">
+                        
+                    </span>
+                    <hr>
+                    <p>Total
+                        <span class="cart-price">
+                            <span class="cart-currency">₦</span>
+                            <span class="digit" id="total">30</span>
+                        </span>
+                        <span class="qty"></span>
+                    </p>
                 </div>
             </aside>
         </div>
     </section>
 
     <!--Add food Modal-->
-    <div id="add-food" class="modal">
+    <div id="order-food" class="modal">
         <div class="modal-content">
             <span onclick="document.getElementById('add-food').style.display='none'" class="close">&times;</span>
             <h1>Order Food</h1>
@@ -183,14 +187,6 @@
                                 <span class="order-display">Phone :</span>
                                 <span class="order-data">08012345678</span>
                             </div>
-                            <div class="order-cell">
-                                <span class="order-display">Food :</span>
-                                <span class="order-data">Burger bacon snacks</span>
-                            </div>
-                            <div class="order-cell">
-                                <span class="order-display">Price :</span>
-                                <span class="order-data">N 1,000</span>
-                            </div>
                         </div>
                     </div>
                 </span><br/><br/>
@@ -198,10 +194,10 @@
                     <label for="address">
                         <b>Address to be delivered</b>
                     </label>
-                    <textarea placeholder="Address" name="address" required></textarea>
+                    <textarea placeholder="Address" name="address" id="address" required></textarea>
                 </span><br/><br/>
                 <span>
-                    <input type="button" value="PLACE ORDER" onclick="checkOrderForm()">
+                    <input type="button" value="PLACE ORDER" onclick="sendOrder()">
                 </span><br/><br/>
             </form>
         </div>

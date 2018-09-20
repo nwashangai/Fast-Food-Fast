@@ -145,6 +145,24 @@ aside#sidebar .profile label {
 aside#sidebar .profile p {
     font-size: 17px;
 }
+ .cart-price {
+     float: right;
+     color: rgb(102, 95, 95);
+     width: 20%;
+ }
+
+ .qty {
+     float: right;
+     width: 15%;
+ }
+
+ .cart-currency {
+     float: left;
+ }
+
+ .digit {
+     float: right;
+ }
 .food-category {
     width: 38%;
     padding: 3px;
@@ -170,7 +188,6 @@ aside#sidebar .profile p {
     font-size: 14px;
     height: 29px;
     padding: 5px;
-    /* If you add too much padding here, the options won't show in IE */
     width: 95%;
 }
 .food-category select option {
@@ -180,6 +197,13 @@ aside#sidebar .profile p {
 }
 .right {
     float: right;
+}
+#add-food {
+    overflow: auto;
+}
+input[type="text"],
+textarea {
+    color: #333;
 }
 /* Main-col */
 
@@ -228,7 +252,8 @@ ul#food li {
     background: #e6e6e6;
 }
 
- ul#food input[type="button"] {
+ ul#food input[type="button"],
+ #cart-control input[type="button"] {
     min-width: 30px;
     width: 20%;
     float: right;
@@ -237,6 +262,10 @@ ul#food li {
     font-size: 14px;
     height: 20px;
     padding: 2px;
+}
+
+#clear {
+    background-color: #333 !important;
 }
 
 ul#food .price {
@@ -479,6 +508,7 @@ ul#food .price {
         padding-bottom: 20px;
     }
     .food-category{
+        margin-top: 5pX;
         float: none;
         width: 100%;
     }
