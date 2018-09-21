@@ -49,9 +49,8 @@ npm run test
 <tr><td>GET</td><td>api/v1/orders</td><td>Get all orders</td><td>None</td></tr>
 <tr><td>GET</td><td>api/v1/orders/:orderId</td><td>Get a specific order</td><td>None</td></tr>
 <tr><td>POST</td><td>api/v1/orders</td><td>Post a user order</td><td>
-"id": string,<br/>
 "userId": string,<br/>
-"order": [<br/>
+"foodItems": [<br/>
     {"foodId": string, "qty": number}<br/>
   ]</td></tr>
 <tr><td>PUT</td><td>api/v1/orders/:orderId</td><td>Update order with the given orderId</td><td>"status": string</td></tr>

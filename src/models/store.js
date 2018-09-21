@@ -3,7 +3,7 @@ export const order = [
   {
     id: '1',
     userId: '1',
-    fooItems: [
+    foodItems: [
       { foodId: '1', qty: 3 },
       { foodId: '2', qty: 2 },
       { foodId: '3', qty: 1 },
@@ -14,7 +14,7 @@ export const order = [
   {
     id: '2',
     userId: '1',
-    fooItems: [
+    foodItems: [
       { foodId: '3', qty: 1 },
       { foodId: '2', qty: 1 },
     ],
@@ -24,7 +24,7 @@ export const order = [
   {
     id: '3',
     userId: '1',
-    fooItems: [
+    foodItems: [
       { foodId: '1', qty: 3 },
     ],
     date: '2018-09-15T20:02:09.451Z',
