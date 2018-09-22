@@ -1,4 +1,6 @@
-import { Pool } from 'pg';
+import {
+    Pool
+} from 'pg';
 import url from 'url';
 import config from '../config';
 
@@ -18,13 +20,14 @@ if (process.env.DATABASE_URL) {
 }
 
 export default async (q, data = []) => {
-    (async () => {
-        const client = await connectionPool.connect();
-        try {
-            const res = await client.query(q, data);
-            return res.rows[0];
-        } finally {
-            client.release()
-        }
-    })().catch(e => { throw e });
+    let res = null;
+    const client = await connectionPool.connect();
+    try {
+        res = await client.query(q, data);
+    } catch (err) {
+        throw err;
+    } finally {
+        client.release();
+    }
+    return res.rows[0];
 }
