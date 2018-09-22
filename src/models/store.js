@@ -4,9 +4,9 @@ export const order = [
     id: '1',
     userId: '1',
     fooItems: [
-      { foodId: '1', qty: 3 },
-      { foodId: '2', qty: 2 },
-      { foodId: '3', qty: 1 },
+      { foodId: '1', quantity: 3 },
+      { foodId: '2', quantity: 2 },
+      { foodId: '3', quantity: 1 },
     ],
     date: '2018-09-15T20:02:09.451Z',
     status: 'accepted',
@@ -15,8 +15,8 @@ export const order = [
     id: '2',
     userId: '1',
     fooItems: [
-      { foodId: '3', qty: 1 },
-      { foodId: '2', qty: 1 },
+      { foodId: '3', quantity: 1 },
+      { foodId: '2', quantity: 1 },
     ],
     date: '2018-09-15T20:02:09.451Z',
     status: 'declined',
@@ -25,7 +25,7 @@ export const order = [
     id: '3',
     userId: '1',
     fooItems: [
-      { foodId: '1', qty: 3 },
+      { foodId: '1', quantity: 3 },
     ],
     date: '2018-09-15T20:02:09.451Z',
     status: 'pending',
