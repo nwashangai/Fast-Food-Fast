@@ -3,11 +3,10 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import morgan from 'morgan';
-import router from './routes/';
+import router from './routes';
 import migration from './models/migration';
 
 const app = express();
-require('dotenv').config();
 config.config();
 
 app.use(morgan('dev'));

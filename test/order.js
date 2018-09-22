@@ -8,13 +8,12 @@ chai.should();
 chai.use(chaiHttp);
 
 const order = {
-  id: '1',
   userId: '2',
-  fooItems: [
-    { foodId: '1', qty: 3 },
-    { foodId: '2', qty: 2 },
-    { foodId: '3', qty: 1 },
-  ],
+  foodItems: [
+    { foodId: '1', quantity: 3 },
+    { foodId: '2', quantity: 2 },
+    { foodId: '3', quantity: 1 }
+  ]
 };
 
 describe('Fast-Food-Fast orders test', () => {
@@ -29,6 +28,34 @@ describe('Fast-Food-Fast orders test', () => {
           res.body.should.have.property('status', 'success');
           res.body.should.have.property('message', 'Order placed');
           res.body.should.have.property('entry');
+          done();
+        });
+    });
+    it('it should reject order when user doesn\'t provides food Items', (done) => {
+      delete order.foodItems;
+      chai.request(app)
+        .post('/api/v1/orders')
+        .send(order)
+        .end((err, res) => {
+          res.should.have.status(400);
+          res.type.should.equal('application/json');
+          res.body.should.have.property('status', 'error');
+          res.body.should.have.property('message', 'No food items');
+          done();
+        });
+    });
+    it('it should reject order when user provides invalid food Items', (done) => {
+      order.foodItems = [
+        { foodId: '1', quantity: '243' }
+      ];
+      chai.request(app)
+        .post('/api/v1/orders')
+        .send(order)
+        .end((err, res) => {
+          res.should.have.status(400);
+          res.type.should.equal('application/json');
+          res.body.should.have.property('status', 'error');
+          res.body.should.have.property('message', 'Invalid quantity type in cart');
           done();
         });
     });
@@ -60,11 +87,10 @@ describe('Fast-Food-Fast orders test', () => {
       chai.request(app)
         .get('/api/v1/orders/335')
         .end((err, res) => {
-          res.should.have.status(200);
+          res.should.have.status(422);
           res.type.should.equal('application/json');
-          res.body.should.have.property('status', 'success');
-          res.body.should.have.property('data');
-          res.body.data.should.be.empty;
+          res.body.should.have.property('status', 'error');
+          res.body.should.have.property('message', 'Invalid order Id');
           done();
         });
     });
