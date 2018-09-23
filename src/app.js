@@ -22,7 +22,7 @@ app.use((req, res, next) => {
 app.listen(process.env.PORT || 3000, () => {
   migration().then(() => {
     console.log('>> migration successful');
-  }).catch(err => console.log(err.message));
+  });
 });
 
 export default app;

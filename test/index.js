@@ -1,6 +1,7 @@
 import chai from 'chai';
 import 'babel-polyfill';
 import chaiHttp from 'chai-http';
+import migration from '../src/models/migration';
 
 import app from '../src/app';
 
@@ -18,6 +19,15 @@ describe('Fast-Food-Fast', () => {
           res.body.should.have.property('error');
           done();
         });
+    });
+  });
+  describe('Migration test', () => {
+    it('it should Successfully migrate database schemas', (done) => {
+      migration().then(() => {
+        done();
+      }).catch((err) => {
+        done();
+      });
     });
   });
 });

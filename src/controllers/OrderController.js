@@ -6,9 +6,6 @@ import updateOrder from '../utils/updateOrder';
 export class OrderController {
   makeOrder(request, response) {
     if (user.find(userData => userData.id === request.body.userId) !== undefined) {
-      if (request.body.foodItems === undefined || request.body.foodItems.length < 1) {
-        response.status(400).json({ status: 'error', message: 'No food items' });
-      } else {
         const userOrder = Object.assign(request.body, {
           id: uuid(process.env.URL, uuid.URL),
           dateTime: new Date(),
@@ -16,7 +13,6 @@ export class OrderController {
         });
         order.push(userOrder);
         response.status(200).json({ status: 'success', message: 'Order placed', entry: request.body });
-      }
     } else {
       response.status(400).json({ status: 'error', message: 'invalid user ID' });
     }

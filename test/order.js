@@ -59,6 +59,38 @@ describe('Fast-Food-Fast orders test', () => {
           done();
         });
     });
+    it('it should reject order when user provides invalid food Items', (done) => {
+      order.foodItems = [
+        { foodId: '1' }
+      ];
+      order.userId = '56';
+      chai.request(app)
+        .post('/api/v1/orders')
+        .send(order)
+        .end((err, res) => {
+          res.should.have.status(400);
+          res.type.should.equal('application/json');
+          res.body.should.have.property('status', 'error');
+          res.body.should.have.property('message', 'Please provide all fields');
+          done();
+        });
+    });
+    it('it should reject order when user provides invalid food Items', (done) => {
+      order.foodItems = [
+        { foodId: '1', quantity: 24 }
+      ];
+      order.userId = '56';
+      chai.request(app)
+        .post('/api/v1/orders')
+        .send(order)
+        .end((err, res) => {
+          res.should.have.status(400);
+          res.type.should.equal('application/json');
+          res.body.should.have.property('status', 'error');
+          res.body.should.have.property('message', 'invalid user ID');
+          done();
+        });
+    });
   });
   describe('Test endpoint get orders', () => {
     it('it should get list of orders when user visits GET /api/v1/orders', (done) => {
