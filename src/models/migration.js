@@ -22,17 +22,7 @@ export default async () => {
         phone VARCHAR(15) not null,
         password TEXT not null
         )`
-      ).then(async () => {
-        await query(`INSERT INTO users(
-        id, name, email, phone, password
-        ) VALUES(
-        '5d5f3ead-f5e8-41df-b997-a71171506f48',
-        'Young',
-        'young@gmail.com',
-        '08013562789',
-        '$2b$10$HI/qDHmOIQruybpEpEKPX.gIGKm.DzhLa44Y/Hm/JMAq1ia/RLSOW'
-        )`);
-      }).catch(error => {
+      ).catch(error => {
         throw error
       });
   await query(`CREATE TABLE IF NOT EXISTS foods(
@@ -44,17 +34,17 @@ export default async () => {
       ).then(async () => {
         await query(`INSERT INTO foods(
         id, name, description, price
-        ) VALUES(
+        ) SELECT
         '5d5f3ead-f5e8-41df-b997-a71171506f48',
         'Chinese Chips',
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus mi augue, viverra sit amet ultricies at, vulputate id lorem. Nulla facilisi.',
         1200
-        )`
+         WHERE NOT EXISTS(SELECT 1 FROM foods WHERE id = '5d5f3ead-f5e8-41df-b997-a71171506f48')`
       );
       }).catch(error => { throw error });
   await query(`CREATE TABLE IF NOT EXISTS orders(
         id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-        userId VARCHAR(200) not null,
+        userId UUID not null,
         foodItems JSONB not null,
         date TIMESTAMP not null,
         status status default 'new' not null

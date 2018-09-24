@@ -9,6 +9,7 @@ const router = express.Router();
 router.post('/auth/signup', validator, UserController.signUp);
 router.post('/auth/login', validator, UserController.login);
 router.post('/orders', auth, validator, OrderController.makeOrder);
+router.get('/users/:userId/orders', auth, OrderController.getOrderHistory);
 router.get('/orders', OrderController.getOrders);
 router.get('/orders/:id', OrderController.getOrders);
 router.put('/orders/:id', OrderController.updateOrder);

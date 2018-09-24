@@ -31,3 +31,5 @@ describe('Fast-Food-Fast', () => {
     });
   });
 });
+require('./user');
+require('./order');

@@ -7,12 +7,12 @@ export default (req, res, next) => {
   if (token) {
     jwt.verify(token, process.env.SECRET_KEY, (err, decoded) => {
       if (err) {
-        return res.status(403).json({ status: 'error', message: 'authentication failed' });
+        return res.status(401).json({ status: 'error', message: 'authentication failed' });
       }
       req.auth = decoded;
       next();
     });
   } else {
-    return res.status(403).send({ status: 'error', message: 'No token provided.' });
+    return res.status(401).send({ status: 'error', message: 'No token provided.' });
   }
 }

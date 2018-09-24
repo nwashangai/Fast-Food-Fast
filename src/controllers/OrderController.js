@@ -2,13 +2,25 @@ import 'dotenv';
 import OrderModel from '../models/OrderModel';
 import { order } from '../models/store';
 import updateOrder from '../utils/updateOrder';
+import { isUUID } from '../utils/validator';
 
 export class OrderController {
   makeOrder(request, response) {
-    OrderModel.makeOrder(request.body).then((result) => {;
+    OrderModel.makeOrder(request.body).then((result) => {
         response.status(200).json({ status: 'success', message: 'Order placed', data: result });
       });
     
+  }
+
+  getOrderHistory(request, response) {
+    if (!isUUID(request.params.userId)) {
+      response.status(422).json({ status: 'error', message: 'Invalid user Id' });
+    } else {
+      OrderModel.getOrderHistory(request.params.userId).then((result) => {
+          result = (result) ? result : 'No order in your history';
+          response.status(200).json({ status: 'success', data: result });
+        });
+    }
   }
 
   getOrders(request, response) {
