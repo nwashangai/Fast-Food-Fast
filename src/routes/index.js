@@ -6,6 +6,7 @@ import UserController from '../controllers/UserController';
 const router = express.Router();
 
 router.post('/auth/signup', validator, UserController.signUp);
+router.post('/auth/login', validator, UserController.login);
 router.post('/orders', validator, OrderController.makeOrder);
 router.get('/orders', OrderController.getOrders);
 router.get('/orders/:id', OrderController.getOrders);

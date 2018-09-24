@@ -40,6 +40,12 @@ export default (request, response, next) => {
             return (response.status(400).json({ status: 'error', message: isValid }));
           }
       });
+    } else if (request.method === 'POST' && (request.originalUrl === '/api/v1/auth/login' || request.originalUrl === '/api/v1/auth/login/')) {
+        if(!request.body.email | !request.body.password) {
+          return (response.status(400).json({ status: 'error', message: 'provide all fields' }));
+        } else {
+            next();
+        }
     } else {
        next();
     }
