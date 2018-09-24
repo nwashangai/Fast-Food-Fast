@@ -173,5 +173,29 @@ describe('Fast-Food-Fast orders test', () => {
           done();
         });
     });
+    it('it should reject invalid ID when user provide invalid ID', (done) => {
+      chai.request(app)
+        .get('/api/v1/users/4/orders')
+        .set('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1ZDVmM2VhZC1mNWU4LTQxZGYtYjk5Ny1hNzExNzE1MDZmNDgiLCJlbWFpbCI6InlvdW5nQGdtYWlsLmNvbSIsImlhdCI6MTUzNzc4NjQyOH0.9ZXpG_ppyYo3ab_cIM2sOFotxz6ZtSwZkIGpyLwcdZY')
+        .end((err, res) => {
+          res.should.have.status(422);
+          res.type.should.equal('application/json');
+          res.body.should.have.property('status', 'error');
+          res.body.should.have.property('message', 'Invalid user Id');
+          done();
+        });
+    });
+    it('it should return user order list when user provide valid user ID', (done) => {
+      chai.request(app)
+        .get('/api/v1/users/5d5f3ead-f5e8-41df-b997-a71171506f48/orders')
+        .set('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1ZDVmM2VhZC1mNWU4LTQxZGYtYjk5Ny1hNzExNzE1MDZmNDgiLCJlbWFpbCI6InlvdW5nQGdtYWlsLmNvbSIsImlhdCI6MTUzNzc4NjQyOH0.9ZXpG_ppyYo3ab_cIM2sOFotxz6ZtSwZkIGpyLwcdZY')
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.type.should.equal('application/json');
+          res.body.should.have.property('status', 'success');
+          res.body.should.have.property('data');
+          done();
+        });
+    });
   });
 });

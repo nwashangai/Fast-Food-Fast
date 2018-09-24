@@ -11,6 +11,12 @@ class userModel {
         ];
         return query(queryString, payload);
     }
+
+    getOrderHistory(userId) {
+        const queryString = `SELECT * FROM orders WHERE userId=$1`;
+        const payload = [userId];
+        return query(queryString, payload);
+    }
 }
 
 export default new userModel();
