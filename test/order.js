@@ -8,26 +8,51 @@ chai.should();
 chai.use(chaiHttp);
 
 const order = {
-  userId: '2',
   foodItems: [
-    { foodId: '1', quantity: 3 },
-    { foodId: '2', quantity: 2 },
-    { foodId: '3', quantity: 1 }
+    { foodId: '5d5f3ead-f5e8-41df-b997-a71171506f48', quantity: 3 },
+    { foodId: '5d5f3ead-f5e8-41df-b997-a71171506f48', quantity: 2 },
+    { foodId: '5d5f3ead-f5e8-41df-b997-a71171506f48', quantity: 1 }
   ]
 };
 
 describe('Fast-Food-Fast orders test', () => {
   describe('Test endpoint to place order', () => {
-    it('it should place user\'s order when user provides order information', (done) => {
+    it('it should reject user\'s order when user has no access token', (done) => {
       chai.request(app)
         .post('/api/v1/orders')
+        .send(order)
+        .end((err, res) => {
+          res.should.have.status(403);
+          res.type.should.equal('application/json');
+          res.body.should.have.property('status', 'error');
+          res.body.should.have.property('message', 'No token provided.');
+          done();
+        });
+    });
+    it('it should reject users order when user authentication fails', (done) => {
+      chai.request(app)
+        .post('/api/v1/orders')
+        .send(order)
+        .set('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9')
+        .end((err, res) => {
+          res.should.have.status(403);
+          res.type.should.equal('application/json');
+          res.body.should.have.property('status', 'error');
+          res.body.should.have.property('message', 'authentication failed');
+          done();
+        });
+    });
+    it('it should successfully place user\'s order when user provides order information', (done) => {
+      chai.request(app)
+        .post('/api/v1/orders')
+        .set('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1ZDVmM2VhZC1mNWU4LTQxZGYtYjk5Ny1hNzExNzE1MDZmNDgiLCJlbWFpbCI6InlvdW5nQGdtYWlsLmNvbSIsImlhdCI6MTUzNzc4NjQyOH0.9ZXpG_ppyYo3ab_cIM2sOFotxz6ZtSwZkIGpyLwcdZY')
         .send(order)
         .end((err, res) => {
           res.should.have.status(200);
           res.type.should.equal('application/json');
           res.body.should.have.property('status', 'success');
           res.body.should.have.property('message', 'Order placed');
-          res.body.should.have.property('entry');
+          res.body.should.have.property('data');
           done();
         });
     });
@@ -35,6 +60,7 @@ describe('Fast-Food-Fast orders test', () => {
       delete order.foodItems;
       chai.request(app)
         .post('/api/v1/orders')
+        .set('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1ZDVmM2VhZC1mNWU4LTQxZGYtYjk5Ny1hNzExNzE1MDZmNDgiLCJlbWFpbCI6InlvdW5nQGdtYWlsLmNvbSIsImlhdCI6MTUzNzc4NjQyOH0.9ZXpG_ppyYo3ab_cIM2sOFotxz6ZtSwZkIGpyLwcdZY')
         .send(order)
         .end((err, res) => {
           res.should.have.status(400);
@@ -46,10 +72,11 @@ describe('Fast-Food-Fast orders test', () => {
     });
     it('it should reject order when user provides invalid food Items', (done) => {
       order.foodItems = [
-        { foodId: '1', quantity: '243' }
+        { foodId: '5d5f3ead-f5e8-41df-b997-a71171506f48', quantity: '243' }
       ];
       chai.request(app)
         .post('/api/v1/orders')
+        .set('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1ZDVmM2VhZC1mNWU4LTQxZGYtYjk5Ny1hNzExNzE1MDZmNDgiLCJlbWFpbCI6InlvdW5nQGdtYWlsLmNvbSIsImlhdCI6MTUzNzc4NjQyOH0.9ZXpG_ppyYo3ab_cIM2sOFotxz6ZtSwZkIGpyLwcdZY')
         .send(order)
         .end((err, res) => {
           res.should.have.status(400);
@@ -59,35 +86,19 @@ describe('Fast-Food-Fast orders test', () => {
           done();
         });
     });
-    it('it should reject order when user provides invalid food Items', (done) => {
+    it('it should reject order when user provides incomplete food Item data', (done) => {
       order.foodItems = [
-        { foodId: '1' }
+        { foodId: '5d5f3ead-f5e8-41df-b997-a71171506f48' }
       ];
-      order.userId = '56';
       chai.request(app)
         .post('/api/v1/orders')
+        .set('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI1ZDVmM2VhZC1mNWU4LTQxZGYtYjk5Ny1hNzExNzE1MDZmNDgiLCJlbWFpbCI6InlvdW5nQGdtYWlsLmNvbSIsImlhdCI6MTUzNzc4NjQyOH0.9ZXpG_ppyYo3ab_cIM2sOFotxz6ZtSwZkIGpyLwcdZY')
         .send(order)
         .end((err, res) => {
           res.should.have.status(400);
           res.type.should.equal('application/json');
           res.body.should.have.property('status', 'error');
           res.body.should.have.property('message', 'Please provide all fields');
-          done();
-        });
-    });
-    it('it should reject order when user provides invalid food Items', (done) => {
-      order.foodItems = [
-        { foodId: '1', quantity: 24 }
-      ];
-      order.userId = '56';
-      chai.request(app)
-        .post('/api/v1/orders')
-        .send(order)
-        .end((err, res) => {
-          res.should.have.status(400);
-          res.type.should.equal('application/json');
-          res.body.should.have.property('status', 'error');
-          res.body.should.have.property('message', 'invalid user ID');
           done();
         });
     });

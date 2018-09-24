@@ -1,4 +1,4 @@
-import { food } from '../models/store';
+import FoodModel from '../models/FoodModel';
 import userModel from '../models/UserModel';
 
 export default (request, response, next) => {
@@ -6,23 +6,31 @@ export default (request, response, next) => {
     if (request.method === 'POST' && (request.originalUrl === '/api/v1/orders/' || request.originalUrl === '/api/v1/orders')) {
         const count = (request.body.foodItems) ? (Array.isArray(request.body.foodItems)) ? request.body.foodItems.length : 0 : 0;
         if (!request.body.foodItems === undefined || !count < 1) {
-        request.body.foodItems.forEach((element) => {
+        request.body.foodItems.forEach((element, index, arr) => {
             if (element.foodId && element.quantity) {
-              isValid = (food.find(item => item.id === element.foodId) === undefined) ?
-                        'Invalid food Id in cart' : ((typeof element.quantity) !== 'number') ?
-                        'Invalid quantity type in cart' : isValid;
+              FoodModel.getFood(element.foodId).then((result) => {
+                  isValid = (!result) ? 'Invalid food Id in cart' : 
+                  ((typeof element.quantity) !== 'number') ?
+                      'Invalid quantity type in cart': isValid;
+                if (index === arr.length - 1) {
+                    request.body.userId = request.auth.userId;
+                    if(isValid === 1) {
+                        request.body.userId = request.auth.userId;
+                        next();
+                    } else {
+                        return (response.status(400).json({ status: 'error', message: isValid }));
+                    }
+                }
+              }).catch((error) => {
+                 response.status(422).json({ status: 'error', message: 'Invalid food item Id' });
+             });
             } else {
-                isValid = 'Please provide all fields';
+                return (response.status(400).json({ status: 'error', message: 'Please provide all fields'}));
             }
         });
     } else {
-        isValid = 'No food items';
+        return (response.status(400).json({ status: 'error', message: 'No food items'}));
     }
-        if(isValid === 1) {
-            next();
-        } else {
-            return (response.status(400).json({ status: 'error', message: isValid }));
-        }
     } else if (request.method === 'POST' && (request.originalUrl === '/api/v1/auth/signup' || request.originalUrl === '/api/v1/auth/signup/')) {
       const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
       isValid = (!regex.test(String(request.body.email)) || !request.body.email) ?

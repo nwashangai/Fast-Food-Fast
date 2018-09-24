@@ -1,21 +1,14 @@
-import uuid from 'uuid/v5';
 import 'dotenv';
-import { order, user } from '../models/store';
+import OrderModel from '../models/OrderModel';
+import { order } from '../models/store';
 import updateOrder from '../utils/updateOrder';
 
 export class OrderController {
   makeOrder(request, response) {
-    if (user.find(userData => userData.id === request.body.userId) !== undefined) {
-        const userOrder = Object.assign(request.body, {
-          id: uuid(process.env.URL, uuid.URL),
-          dateTime: new Date(),
-          status: 'pending'
-        });
-        order.push(userOrder);
-        response.status(200).json({ status: 'success', message: 'Order placed', entry: request.body });
-    } else {
-      response.status(400).json({ status: 'error', message: 'invalid user ID' });
-    }
+    OrderModel.makeOrder(request.body).then((result) => {;
+        response.status(200).json({ status: 'success', message: 'Order placed', data: result });
+      });
+    
   }
 
   getOrders(request, response) {

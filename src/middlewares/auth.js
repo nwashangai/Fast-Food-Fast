@@ -1,10 +1,11 @@
 import jwt from 'jsonwebtoken';
+require('dotenv').config();
 
 export default (req, res, next) => {
   const token = req.body.token || req.headers['x-access-token'];
 
   if (token) {
-    jwt.verify(token, config.development.SECRET, (err, decoded) => {
+    jwt.verify(token, process.env.SECRET_KEY, (err, decoded) => {
       if (err) {
         return res.status(403).json({ status: 'error', message: 'authentication failed' });
       }
