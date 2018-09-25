@@ -13,7 +13,7 @@ router.post('/orders', auth, validator, OrderController.makeOrder);
 router.post('/menu', auth, validator, FoodController.addFood);
 router.get('/menu', auth, FoodController.getFoodMenu);
 router.get('/users/:userId/orders', auth, OrderController.getOrderHistory);
-router.get('/orders', OrderController.getOrders);
+router.get('/orders', auth, validator, OrderController.getOrders);
 router.get('/orders/:orderId', auth, validator, OrderController.getOrder);
 router.put('/orders/:orderId', auth, validator, OrderController.updateOrder);
 

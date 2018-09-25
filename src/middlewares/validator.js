@@ -78,6 +78,12 @@ export default (request, response, next) => {
             return (response.status(400).json({ status: 'error', message: 'Invalid order ID' }));
             }
         }
+    } else if (request.method === 'GET' && (request.originalUrl === '/api/v1/orders' || request.originalUrl === '/api/v1/orders/')) {
+        if (request.auth.email !== process.env.ADMIN) {
+          return (response.status(401).json({ status: 'error', message: 'Unathorized' }));
+        } else {
+          next();
+        }
     } else {
        next();
     }
