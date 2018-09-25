@@ -2,7 +2,7 @@ import chai from 'chai';
 import 'babel-polyfill';
 import chaiHttp from 'chai-http';
 
-import app from '../src/app';
+import app from '../../src/app';
 
 chai.should();
 chai.use(chaiHttp);
@@ -11,6 +11,7 @@ let token = '';
 const food = {};
 
 describe('Fast-Food-Fast orders test', () => {
+  describe('Test endpoint to add Foods', () => {
     it('it should successfully login user when user provides valid login information', (done) => {
       chai.request(app)
         .post('/api/v1/auth/login')
@@ -27,7 +28,6 @@ describe('Fast-Food-Fast orders test', () => {
           done();
         });
     });
-  describe('Test endpoint to add Foods', () => {
     it('it should reject food when user provides no food name', (done) => {
       chai.request(app)
         .post('/api/v1/menu')
@@ -103,6 +103,20 @@ describe('Fast-Food-Fast orders test', () => {
         .post('/api/v1/menu')
         .set('x-access-token', token)
         .send(food)
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.type.should.equal('application/json');
+          res.body.should.have.property('status', 'success');
+          res.body.should.have.property('data');
+          done();
+        });
+    });
+  });
+  describe('Test endpoint to get Foods', () => {
+    it('it should successfully get food menu when user is authenticated', (done) => {
+      chai.request(app)
+        .get('/api/v1/menu')
+        .set('x-access-token', token)
         .end((err, res) => {
           res.should.have.status(200);
           res.type.should.equal('application/json');

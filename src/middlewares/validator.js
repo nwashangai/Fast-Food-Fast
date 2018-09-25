@@ -11,7 +11,7 @@ export default (request, response, next) => {
         request.body.foodItems.forEach((element, index, arr) => {
             if (element.foodId && element.quantity) {
               FoodModel.getFood(element.foodId).then((result) => {
-                  isValid = (!result) ? 'Invalid food Id in cart' : 
+                  isValid = (result < 1) ? 'Invalid food Id in cart' : 
                   ((typeof element.quantity) !== 'number') ?
                       'Invalid quantity type in cart': isValid;
                 if (index === arr.length - 1) {
@@ -41,7 +41,7 @@ export default (request, response, next) => {
           'Invalid phone number': (!request.body.password || !((request.body.password.length || '') > 4)) ?
           'password should not be less than 4 characters' : isValid;
       userModel.getEmail(request.body.email).then((result) => {
-          if (result) {
+          if (result.length > 0) {
               isValid = 'Duplicate email address';
           }
           if(isValid === 1) {

@@ -29,5 +29,5 @@ export default async (q, data = []) => {
     } finally {
         client.release();
     }
-    return res.rows[0];
+    return res.rows;
 }
