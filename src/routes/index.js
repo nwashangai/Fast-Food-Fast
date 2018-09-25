@@ -15,6 +15,6 @@ router.get('/menu', auth, FoodController.getFoodMenu);
 router.get('/users/:userId/orders', auth, OrderController.getOrderHistory);
 router.get('/orders', OrderController.getOrders);
 router.get('/orders/:id', OrderController.getOrders);
-router.put('/orders/:id', OrderController.updateOrder);
+router.put('/orders/:orderId', auth, validator, OrderController.updateOrder);
 
 export default router;

@@ -1,6 +1,6 @@
 import FoodModel from '../models/FoodModel';
 import userModel from '../models/UserModel';
-import { isValidMenuItem } from '../utils/validator';
+import { isValidMenuItem, isUUID } from '../utils/validator';
 require('dotenv').config();
 
 export default (request, response, next) => {
@@ -66,6 +66,16 @@ export default (request, response, next) => {
             } else {
               request.body.image = request.body.image || null;
               next();
+            }
+        }
+    } else if (request.method === 'PUT' && request.params.orderId) {
+        if (request.auth.email !== process.env.ADMIN) {
+          return (response.status(401).json({ status: 'error', message: 'Unathorized' }));
+        } else {
+        if (isUUID(request.params.orderId)) {
+            next();
+            } else {
+            return (response.status(400).json({ status: 'error', message: 'Invalid order ID' }));
             }
         }
     } else {

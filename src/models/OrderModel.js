@@ -3,7 +3,7 @@ import query from './';
 class userModel {
     makeOrder(data) {
         const queryString = `INSERT INTO orders(userId, foodItems, date)
-        VALUES($1, $2, $3) RETURNING userId, foodItems, date, status `;
+        VALUES($1, $2, $3) RETURNING *`;
         const payload = [
             data.userId,
             JSON.stringify(data.foodItems),
@@ -15,6 +15,12 @@ class userModel {
     getOrderHistory(userId) {
         const queryString = `SELECT * FROM orders WHERE userId=$1`;
         const payload = [userId];
+        return query(queryString, payload);
+    }
+
+    updateOrder(id, status) {
+        const queryString = `UPDATE orders SET status=$1 WHERE id=$2 RETURNING *`;
+        const payload = [status, id];
         return query(queryString, payload);
     }
 }

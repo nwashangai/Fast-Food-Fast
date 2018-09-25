@@ -1,7 +1,6 @@
 import 'dotenv';
 import OrderModel from '../models/OrderModel';
 import { order } from '../models/store';
-import updateOrder from '../utils/updateOrder';
 import { isUUID } from '../utils/validator';
 
 export class OrderController {
@@ -36,13 +35,14 @@ export class OrderController {
   }
 
   updateOrder(request, response) {
-    if (['accepted', 'declined', 'completed'].includes(request.body.status)) {
-      const update = updateOrder(request.params.id, request.body.status);
-      if (update.count > 0) {
-        response.status(200).json({ status: 'success', update });
-      } else {
-        response.status(400).json({ status: 'error', message: 'invalid order ID' });
-      }
+    if (['processing', 'cancelled', 'completed'].includes(request.body.status)) {
+      OrderModel.updateOrder(request.params.orderId, request.body.status).then((result) => {
+        if (result.length > 0) {
+          response.status(200).json({ status: 'success', update: result[0] });
+        } else {
+          response.status(400).json({ status: 'error', message: 'invalid order ID' });
+        }
+      });
     } else {
       response.status(400).json({ status: 'error', message: 'invalid status' });
     }
