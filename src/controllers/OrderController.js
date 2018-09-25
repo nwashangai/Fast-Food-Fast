@@ -47,6 +47,16 @@ export class OrderController {
       response.status(400).json({ status: 'error', message: 'invalid status' });
     }
   }
+
+  getOrder(request, response) {
+    OrderModel.getOrder(request.params.orderId).then((result) => {
+      if (result.length === 1) {
+        response.status(200).json({ status: 'success', data: result[0] });
+      } else {
+        response.status(400).json({ status: 'error', message: 'invalid order ID' });
+      }
+    });
+  }
 }
 
 export default new OrderController();

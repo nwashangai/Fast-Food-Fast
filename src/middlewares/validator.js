@@ -68,7 +68,7 @@ export default (request, response, next) => {
               next();
             }
         }
-    } else if (request.method === 'PUT' && request.params.orderId) {
+    } else if ((request.method === 'PUT' || request.method === 'GET') && request.params.orderId) {
         if (request.auth.email !== process.env.ADMIN) {
           return (response.status(401).json({ status: 'error', message: 'Unathorized' }));
         } else {

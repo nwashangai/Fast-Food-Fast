@@ -18,6 +18,12 @@ class userModel {
         return query(queryString, payload);
     }
 
+    getOrder(id) {
+        const queryString = `SELECT * FROM orders WHERE id=$1`;
+        const payload = [id];
+        return query(queryString, payload);
+    }
+
     updateOrder(id, status) {
         const queryString = `UPDATE orders SET status=$1 WHERE id=$2 RETURNING *`;
         const payload = [status, id];
