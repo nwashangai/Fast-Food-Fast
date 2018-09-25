@@ -32,4 +32,5 @@ describe('Fast-Food-Fast', () => {
   });
 });
 require('./user');
+require('./food');
 require('./order');

@@ -28,20 +28,11 @@ export default async () => {
   await query(`CREATE TABLE IF NOT EXISTS foods(
         id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
         name VARCHAR(100) not null,
+        category VARCHAR(100) not null,
         description TEXT not null,
         image TEXT, price MONEY not null
         )`
-      ).then(async () => {
-        await query(`INSERT INTO foods(
-        id, name, description, price
-        ) SELECT
-        '5d5f3ead-f5e8-41df-b997-a71171506f48',
-        'Chinese Chips',
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus mi augue, viverra sit amet ultricies at, vulputate id lorem. Nulla facilisi.',
-        1200
-         WHERE NOT EXISTS(SELECT 1 FROM foods WHERE id = '5d5f3ead-f5e8-41df-b997-a71171506f48')`
-      );
-      }).catch(error => { throw error });
+      ).catch(error => { throw error });
   await query(`CREATE TABLE IF NOT EXISTS orders(
         id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
         userId UUID not null,

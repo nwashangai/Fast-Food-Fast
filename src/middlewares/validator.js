@@ -1,5 +1,7 @@
 import FoodModel from '../models/FoodModel';
 import userModel from '../models/UserModel';
+import { isValidMenuItem } from '../utils/validator';
+require('dotenv').config();
 
 export default (request, response, next) => {
     let isValid = 1;
@@ -53,6 +55,18 @@ export default (request, response, next) => {
           return (response.status(400).json({ status: 'error', message: 'provide all fields' }));
         } else {
             next();
+        }
+    } else if (request.method === 'POST' && (request.originalUrl === '/api/v1/menu' || request.originalUrl === '/api/v1/menu/')) {
+        if (request.auth.email !== process.env.ADMIN) {
+          return (response.status(401).json({ status: 'error', message: 'Unathorized' }));
+        } else {
+            isValid = isValidMenuItem(request.body);
+            if (isValid !== 'valid') {
+                return (response.status(400).json({ status: 'error', message: isValid }));
+            } else {
+              request.body.image = request.body.image || null;
+              next();
+            }
         }
     } else {
        next();

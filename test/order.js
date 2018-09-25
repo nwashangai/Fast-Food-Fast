@@ -8,11 +8,10 @@ chai.should();
 chai.use(chaiHttp);
 
 let token = '';
+let foodId = '';
 const order = {
   foodItems: [
-    { foodId: '5d5f3ead-f5e8-41df-b997-a71171506f48', quantity: 3 },
-    { foodId: '5d5f3ead-f5e8-41df-b997-a71171506f48', quantity: 2 },
-    { foodId: '5d5f3ead-f5e8-41df-b997-a71171506f48', quantity: 1 }
+    { foodId: '5d5f3ead-f5e8-41df-b997-a71171506f48', quantity: 3 }
   ]
 };
 
@@ -26,6 +25,26 @@ describe('Fast-Food-Fast orders test', () => {
         })
         .end((err, res) => {
           token = res.body.data.token;
+          res.should.have.status(200);
+          res.type.should.equal('application/json');
+          res.body.should.have.property('status', 'success');
+          res.body.should.have.property('data');
+          done();
+        });
+    });
+    it('it should successfully add food when user provides all food data', (done) => {
+      chai.request(app)
+        .post('/api/v1/menu')
+        .set('x-access-token', token)
+        .send({
+          name: 'chicken source',
+          category: 'poultry',
+          description: 'white poultry meat',
+          price: 300
+        })
+        .end((err, res) => {
+          foodId = res.body.data.id;
+          order.foodItems[0].foodId = res.body.data.id;
           res.should.have.status(200);
           res.type.should.equal('application/json');
           res.body.should.have.property('status', 'success');
@@ -89,7 +108,7 @@ describe('Fast-Food-Fast orders test', () => {
     });
     it('it should reject order when user provides invalid food Items', (done) => {
       order.foodItems = [
-        { foodId: '5d5f3ead-f5e8-41df-b997-a71171506f48', quantity: '243' }
+        { foodId: foodId, quantity: '243' }
       ];
       chai.request(app)
         .post('/api/v1/orders')
@@ -105,7 +124,7 @@ describe('Fast-Food-Fast orders test', () => {
     });
     it('it should reject order when user provides incomplete food Item data', (done) => {
       order.foodItems = [
-        { foodId: '5d5f3ead-f5e8-41df-b997-a71171506f48' }
+        { foodId: foodId }
       ];
       chai.request(app)
         .post('/api/v1/orders')
