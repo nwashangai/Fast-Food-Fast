@@ -144,6 +144,7 @@ describe('Fast-Food-Fast orders test', () => {
     it('it should get list of orders when user visits GET /api/v1/orders', (done) => {
       chai.request(app)
         .get('/api/v1/orders')
+        .set('x-access-token', token)
         .end((err, res) => {
           res.should.have.status(200);
           res.type.should.equal('application/json');

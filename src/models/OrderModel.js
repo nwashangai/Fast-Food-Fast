@@ -18,6 +18,10 @@ class userModel {
         return query(queryString, payload);
     }
 
+    getOrders() {
+        return query(`SELECT * FROM orders`);
+    }
+
     getOrder(id) {
         const queryString = `SELECT * FROM orders WHERE id=$1`;
         const payload = [id];
