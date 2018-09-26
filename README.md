@@ -46,13 +46,60 @@ npm run test
 ## Endpoints
 <table>
 <tr><th>HTTP verbs</th><th>Route Endpoints</th><th>Function</th><th>Payload</th></tr>
+<tr><td>POST</td><td>api/v1/auth/signup</td><td>Signup user</td><td>
+<code>
+<pre>
+{
+  "name": "string",
+  "email": "string",
+  "phone": "string",
+  "password": "string"
+}
+</pre></code></td></tr>
+<tr><td>POST</td><td>api/v1/auth/login</td><td>Login user</td><td>
+<code>
+<pre>
+{
+  "email": "string",
+  "password": "string"
+}
+</pre></code></td></tr>
+<tr><td>POST</td><td>api/v1/menu</td><td>Add menu item</td><td>
+<code>
+<pre>
+{
+	"name": "string",
+	"category": "string",
+	"description": "text",
+	"price": "number",
+	"image": "text"
+}
+</pre></code></td></tr>
+<tr><td>GET</td><td>api/v1/menu</td><td>Get all menu items</td><td>None</td></tr>
+<tr><td>PuT</td><td>api/v1/menu/:menuId</td><td>Updates a specific menu item</td><td><code>
+<pre>
+{
+	"name": "string",
+	"category": "string",
+	"description": "text",
+	"price": "number",
+	"image": "text"
+}
+</pre></code></td></tr>
+<tr><td>GET</td><td>api/v1/menu/:userId/orders</td><td>Get all orders of a specific user</td><td>None</td></tr>
 <tr><td>GET</td><td>api/v1/orders</td><td>Get all orders</td><td>None</td></tr>
 <tr><td>GET</td><td>api/v1/orders/:orderId</td><td>Get a specific order</td><td>None</td></tr>
 <tr><td>POST</td><td>api/v1/orders</td><td>Post a user order</td><td>
-"userId": string,<br/>
-"foodItems": [<br/>
-    {"foodId": string, "qty": number}<br/>
-  ]</td></tr>
+<code>
+<pre>
+{
+  "address": "string",
+  "foodItems": [
+    { "foodId": "string", "quantity": "number" },
+    ...
+  ]
+}
+</pre></code></td></tr>
 <tr><td>PUT</td><td>api/v1/orders/:orderId</td><td>Update order with the given orderId</td><td>"status": string</td></tr>
 </table>
 

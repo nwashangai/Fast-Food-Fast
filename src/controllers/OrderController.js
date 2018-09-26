@@ -1,50 +1,54 @@
-import uuid from 'uuid/v5';
 import 'dotenv';
-import { order, user } from '../models/store';
-import updateOrder from '../utils/updateOrder';
+import OrderModel from '../models/OrderModel';
+import { isUUID } from '../utils/validator';
 
 export class OrderController {
   makeOrder(request, response) {
-    if (user.find(userData => userData.id === request.body.userId) !== undefined) {
-      if (request.body.foodItems === undefined || request.body.foodItems.length < 1) {
-        response.status(400).json({ status: 'error', message: 'No food items' });
-      } else {
-        const userOrder = Object.assign(request.body, {
-          id: uuid(process.env.URL, uuid.URL),
-          dateTime: new Date(),
-          status: 'pending'
-        });
-        order.push(userOrder);
-        response.status(200).json({ status: 'success', message: 'Order placed', entry: request.body });
-      }
+    OrderModel.makeOrder(request.body).then((result) => {
+        response.status(200).json({ status: 'success', message: 'Order placed', data: result });
+      });
+    
+  }
+
+  getOrderHistory(request, response) {
+    if (!isUUID(request.params.userId)) {
+      response.status(422).json({ status: 'error', message: 'Invalid user Id' });
     } else {
-      response.status(400).json({ status: 'error', message: 'invalid user ID' });
+      OrderModel.getOrderHistory(request.params.userId).then((result) => {
+          result = (result) ? result : 'No order in your history';
+          response.status(200).json({ status: 'success', data: result });
+        });
     }
   }
 
   getOrders(request, response) {
-    if (request.params.id) {
-      const userOrder = order.filter(order => order.id === request.params.id);
-      if(userOrder.length > 0)
-        response.status(200).json({ status: 'success', data: userOrder });
-      else
-        response.status(422).json({ status: 'error', message: 'Invalid order Id' });
-    } else {
-      response.status(200).json({ status: 'success', data: order });
-    }
+    OrderModel.getOrders().then((result) => {
+      response.status(200).json({ status: 'success', data: result });
+    });
   }
 
   updateOrder(request, response) {
-    if (['accepted', 'declined', 'completed'].includes(request.body.status)) {
-      const update = updateOrder(request.params.id, request.body.status);
-      if (update.count > 0) {
-        response.status(200).json({ status: 'success', update });
-      } else {
-        response.status(400).json({ status: 'error', message: 'invalid order ID' });
-      }
+    if (['processing', 'cancelled', 'completed'].includes(request.body.status)) {
+      OrderModel.updateOrder(request.params.orderId, request.body.status).then((result) => {
+        if (result.length > 0) {
+          response.status(200).json({ status: 'success', update: result[0] });
+        } else {
+          response.status(400).json({ status: 'error', message: 'invalid order ID' });
+        }
+      });
     } else {
       response.status(400).json({ status: 'error', message: 'invalid status' });
     }
+  }
+
+  getOrder(request, response) {
+    OrderModel.getOrder(request.params.orderId).then((result) => {
+      if (result.length === 1) {
+        response.status(200).json({ status: 'success', data: result[0] });
+      } else {
+        response.status(400).json({ status: 'error', message: 'invalid order ID' });
+      }
+    });
   }
 }
 

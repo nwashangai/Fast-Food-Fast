@@ -1,6 +1,7 @@
 import chai from 'chai';
 import 'babel-polyfill';
 import chaiHttp from 'chai-http';
+import migration from '../src/models/migration';
 
 import app from '../src/app';
 
@@ -12,12 +13,16 @@ describe('Fast-Food-Fast', () => {
     it('it should Reject the default route when user enters default route', (done) => {
       chai.request(app)
         .get('/')
-        .end((err, res) => {
+        .end(async (err, res) => {
           res.should.have.status(404);
           res.type.should.equal('application/json');
           res.body.should.have.property('error');
+          await migration();
           done();
         });
     });
   });
 });
+require('./others/user');
+require('./others/food');
+require('./others/order');

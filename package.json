@@ -7,7 +7,7 @@
     "build": "babel -d ./build ./src",
     "start": "npm run build && node ./build/app.js",
     "dev": "babel-node ./src/app.js",
-    "test": "mocha --recursive './test/' --compilers js:babel-core/register --exit",
+    "test": "mocha --recursive './test/index.js' --compilers js:babel-core/register --exit",
     "cover": "nyc npm run test && nyc report --reporter=lcov --reporter=text-lcov npm test",
     "coveralls": "nyc report --reporter=lcov --reporter=text-lcov | ./node_modules/coveralls/bin/coveralls.js"
   },
@@ -28,6 +28,7 @@
     "morgan": "^1.8.2",
     "nodemailer": "^4.6.8",
     "nyc": "^12.0.2",
+    "pg": "^7.4.3",
     "sequelize": "^4.38.0",
     "swagger-ui-express": "^4.0.0",
     "url": "^0.11.0",
