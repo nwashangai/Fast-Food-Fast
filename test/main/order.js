@@ -25,11 +25,11 @@ describe('Fast-Food-Fast orders test', () => {
           password: '12345'
         })
         .end((err, res) => {
-          token = res.body.data.token;
+          token = res.body.token;
           res.should.have.status(200);
           res.type.should.equal('application/json');
           res.body.should.have.property('status', 'success');
-          res.body.should.have.property('data');
+          res.body.should.have.property('token');
           done();
         });
     });
@@ -46,7 +46,7 @@ describe('Fast-Food-Fast orders test', () => {
         .end((err, res) => {
           foodId = res.body.data.id;
           order.foodItems[0].foodId = res.body.data.id;
-          res.should.have.status(200);
+          res.should.have.status(201);
           res.type.should.equal('application/json');
           res.body.should.have.property('status', 'success');
           res.body.should.have.property('data');
@@ -100,7 +100,7 @@ describe('Fast-Food-Fast orders test', () => {
         .send(order)
         .end((err, res) => {
           orderId = res.body.data[0].id;
-          res.should.have.status(200);
+          res.should.have.status(201);
           res.type.should.equal('application/json');
           res.body.should.have.property('status', 'success');
           res.body.should.have.property('message', 'Order placed');
@@ -150,7 +150,7 @@ describe('Fast-Food-Fast orders test', () => {
           res.should.have.status(400);
           res.type.should.equal('application/json');
           res.body.should.have.property('status', 'error');
-          res.body.should.have.property('message', 'Please provide all fields');
+          res.body.should.have.property('message', 'Please provide both food item and quantity');
           done();
         });
     });
@@ -214,7 +214,7 @@ describe('Fast-Food-Fast orders test', () => {
           res.should.have.status(400);
           res.type.should.equal('application/json');
           res.body.should.have.property('status', 'error');
-          res.body.should.have.property('message', 'invalid status');
+          res.body.should.have.property('message', 'invalid status, please specify \"processing\", \"cancelled\", or \"completed\"');
           done();
         });
     });

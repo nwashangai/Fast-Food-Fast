@@ -33,7 +33,7 @@ describe('Fast-Food-Fast user test', () => {
         .post('/api/v1/auth/signup')
         .send(user)
         .end((err, res) => {
-          res.should.have.status(200);
+          res.should.have.status(201);
           res.type.should.equal('application/json');
           res.body.should.have.property('status', 'success');
           res.body.should.have.property('data');
@@ -45,7 +45,7 @@ describe('Fast-Food-Fast user test', () => {
         .post('/api/v1/auth/signup')
         .send(user)
         .end((err, res) => {
-          res.should.have.status(400);
+          res.should.have.status(409);
           res.type.should.equal('application/json');
           res.body.should.have.property('status', 'error');
           res.body.should.have.property('message', 'Duplicate email address');
@@ -53,7 +53,7 @@ describe('Fast-Food-Fast user test', () => {
         });
     });
     it('it should reject signup when user provides invalid email Id', (done) => {
-        user.email = 'example@gmail';
+      user.email = 'example@gmail';
       chai.request(app)
         .post('/api/v1/auth/signup')
         .send(user)
@@ -66,8 +66,8 @@ describe('Fast-Food-Fast user test', () => {
         });
     });
     it('it should reject signup when user provides incomplete signup information', (done) => {
-        delete user.name;
-        user.email = 'example@gmail.com';
+      delete user.name;
+      user.email = 'example@gmail.com';
       chai.request(app)
         .post('/api/v1/auth/signup')
         .send(user)
@@ -90,7 +90,7 @@ describe('Fast-Food-Fast user test', () => {
           res.should.have.status(400);
           res.type.should.equal('application/json');
           res.body.should.have.property('status', 'error');
-          res.body.should.have.property('message', 'provide all fields');
+          res.body.should.have.property('message', 'Invalid or no email address');
           done();
         });
     });
@@ -120,7 +120,7 @@ describe('Fast-Food-Fast user test', () => {
           res.should.have.status(200);
           res.type.should.equal('application/json');
           res.body.should.have.property('status', 'success');
-          res.body.should.have.property('data');
+          res.body.should.have.property('token');
           done();
         });
     });
