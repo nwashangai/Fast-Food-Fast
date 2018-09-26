@@ -8,10 +8,16 @@ class FoodController {
 
     getFoodMenu(request, response) {
         FoodModel.getFoodMenu().then((result) => {
+            response.status(200).json({ status: 'success', data: result });
+        });
+    }
+
+    updateFoodMenu(request, response) {
+        FoodModel.updateFoodMenu(request.params.menuId, request.body).then((result) => {
             if (result.length > 0) 
-                response.status(200).json({ status: 'success', data: result });
+                response.status(200).json({ status: 'success', update: result[0] });
             else
-                response.status(200).json({ status: 'success', data: 'No food menu available' });
+                response.status(400).json({ status: 'error', message: 'Invalid menu ID' });
         });
     }
 }
