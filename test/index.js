@@ -31,3 +31,6 @@ describe('Fast-Food-Fast', () => {
     });
   });
 });
+require('./others/user');
+require('./others/food');
+require('./others/order');

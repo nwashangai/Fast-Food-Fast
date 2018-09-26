@@ -7,7 +7,7 @@
     "build": "babel -d ./build ./src",
     "start": "npm run build && node ./build/app.js",
     "dev": "babel-node ./src/app.js",
-    "test": "mocha --recursive './test/' --compilers js:babel-core/register --exit",
+    "test": "mocha --recursive './test/index.js' --compilers js:babel-core/register --exit",
     "cover": "nyc npm run test && nyc report --reporter=lcov --reporter=text-lcov npm test",
     "coveralls": "nyc report --reporter=lcov --reporter=text-lcov | ./node_modules/coveralls/bin/coveralls.js"
   },
