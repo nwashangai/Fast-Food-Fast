@@ -2,7 +2,7 @@ import chai from 'chai';
 import 'babel-polyfill';
 import chaiHttp from 'chai-http';
 
-import app from '../src/app';
+import app from '../../src/app';
 
 chai.should();
 chai.use(chaiHttp);

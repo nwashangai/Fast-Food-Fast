@@ -13,6 +13,17 @@ class userModel {
         const payload = [data.name, data.category, data.description, data.image, data.price];
         return query(queryString, payload);
     }
+
+    getFoodMenu() {
+        const queryString = `SELECT * FROM foods`;
+        return query(queryString);
+    }
+
+    updateFoodMenu(id, data) {
+        const queryString = `UPDATE foods SET name=$1, category=$2, description=$3, image=$4, price=$5 WHERE id=$6 RETURNING *`;
+        const payload = [data.name, data.category, data.description, data.image, data.price, id];
+        return query(queryString, payload);
+    }
 }
 
 export default new userModel();

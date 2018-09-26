@@ -2,12 +2,12 @@ import chai from 'chai';
 import 'babel-polyfill';
 import chaiHttp from 'chai-http';
 
-import app from '../src/app';
+import app from '../../src/app';
 
 chai.should();
 chai.use(chaiHttp);
 
-let token = '';
+let token = '', orderId = '';
 let foodId = '';
 const order = {
   foodItems: [
@@ -84,6 +84,7 @@ describe('Fast-Food-Fast orders test', () => {
         .set('x-access-token', token)
         .send(order)
         .end((err, res) => {
+          orderId = res.body.data[0].id;
           res.should.have.status(200);
           res.type.should.equal('application/json');
           res.body.should.have.property('status', 'success');
@@ -143,6 +144,7 @@ describe('Fast-Food-Fast orders test', () => {
     it('it should get list of orders when user visits GET /api/v1/orders', (done) => {
       chai.request(app)
         .get('/api/v1/orders')
+        .set('x-access-token', token)
         .end((err, res) => {
           res.should.have.status(200);
           res.type.should.equal('application/json');
@@ -153,7 +155,8 @@ describe('Fast-Food-Fast orders test', () => {
     });
     it('it should get a specific order when user requests for an order', (done) => {
       chai.request(app)
-        .get('/api/v1/orders/1')
+        .get(`/api/v1/orders/${orderId}`)
+        .set('x-access-token', token)
         .end((err, res) => {
           res.should.have.status(200);
           res.type.should.equal('application/json');
@@ -165,18 +168,20 @@ describe('Fast-Food-Fast orders test', () => {
     it('it should get empty order when order is not found', (done) => {
       chai.request(app)
         .get('/api/v1/orders/335')
+        .set('x-access-token', token)
         .end((err, res) => {
-          res.should.have.status(422);
+          res.should.have.status(400);
           res.type.should.equal('application/json');
           res.body.should.have.property('status', 'error');
-          res.body.should.have.property('message', 'Invalid order Id');
+          res.body.should.have.property('message', 'Invalid order ID');
           done();
         });
     });
     it('it should successfully update order given an Id', (done) => {
       chai.request(app)
-        .put('/api/v1/orders/3')
-        .send({ status: 'accepted' })
+        .put(`/api/v1/orders/${orderId}`)
+        .set('x-access-token', token)
+        .send({ status: 'processing' })
         .end((err, res) => {
           res.should.have.status(200);
           res.type.should.equal('application/json');
@@ -187,7 +192,8 @@ describe('Fast-Food-Fast orders test', () => {
     });
     it('it should reject invalid status when user provide invalid status', (done) => {
       chai.request(app)
-        .put('/api/v1/orders/2')
+        .put(`/api/v1/orders/${orderId}`)
+        .set('x-access-token', token)
         .send({ status: 'finished' })
         .end((err, res) => {
           res.should.have.status(400);
@@ -200,12 +206,13 @@ describe('Fast-Food-Fast orders test', () => {
     it('it should reject invalid ID when user provide invalid ID', (done) => {
       chai.request(app)
         .put('/api/v1/orders/230')
-        .send({ status: 'accepted' })
+        .set('x-access-token', token)
+        .send({ status: 'processing' })
         .end((err, res) => {
           res.should.have.status(400);
           res.type.should.equal('application/json');
           res.body.should.have.property('status', 'error');
-          res.body.should.have.property('message', 'invalid order ID');
+          res.body.should.have.property('message', 'Invalid order ID');
           done();
         });
     });

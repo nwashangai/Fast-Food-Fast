@@ -1,6 +1,6 @@
 import FoodModel from '../models/FoodModel';
 import userModel from '../models/UserModel';
-import { isValidMenuItem } from '../utils/validator';
+import { isValidMenuItem, isUUID } from '../utils/validator';
 require('dotenv').config();
 
 export default (request, response, next) => {
@@ -11,7 +11,7 @@ export default (request, response, next) => {
         request.body.foodItems.forEach((element, index, arr) => {
             if (element.foodId && element.quantity) {
               FoodModel.getFood(element.foodId).then((result) => {
-                  isValid = (!result) ? 'Invalid food Id in cart' : 
+                  isValid = (result < 1) ? 'Invalid food Id in cart' : 
                   ((typeof element.quantity) !== 'number') ?
                       'Invalid quantity type in cart': isValid;
                 if (index === arr.length - 1) {
@@ -41,7 +41,7 @@ export default (request, response, next) => {
           'Invalid phone number': (!request.body.password || !((request.body.password.length || '') > 4)) ?
           'password should not be less than 4 characters' : isValid;
       userModel.getEmail(request.body.email).then((result) => {
-          if (result) {
+          if (result.length > 0) {
               isValid = 'Duplicate email address';
           }
           if(isValid === 1) {
@@ -56,10 +56,13 @@ export default (request, response, next) => {
         } else {
             next();
         }
-    } else if (request.method === 'POST' && (request.originalUrl === '/api/v1/menu' || request.originalUrl === '/api/v1/menu/')) {
+    } else if ((request.method === 'POST' && (request.originalUrl === '/api/v1/menu' || request.originalUrl === '/api/v1/menu/')) || (request.method === 'PUT' && request.params.menuId)) {
         if (request.auth.email !== process.env.ADMIN) {
           return (response.status(401).json({ status: 'error', message: 'Unathorized' }));
         } else {
+            if (request.method === 'PUT' && !isUUID(request.params.menuId)) {
+                return (response.status(400).json({ status: 'error', message: 'Invalid menu ID' }));
+            }
             isValid = isValidMenuItem(request.body);
             if (isValid !== 'valid') {
                 return (response.status(400).json({ status: 'error', message: isValid }));
@@ -67,6 +70,22 @@ export default (request, response, next) => {
               request.body.image = request.body.image || null;
               next();
             }
+        }
+    } else if ((request.method === 'PUT' || request.method === 'GET') && request.params.orderId) {
+        if (request.auth.email !== process.env.ADMIN) {
+          return (response.status(401).json({ status: 'error', message: 'Unathorized' }));
+        } else {
+        if (isUUID(request.params.orderId)) {
+                next();
+            } else {
+                return (response.status(400).json({ status: 'error', message: 'Invalid order ID' }));
+            }
+        }
+    } else if (request.method === 'GET' && (request.originalUrl === '/api/v1/orders' || request.originalUrl === '/api/v1/orders/')) {
+        if (request.auth.email !== process.env.ADMIN) {
+          return (response.status(401).json({ status: 'error', message: 'Unathorized' }));
+        } else {
+          next();
         }
     } else {
        next();
