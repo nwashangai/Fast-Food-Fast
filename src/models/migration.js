@@ -22,18 +22,22 @@ export default async () => {
         phone VARCHAR(15) not null,
         password TEXT not null
         )`
-      ).catch(error => { throw error });
-  await query(`CREATE TABLE IF NOT EXISTS food(
-        id UUID PRIMARY KEY DEFAULT gen_random_uuid() PRIMARY KEY,
+      ).catch(error => {
+        throw error
+      });
+  await query(`CREATE TABLE IF NOT EXISTS foods(
+        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
         name VARCHAR(100) not null,
+        category VARCHAR(100) not null,
         description TEXT not null,
         image TEXT, price MONEY not null
         )`
       ).catch(error => { throw error });
   await query(`CREATE TABLE IF NOT EXISTS orders(
-        id UUID PRIMARY KEY DEFAULT gen_random_uuid() PRIMARY KEY,
-        userId VARCHAR(200) not null,
-        fooItems JSON not null,
+        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+        userId UUID not null,
+        address TEXT not null,
+        foodItems JSONB not null,
         date TIMESTAMP not null,
         status status default 'new' not null
         )`

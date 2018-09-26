@@ -25,9 +25,9 @@ export default async (q, data = []) => {
     try {
         res = await client.query(q, data);
     } catch (err) {
-        throw err;
+        console.log(err);
     } finally {
         client.release();
     }
-    return res.rows[0];
+    return res.rows;
 }
