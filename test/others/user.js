@@ -2,7 +2,7 @@ import chai from 'chai';
 import 'babel-polyfill';
 import chaiHttp from 'chai-http';
 
-import app from '../src/app';
+import app from '../../src/app';
 
 chai.should();
 chai.use(chaiHttp);
@@ -76,6 +76,51 @@ describe('Fast-Food-Fast user test', () => {
           res.type.should.equal('application/json');
           res.body.should.have.property('status', 'error');
           res.body.should.have.property('message', 'Invalid name');
+          done();
+        });
+    });
+  });
+
+  describe('Test endpoint to login user', () => {
+    it('it should reject login when user provides incomplete login information', (done) => {
+      chai.request(app)
+        .post('/api/v1/auth/login')
+        .send({})
+        .end((err, res) => {
+          res.should.have.status(400);
+          res.type.should.equal('application/json');
+          res.body.should.have.property('status', 'error');
+          res.body.should.have.property('message', 'provide all fields');
+          done();
+        });
+    });
+    it('it should reject login when user provides invalid login information', (done) => {
+      chai.request(app)
+        .post('/api/v1/auth/login')
+        .send({
+          email: 'john@gmail.com',
+          password: '12345'
+        })
+        .end((err, res) => {
+          res.should.have.status(400);
+          res.type.should.equal('application/json');
+          res.body.should.have.property('status', 'error');
+          res.body.should.have.property('message', 'email address does not exist');
+          done();
+        });
+    });
+    it('it should successfully login user when user provides valid login information', (done) => {
+      chai.request(app)
+        .post('/api/v1/auth/login')
+        .send({
+          email: 'johndoe@gmail.com',
+          password: '12345'
+        })
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.type.should.equal('application/json');
+          res.body.should.have.property('status', 'success');
+          res.body.should.have.property('data');
           done();
         });
     });

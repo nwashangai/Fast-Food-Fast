@@ -19,6 +19,12 @@ class userModel {
         const payload = [email];
         return query(queryString, payload);
     }
+
+    login(email) {
+      const queryString = `SELECT * FROM users WHERE email=$1`;
+      const payload = [email];
+      return query(queryString, payload);
+    }
 }
 
 export default new userModel();

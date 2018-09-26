@@ -13,21 +13,16 @@ describe('Fast-Food-Fast', () => {
     it('it should Reject the default route when user enters default route', (done) => {
       chai.request(app)
         .get('/')
-        .end((err, res) => {
+        .end(async (err, res) => {
           res.should.have.status(404);
           res.type.should.equal('application/json');
           res.body.should.have.property('error');
+          await migration();
           done();
         });
     });
   });
-  describe('Migration test', () => {
-    it('it should Successfully migrate database schemas', (done) => {
-      migration().then(() => {
-        done();
-      }).catch((err) => {
-        done();
-      });
-    });
-  });
 });
+require('./others/user');
+require('./others/food');
+require('./others/order');
