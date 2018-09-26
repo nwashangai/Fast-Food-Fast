@@ -7,7 +7,7 @@ import app from '../../src/app';
 chai.should();
 chai.use(chaiHttp);
 
-let token = '';
+let token = '', menuId = '';
 const food = {};
 
 describe('Fast-Food-Fast orders test', () => {
@@ -104,6 +104,7 @@ describe('Fast-Food-Fast orders test', () => {
         .set('x-access-token', token)
         .send(food)
         .end((err, res) => {
+          menuId = res.body.data.id;
           res.should.have.status(200);
           res.type.should.equal('application/json');
           res.body.should.have.property('status', 'success');
@@ -122,6 +123,34 @@ describe('Fast-Food-Fast orders test', () => {
           res.type.should.equal('application/json');
           res.body.should.have.property('status', 'success');
           res.body.should.have.property('data');
+          done();
+        });
+    });
+  });
+  describe('Test endpoint to update Foods', () => {
+    it('it should reject update when user provides invalid menu ID', (done) => {
+      chai.request(app)
+        .put(`/api/v1/menu/32`)
+        .set('x-access-token', token)
+        .send(food)
+        .end((err, res) => {
+          res.should.have.status(400);
+          res.type.should.equal('application/json');
+          res.body.should.have.property('status', 'error');
+          res.body.should.have.property('message', 'Invalid menu ID');
+          done();
+        });
+    });
+    it('it should successfully update food menu when user provides all valid data', (done) => {
+      chai.request(app)
+        .put(`/api/v1/menu/${menuId}`)
+        .set('x-access-token', token)
+        .send(food)
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.type.should.equal('application/json');
+          res.body.should.have.property('status', 'success');
+          res.body.should.have.property('update');
           done();
         });
     });
