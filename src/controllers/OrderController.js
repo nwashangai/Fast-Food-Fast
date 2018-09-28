@@ -1,5 +1,7 @@
 import 'dotenv';
 import OrderModel from '../models/OrderModel';
+import UserModel from '../models/UserModel';
+import FoodModel from '../models/FoodModel';
 import { isUUID } from '../utils/validator';
 
 export class OrderController {
@@ -14,15 +16,51 @@ export class OrderController {
     if (!isUUID(request.params.userId)) {
       response.status(422).json({ status: 'error', message: 'Invalid user Id' });
     } else {
-      OrderModel.getOrderHistory(request.params.userId).then((result) => {
-          response.status(200).json({ status: 'success', data: result });
+      OrderModel.getOrderHistory(request.params.userId).then(result => {
+        if (result.length < 1)
+          response.status(200).json({ status: 'success', data: [] });
+        result.forEach(async (element, index, arr) => {
+          let total = 0;
+          let user = await UserModel.getUser(element.userid);
+          element.name = (user[0]) ? user[0].name : 'No name';
+          element.fooditems.forEach(async (item, ind, obj) => {
+            await FoodModel.getFood(item.foodId).then(done => {
+              item.name = done[0].name || 'Deleted';
+              item.price = done[0].price || 'Deleted';
+              item.subTotal = parseFloat(done[0].price * item.quantity).toFixed(2) || 'Deleted';
+              total = parseFloat(total + item.subTotal).toFixed(2);
+              if (arr.length - 1 === index && obj.length - 1 === ind) {
+                arr[index].totalPrice = total;
+                response.status(200).json({ status: 'success', data: result });
+              }
+            });
+          });
         });
+      });
     }
   }
 
   getOrders(request, response) {
-    OrderModel.getOrders().then((result) => {
-      response.status(200).json({ status: 'success', data: result });
+    OrderModel.getOrders().then(result => {
+      if (result.length < 0)
+          response.status(422).json({ status: 'success', data: [] });
+      result.forEach(async (element, index, arr) => {
+        let total = 0;
+        let user = await UserModel.getUser(element.userid);
+        element.name = (user[0]) ? user[0].name : 'No name';
+        element.fooditems.forEach(async (item, ind, obj) => {
+          await FoodModel.getFood(item.foodId).then(done => {
+            item.name = done[0].name || 'Deleted';
+            item.price = done[0].price || 'Deleted';
+            item.subTotal = parseFloat(done[0].price * item.quantity).toFixed(2) || 'Deleted';
+            total = parseFloat(total + item.subTotal).toFixed(2);
+            if (arr.length - 1 === index && obj.length - 1 === ind) {
+              arr[index].totalPrice = total;
+              response.status(200).json({ status: 'success', data: result });
+            }
+          });
+        });
+      });
     });
   }
 
@@ -46,7 +84,25 @@ export class OrderController {
   getOrder(request, response) {
     OrderModel.getOrder(request.params.orderId).then((result) => {
       if (result.length === 1) {
-        response.status(200).json({ status: 'success', data: result[0] });
+        let total = 0;
+        UserModel.getUser(result[0].userid).then(user => {
+          result[0].name = (user[0]) ? user[0].name : 'No name';
+          result[0].fooditems.forEach(async (item, ind, obj) => {
+            await FoodModel.getFood(item.foodId).then(done => {
+              item.name = done[0].name || 'Deleted';
+              item.price = done[0].price || 'Deleted';
+              item.subTotal = parseFloat(done[0].price * item.quantity).toFixed(2) || 'Deleted';
+              total = parseFloat(total + item.subTotal).toFixed(2);
+              if (obj.length - 1 === ind) {
+                result[0].totalPrice = total;
+                response.status(200).json({
+                  status: 'success',
+                  data: result[0]
+                });
+              }
+            });
+          });
+        });
       } else {
         response.status(400).json({ status: 'error', message: 'invalid order ID' });
       }
