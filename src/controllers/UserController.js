@@ -6,7 +6,12 @@ require('dotenv').config();
 class UserController {
     signUp(request, response) {
       UserModel.createUser(request.body).then((result) => {
-          response.status(200).json({ status: 'success', data: result[0] });
+          const payload = {
+              userId: result[0].id,
+              email: result[0].email
+          };
+          result[0].token = jwt.sign(payload, process.env.SECRET_KEY);
+          response.status(201).json({ status: 'success', data: result[0] });
       });
     }
 
@@ -18,13 +23,12 @@ class UserController {
           if (output !== 'verified') {
               response.status(400).json({ status: 'error', message: output });
           } else {
-              delete result[0].password;
               const payload = {
                   userId: result[0].id,
                   email: result[0].email
               };
-              result[0].token = jwt.sign(payload, process.env.SECRET_KEY);
-              response.status(200).json({ status: 'success', data: result[0] });
+              const token = jwt.sign(payload, process.env.SECRET_KEY);
+              response.status(200).json({ status: 'success', token });
           }
       });
     }

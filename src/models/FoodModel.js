@@ -7,6 +7,12 @@ class userModel {
         return query(queryString, payload);
     }
 
+    deleteFood(id) {
+        const queryString = `DELETE FROM foods WHERE id=$1 RETURNING *`;
+        const payload = [id];
+        return query(queryString, payload);
+    }
+
     addFood(data) {
         const queryString = `INSERT INTO foods(name, category, description, image, price)
         VALUES($1, $2, $3, $4, $5) RETURNING id, name, category, description, image, price `;

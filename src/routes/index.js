@@ -7,15 +7,16 @@ import FoodController from '../controllers/FoodController';
 
 const router = express.Router();
 
-router.post('/auth/signup', validator, UserController.signUp);
-router.post('/auth/login', validator, UserController.login);
-router.post('/orders', auth, validator, OrderController.makeOrder);
-router.post('/menu', auth, validator, FoodController.addFood);
+router.post('/auth/signup', validator.signUp, UserController.signUp);
+router.post('/auth/login', validator.login, UserController.login);
+router.post('/orders', auth, validator.foodItems, OrderController.makeOrder);
+router.post('/menu', auth, validator.menu, FoodController.addFood);
 router.get('/menu', auth, FoodController.getFoodMenu);
-router.put('/menu/:menuId', auth, validator, FoodController.updateFoodMenu);
+router.put('/menu/:menuId', auth, validator.menu, FoodController.updateFoodMenu);
+router.delete('/menu/:menuId', auth, validator.deleteMenu, FoodController.deleteFood);
 router.get('/users/:userId/orders', auth, OrderController.getOrderHistory);
-router.get('/orders', auth, validator, OrderController.getOrders);
-router.get('/orders/:orderId', auth, validator, OrderController.getOrder);
-router.put('/orders/:orderId', auth, validator, OrderController.updateOrder);
+router.get('/orders', auth, validator.getOrders, OrderController.getOrders);
+router.get('/orders/:orderId', auth, validator.order, OrderController.getOrder);
+router.put('/orders/:orderId', auth, validator.order, OrderController.updateOrder);
 
 export default router;

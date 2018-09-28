@@ -20,11 +20,11 @@ describe('Fast-Food-Fast orders test', () => {
           password: '12345'
         })
         .end((err, res) => {
-          token = res.body.data.token;
+          token = res.body.token;
           res.should.have.status(200);
           res.type.should.equal('application/json');
           res.body.should.have.property('status', 'success');
-          res.body.should.have.property('data');
+          res.body.should.have.property('token');
           done();
         });
     });
@@ -42,7 +42,7 @@ describe('Fast-Food-Fast orders test', () => {
         });
     });
     it('it should reject food when user provides no food category', (done) => {
-        food.name = 'plantain chips';
+      food.name = 'plantain chips';
       chai.request(app)
         .post('/api/v1/menu')
         .set('x-access-token', token)
@@ -56,7 +56,7 @@ describe('Fast-Food-Fast orders test', () => {
         });
     });
     it('it should reject food when user provides no food description', (done) => {
-        food.category = 'vegetables';
+      food.category = 'vegetables';
       chai.request(app)
         .post('/api/v1/menu')
         .set('x-access-token', token)
@@ -70,7 +70,7 @@ describe('Fast-Food-Fast orders test', () => {
         });
     });
     it('it should reject food when user provides no food price', (done) => {
-        food.description = 'taste great';
+      food.description = 'taste great';
       chai.request(app)
         .post('/api/v1/menu')
         .set('x-access-token', token)
@@ -84,7 +84,7 @@ describe('Fast-Food-Fast orders test', () => {
         });
     });
     it('it should reject food when user provides invalid food price', (done) => {
-        food.price = 'fifty';
+      food.price = 'fifty';
       chai.request(app)
         .post('/api/v1/menu')
         .set('x-access-token', token)
@@ -98,14 +98,14 @@ describe('Fast-Food-Fast orders test', () => {
         });
     });
     it('it should successfully add food when user provides all food data', (done) => {
-        food.price = 200;
+      food.price = 200;
       chai.request(app)
         .post('/api/v1/menu')
         .set('x-access-token', token)
         .send(food)
         .end((err, res) => {
           menuId = res.body.data.id;
-          res.should.have.status(200);
+          res.should.have.status(201);
           res.type.should.equal('application/json');
           res.body.should.have.property('status', 'success');
           res.body.should.have.property('data');
@@ -151,6 +151,30 @@ describe('Fast-Food-Fast orders test', () => {
           res.type.should.equal('application/json');
           res.body.should.have.property('status', 'success');
           res.body.should.have.property('update');
+          done();
+        });
+    });
+    it('it should successfully delete food menu when user provides valid menu Id', (done) => {
+      chai.request(app)
+        .delete(`/api/v1/menu/${menuId}`)
+        .set('x-access-token', token)
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.type.should.equal('application/json');
+          res.body.should.have.property('status', 'success');
+          res.body.should.have.property('deleted');
+          done();
+        });
+    });
+    it('it should reject delete food menu when user provides invalid menu Id', (done) => {
+      chai.request(app)
+        .delete(`/api/v1/menu/${menuId}`)
+        .set('x-access-token', token)
+        .end((err, res) => {
+          res.should.have.status(400);
+          res.type.should.equal('application/json');
+          res.body.should.have.property('status', 'error');
+          res.body.should.have.property('message', 'Invalid menu ID');
           done();
         });
     });

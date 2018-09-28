@@ -3,13 +3,15 @@ import userModel from '../models/UserModel';
 import { isValidMenuItem, isUUID, isAddress, isEmail, isName, isPhoneNumber } from '../utils/validator';
 require('dotenv').config();
 
-export default (request, response, next) => {
-    let isValid = 1;
-    if (request.method === 'POST' && (request.originalUrl === '/api/v1/orders/' || request.originalUrl === '/api/v1/orders')) {
+class ValidatorController {
+    foodItems(request, response, next) {
+        let isValid = 1;
         if (!request.body.address || isAddress(request.body.address) !== true) {
             response.status(400).json({ status: 'error', message: 'Invalid Address' });
         } else {
-            const count = (request.body.foodItems) ? (Array.isArray(request.body.foodItems)) ? request.body.foodItems.length : 0 : 0;
+            const count = (request.body.foodItems) ?
+            (Array.isArray(request.body.foodItems)) ?
+            request.body.foodItems.length : 0 : 0;
             if (!request.body.foodItems === undefined || !count < 1) {
                 request.body.foodItems.forEach((element, index, arr) => {
                     if (element.foodId && element.quantity) {
@@ -30,67 +32,129 @@ export default (request, response, next) => {
                         response.status(422).json({ status: 'error', message: 'Invalid food item Id' });
                     });
                     } else {
-                        return (response.status(400).json({ status: 'error', message: 'Please provide all fields'}));
+                        return (response.status(400).json({ status: 'error', message: 'Please provide both food item and quantity'}));
                     }
                 });
             } else {
                 return (response.status(400).json({ status: 'error', message: 'No food items'}));
             }
         }
-    } else if (request.method === 'POST' && (request.originalUrl === '/api/v1/auth/signup' || request.originalUrl === '/api/v1/auth/signup/')) {
-      isValid = (!isEmail(request.body.email) || !request.body.email) ?
-          'Invalid email id': (!isName(request.body.name) || !request.body.name) ?
-          'Invalid name': (!request.body.phone || !isPhoneNumber(request.body.phone)) ?
-          'Invalid phone number': (!request.body.password || !((request.body.password.length || '') > 4)) ?
-          'password should not be less than 4 characters' : isValid;
-      userModel.getEmail(request.body.email).then((result) => {
-          if (result.length > 0) {
-              isValid = 'Duplicate email address';
-          }
-          if(isValid === 1) {
-            next();
-          } else {
-            return (response.status(400).json({ status: 'error', message: isValid }));
-          }
-      });
-    } else if (request.method === 'POST' && (request.originalUrl === '/api/v1/auth/login' || request.originalUrl === '/api/v1/auth/login/')) {
-        if(!request.body.email | !request.body.password) {
-          return (response.status(400).json({ status: 'error', message: 'provide all fields' }));
+    }
+
+    signUp(request, response, next) {
+        let isValid = 1;
+        isValid = (!isEmail(request.body.email) || !request.body.email) ?
+            'Invalid email id' : (!isName(request.body.name) || !request.body.name) ?
+            'Invalid name' : (!request.body.phone || !isPhoneNumber(request.body.phone)) ?
+            'Invalid phone number' : (!request.body.password || !((request.body.password.length || '') > 4)) ?
+            'password should not be less than 4 characters' : isValid;
+        userModel.getEmail(request.body.email).then((result) => {
+            if (result.length > 0) {
+                return (response.status(409).json({
+                    status: 'error',
+                    message: 'Duplicate email address'
+                }));
+            }
+            if (isValid === 1) {
+                next();
+            } else {
+                return (response.status(400).json({
+                    status: 'error',
+                    message: isValid
+                }));
+            }
+        });
+    }
+
+    login(request, response, next) {
+        if (!request.body.email | !isEmail(request.body.email)) {
+            return (response.status(400).json({
+                status: 'error',
+                message: 'Invalid or no email address'
+            }));
+        } else if (!request.body.password) {
+            return (response.status(400).json({
+                status: 'error',
+                message: 'Invalid password'
+            }));
         } else {
             next();
         }
-    } else if ((request.method === 'POST' && (request.originalUrl === '/api/v1/menu' || request.originalUrl === '/api/v1/menu/')) || (request.method === 'PUT' && request.params.menuId)) {
+    }
+
+    menu(request, response, next) {
+        let isValid = 1;
         if (request.auth.email !== process.env.ADMIN) {
-          return (response.status(401).json({ status: 'error', message: 'Unathorized' }));
+            return (response.status(403).json({
+                status: 'error',
+                message: 'Forbidden'
+            }));
         } else {
             if (request.method === 'PUT' && !isUUID(request.params.menuId)) {
-                return (response.status(400).json({ status: 'error', message: 'Invalid menu ID' }));
+                return (response.status(400).json({
+                    status: 'error',
+                    message: 'Invalid menu ID'
+                }));
             }
             isValid = isValidMenuItem(request.body);
             if (isValid !== 'valid') {
-                return (response.status(400).json({ status: 'error', message: isValid }));
+                return (response.status(400).json({
+                    status: 'error',
+                    message: isValid
+                }));
             } else {
-              request.body.image = request.body.image || null;
-              next();
+                request.body.image = request.body.image || null;
+                next();
             }
         }
-    } else if ((request.method === 'PUT' || request.method === 'GET') && request.params.orderId) {
+    }
+
+    order(request, response, next) {
         if (request.auth.email !== process.env.ADMIN) {
-          return (response.status(401).json({ status: 'error', message: 'Unathorized' }));
+            return (response.status(403).json({
+                status: 'error',
+                message: 'Forbidden'
+            }));
         } else {
-        if (isUUID(request.params.orderId)) {
+            if (isUUID(request.params.orderId)) {
                 next();
             } else {
-                return (response.status(400).json({ status: 'error', message: 'Invalid order ID' }));
+                return (response.status(400).json({
+                    status: 'error',
+                    message: 'Invalid order ID'
+                }));
             }
         }
-    } else if (request.method === 'GET' && (request.originalUrl === '/api/v1/orders' || request.originalUrl === '/api/v1/orders/')) {
+    }
+
+    deleteMenu(request, response, next) {
         if (request.auth.email !== process.env.ADMIN) {
-          return (response.status(401).json({ status: 'error', message: 'Unathorized' }));
+            return (response.status(403).json({
+                status: 'error',
+                message: 'Forbidden'
+            }));
         } else {
-          next();
+            if (isUUID(request.params.menuId)) {
+                next();
+            } else {
+                return (response.status(400).json({
+                    status: 'error',
+                    message: 'Invalid order ID'
+                }));
+            }
         }
-    } else {
-       next();
+    }
+
+    getOrders(request, response, next) {
+        if (request.auth.email !== process.env.ADMIN) {
+            return (response.status(403).json({
+                status: 'error',
+                message: 'Forbidden'
+            }));
+        } else {
+            next();
+        }
     }
 }
+
+export default new ValidatorController();
