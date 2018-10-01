@@ -30,6 +30,7 @@
 .popup-content {
     width: auto;
     max-width: 30%;
+    min-width: 300px;
     height: auto;
     padding: 3%;
     padding-top: 0%;

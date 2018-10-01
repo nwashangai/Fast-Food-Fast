@@ -282,8 +282,9 @@
         @media screen and (max-width: 800px) {
             #food-content,
             #order-content {
-                height: 100vh;
-                margin-bottom: 300px;
+                min-height: 10vh;
+                height: auto;
+                margin-bottom: 20px;
             }
             .leftcolumn,
             .rightcolumn {

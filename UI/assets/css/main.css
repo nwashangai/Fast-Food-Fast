@@ -263,6 +263,7 @@ textarea {
 #food-image {
     max-height: 350px;
     width: 96%;
+    border: 1px solid #a33131;
 }
 /* Main-col */
 
