@@ -1,3 +1,8 @@
+const user = {
+    name: 'John Doe',
+    email: 'johndoe@gmail.com',
+    phone: '08012345676'
+};
 let cart = [];
 const foods = [
     {
@@ -24,6 +29,86 @@ const foods = [
     }
 ];
 
+const orders = [
+    {
+      id: '1234567',
+      userid: 'egfwegfj',
+      name: 'john',
+      totalPrice: '700',
+      status: 'new',
+      phone: '08036829642',
+      address: '56 ikeja lagos',
+          date: '8/3/2018, 9:35:59 AM',
+      fooditems: [
+          {
+            foodId: '1',
+            name: 'Burger bacon snacks',
+            price: 100,
+            quantity: 2,
+            subTotal: "200"
+          }, {
+              foodId: '2',
+              name: 'Toasted bread & potato chips',
+              price: 300,
+              quantity: 1,
+              subTotal: "300"
+          }, {
+              foodId: '3',
+              name: 'Fried plantain',
+              price: 200,
+              quantity: 1,
+              subTotal: "200"
+          },
+      ]
+    }, {
+      id: '1297967',
+      userid: 'natgls',
+      name: 'Mike',
+      totalPrice: '500',
+      status: 'proccessing',
+      phone: '08036829642',
+      address: '56 ikeja lagos',
+      date: '8/3/2018, 9:35:59 AM',
+      fooditems: [
+          {
+            foodId: '1',
+            name: 'Burger bacon snacks',
+            price: 100,
+            quantity: 2,
+            subTotal: "200"
+          }, {
+              foodId: '2',
+              name: 'Toasted bread & potato chips',
+              price: 300,
+              quantity: 1,
+              subTotal: "300"
+          }
+      ]
+    }, {
+      id: '7258502',
+      userid: 'snjsv',
+      name: 'Fred',
+      totalPrice: '300',
+      status: 'completed',
+      phone: '08036829642',
+      address: '56 ikeja lagos',
+      date: '8/3/2018, 9:35:59 AM',
+      fooditems: [
+          {
+              foodId: '2',
+              name: 'Toasted bread & potato chips',
+              price: 300,
+              quantity: 1,
+              subTotal: "300"
+          }
+      ]
+    }
+];
+
+document.getElementById('user-name').innerHTML = user.name;
+document.getElementById('user-first-name').innerHTML = user.name.split(" ")[0];
+document.getElementById('user-phone').innerHTML = user.phone;
+
 const getFoods = (foodCategory = 'vegetables') => {
   let items = '';
   const foodFiltered = foods.filter(item => item.category === foodCategory);
@@ -42,6 +127,47 @@ const getFoods = (foodCategory = 'vegetables') => {
       document.getElementById("category-selected").value = foodCategory;
   }
 }
+
+
+const orderList = () => {
+    let item = '', i = 1;
+    if(orders.length < 1) {
+        document.getElementById('table-body').innerHTML = '<div id="no-data">No entry to show</div>';
+    } else {
+        orders.forEach(element => {
+            let statusBtn = (element.status === 'proccessing') ?
+                '<span class="waiting">Proccessing..</span>':
+                (element.status === 'new') ?
+                `<span class="waiting">Waiting..</span>`:
+                (element.status === 'declined') ?
+                `<span class="declined">Declined</span>`:
+                `<span class="completed">Completed</span>`;
+            item += `
+                <div class="table-row">
+                    <div class="table-body-cell  cell-11">
+                        <span class="small-display">#id :</span> <span class="data">${i}</span>
+                    </div>
+                    <div class="table-body-cell cell-12">
+                        <span class="small-display">Name :</span><span class="data">${element.date}</span>
+                    </div>
+                    <div class="table-body-cell cell-13">
+                        <span class = "small-display" > Address: </span><span class="data">${element.address}</span >
+                    </div>
+                    <div class="table-body-cell cell-14">
+                        <span class = "small-display" > Food: </span><span class="data clickable" onclick="viewFoodItems(${element.id})">View items</span >
+                    </div>
+                    <div class="table-body-cell cell-15">
+                        ${statusBtn}
+                    </div>
+                </div>
+            `;
+            i++;
+        });
+        document.getElementById('table-body').innerHTML = item;
+    }
+}
+
+orderList();
 
 const makeOrder = () => {
     if (cart.length > 0) {
@@ -68,15 +194,19 @@ const refreshCart = () => {
     let cartItems = '', total = 0;
     cart.forEach((item) => {
         total += item.subTotal;
-        cartItems += `<p><span>${item.name}</span>`
-                +`<span class="cart-price">`
-                +`<span class="cart-currency">₦</span>`
-                +`<span class="digit">${item.price}</span></span>`
-                +`<span class="qty">${item.qty}</span></p>`
+        cartItems += `<p><span>${item.name}</span>
+                <span class="cart-price">
+                <span class="cart-currency">  ₦</span>
+                <span class="digit">${item.subTotal}</span></span>
+                <span class="qty">
+                <span class="ctr"  onclick="minus('${item.id}')">- </span>
+                ${item.qty}
+                <span class="ctr"  onclick="plus('${item.id}')"> +</span>
+                </span></p>`
     });
     document.getElementById('cart-content').innerHTML = cartItems;
     document.getElementById('total').innerHTML = total;
-}
+};
 
 const pushOrder = (id) => {
     let track = 0;
@@ -93,6 +223,26 @@ const pushOrder = (id) => {
         newCart.subTotal = newCart.price * newCart.qty;
         cart.push(newCart);
     }
+    refreshCart();
+}
+
+const minus = id => {
+    cart.forEach((item) => {
+        if (item.id === id && item.qty > 0) {
+            item.qty -= 1;
+            item.subTotal = item.price * item.qty;
+        }
+    });
+    refreshCart();
+}
+
+const plus = id => {
+    cart.forEach((item) => {
+        if (item.id === id && item.qty < 30) {
+            item.qty += 1;
+            item.subTotal = item.price * item.qty;
+        }
+    });
     refreshCart();
 }
 

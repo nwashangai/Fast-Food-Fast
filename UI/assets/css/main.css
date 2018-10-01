@@ -153,8 +153,17 @@ aside#sidebar .profile p {
  }
 
  .qty {
+     text-align: center;
      float: right;
      width: 15%;
+ }
+
+ .ctr {
+     cursor: pointer;
+ }
+
+ .ctr:hover {
+     font-weight: bold;
  }
 
  .cart-currency {
@@ -199,12 +208,61 @@ aside#sidebar .profile p {
 .right {
     float: right;
 }
+.item-body {
+    width: 100%;
+    display: inline-block;
+    color: #a33131;
+}
+.item-row, .item-head {
+    width: 100%;
+    margin-right: 5%;
+    margin-left: 5%;
+    margin-bottom: 10px;
+    min-height: 30px;
+    overflow: auto;
+}
+.item-head {
+    font-weight: bold;
+}
+.item-name {
+    display: block;
+    float: left;
+    width: 40%;
+}
+.item-price {
+    width: 20%;
+    float: left;
+    text-align: right;
+}
+.item-qty {
+    width: 10%;
+    float: left;
+    text-align: right;
+}
+.item-sub {
+    width: 20%;
+    float: left;
+    text-align: right;
+}
+.line {
+    margin-left: 25px;
+    margin-right: 25px;
+}
+.total {
+    font-weight: bold;
+    padding-right: 5%;
+    padding-bottom: 20px;
+}
 #add-food {
     overflow: auto;
 }
 input[type="text"],
 textarea {
     color: #333;
+}
+#food-image {
+    max-height: 350px;
+    width: 96%;
 }
 /* Main-col */
 
@@ -370,6 +428,7 @@ ul#food .price {
 
 .cell-5 {
     width: 13%;
+    text-align: center;
 }
 
 .cell-6 {
@@ -391,12 +450,12 @@ ul#food .price {
 }
 
 .cell-14 {
-    width: 27%;
+    width: 20%;
 }
 
 .cell-15 {
     text-align: center;
-    width: 14%;
+    width: 21%;
 }
 
 .deliver {
@@ -452,6 +511,13 @@ ul#food .price {
       color: #333
   }
 
+ .clickable {
+     padding: 2px;
+     padding-left: 15px;
+     padding-right: 15px;
+     background: rgb(148, 185, 219);
+     cursor: pointer;
+ }
  .order-display {
      display: block;
      width: 20%;
@@ -551,7 +617,7 @@ ul#food .price {
     .table-body-cell {
         padding: 0%;
         display: block;
-        border-bottom: 0.5px solid #a33131;
+        border-bottom: 1px solid #a33131;
     }
     .small-display{
         display: block;

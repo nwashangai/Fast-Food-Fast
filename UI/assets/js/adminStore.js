@@ -1,3 +1,8 @@
+const user = {
+    name: 'John Doe',
+    email: 'johndoe@gmail.com',
+    phone: '08012345676'
+};
 const foods = [{
     id: '1',
     name: 'Burger bacon snacks',
@@ -21,6 +26,86 @@ const foods = [{
     price: 950,
 }];
 
+const orders = [
+    {
+      id: '1234567',
+      userid: 'egfwegfj',
+      name: 'john',
+      totalPrice: '700',
+      status: 'new',
+      phone: '08036829642',
+      address: '56 ikeja lagos',
+      date: '8/3/2018, 9:35:59 AM',
+      fooditems: [
+          {
+            foodId: '1',
+            name: 'Burger bacon snacks',
+            price: 100,
+            quantity: 2,
+            subTotal: "200"
+          }, {
+              foodId: '2',
+              name: 'Toasted bread & potato chips',
+              price: 300,
+              quantity: 1,
+              subTotal: "300"
+          }, {
+              foodId: '3',
+              name: 'Fried plantain',
+              price: 200,
+              quantity: 1,
+              subTotal: "200"
+          },
+      ]
+    }, {
+      id: '1297967',
+      userid: 'natgls',
+      name: 'Mike',
+      totalPrice: '500',
+      status: 'proccessing',
+      phone: '08036829642',
+      address: '56 ikeja lagos',
+      date: '8/3/2018, 9:35:59 AM',
+      fooditems: [
+          {
+            foodId: '1',
+            name: 'Burger bacon snacks',
+            price: 100,
+            quantity: 2,
+            subTotal: "200"
+          }, {
+              foodId: '2',
+              name: 'Toasted bread & potato chips',
+              price: 300,
+              quantity: 1,
+              subTotal: "300"
+          }
+      ]
+    }, {
+      id: '7258502',
+      userid: 'snjsv',
+      name: 'Fred',
+      totalPrice: '300',
+      status: 'completed',
+      phone: '08036829642',
+      address: '56 ikeja lagos',
+      date: '8/3/2018, 9:35:59 AM',
+      fooditems: [
+          {
+              foodId: '2',
+              name: 'Toasted bread & potato chips',
+              price: 300,
+              quantity: 1,
+              subTotal: "300"
+          }
+      ]
+    }
+];
+
+document.getElementById('user-name').innerHTML = user.name;
+document.getElementById('user-email').innerHTML = user.email;
+document.getElementById('user-phone').innerHTML = user.phone;
+
 const getFoods = (foodCategory = 'vegetables') => {
   let items = '';
   const foodFiltered = foods.filter(item => item.category === foodCategory);
@@ -40,6 +125,69 @@ const getFoods = (foodCategory = 'vegetables') => {
       document.getElementById("category-selected").value = foodCategory;
   }
 }
+
+const readFile = _ => {
+        const file = document.getElementById("image").files;
+
+    if (file && file[0]) {
+        console.log(file[0]);
+
+        var FR = new FileReader();
+
+        FR.addEventListener("load", e => {
+            document.getElementById("food-image").src = e.target.result;
+        });
+
+        FR.readAsDataURL(file[0]);
+    }
+
+}
+
+document.getElementById("image").addEventListener("change", readFile);
+
+const orderList = () => {
+    let item = '', i = 1;
+    if(orders.length < 1) {
+        document.getElementById('table-body').innerHTML = '<div id="no-data">No entry to show</div>';
+    } else {
+        orders.forEach(element => {
+            let statusBtn = (element.status === 'proccessing') ?
+                '<input type="button" value="Deliver" onclick="deliver(event)" class="status deliver">':
+                (element.status === 'new') ?
+                `<input type="button" value="Accept" onclick="accepted(event)" class="status accept">
+                <input type="button" value="Decline" onclick="decline(event)" class="status decline">`:
+                (element.status === 'declined') ?
+                `<span class="declined">Declined</span>`:
+                `<span class="completed">Completed</span>`;
+            item += `
+                <div class="table-row">
+                    <div class="table-body-cell  cell-1">
+                        <span class="small-display">#id :</span> <span class="data">${i}</span>
+                    </div>
+                    <div class="table-body-cell cell-2">
+                        <span class="small-display">Name :</span><span class="data">${element.name}</span>
+                    </div>
+                    <div class="table-body-cell cell-3">
+                        <span class = "small-display" > Address: </span><span class="data">${element.address}</span >
+                    </div>
+                    <div class="table-body-cell cell-4">
+                        <span class = "small-display" > Food: </span><span class="data clickable" onclick="viewFoodItems(${element.id})">View items</span >
+                    </div>
+                    <div class="table-body-cell cell-5">
+                        <span class = "small-display" > Phone: </span><span class="data">${element.phone}</span >
+                    </div>
+                    <div class="table-body-cell cell-6">
+                        ${statusBtn}
+                    </div>
+                </div>
+            `;
+            i++;
+        });
+        document.getElementById('table-body').innerHTML = item;
+    }
+}
+
+orderList();
 
 const findItem = (id) => {
     return foods.find(item => item.id === id);
