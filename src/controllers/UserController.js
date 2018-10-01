@@ -32,6 +32,18 @@ class UserController {
           }
       });
     }
+
+    getUser(request, response) {
+      UserModel.getUser(request.auth.userId).then((result) => {
+          if (result.length > 0) {
+            const { name, email, phone } = result[0];
+            response.status(200).json({ status: 'success', data: { name, email, phone } });
+          } else {
+            response.status(401).json({ status: 'error', message: 'authentication failed' });
+          }
+          
+      });
+    }
 }
 
 export default new UserController();

@@ -7,6 +7,7 @@ import app from '../../src/app';
 chai.should();
 chai.use(chaiHttp);
 
+let token = '';
 const user = {
     "name": "John",
     "email": "johndoe@gmail.com",
@@ -117,10 +118,39 @@ describe('Fast-Food-Fast user test', () => {
           password: '12345'
         })
         .end((err, res) => {
+          token = res.body.token;
           res.should.have.status(200);
           res.type.should.equal('application/json');
           res.body.should.have.property('status', 'success');
           res.body.should.have.property('token');
+          done();
+        });
+    });
+  });
+  describe('Test endpoint to get a user', () => {
+    it('it should successfully get user information when user provides valid token', (done) => {
+      chai.request(app)
+        .get('/api/v1/user')
+        .set('x-access-token', token)
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.type.should.equal('application/json');
+          res.body.should.have.property('status', 'success');
+          res.body.should.have.property('data');
+          done();
+        });
+    });
+  });
+  describe('Test endpoint to get a user', () => {
+    it('it should reject request when user provides invalid token', (done) => {
+      chai.request(app)
+        .get('/api/v1/user')
+        .set('x-access-token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI4MDUyYjk5ZS02YmE4LTQyZGEtYjc3Yi0zZGY3ZjhhNjA1ODUiLCJlbWFpbCI6ImpvaG5kb2VAZ21haWwuY29tIiwiaWF0IjoxNTM4MDM4MjU5fQ.J16Cu9MpWc1-sv6bRtEucQVa6Yx2Hy5wg0MNeDDIuqc')
+        .end((err, res) => {
+          res.should.have.status(401);
+          res.type.should.equal('application/json');
+          res.body.should.have.property('status', 'error');
+          res.body.should.have.property('message', 'authentication failed');
           done();
         });
     });
