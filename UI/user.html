@@ -16,7 +16,7 @@
 
     <section id="nav-bar">
         <div class="container">
-            <h1>Welcome John!</h1>
+            <h1>Welcome <span id="user-first-name">John</span>!</h1>
             <form>
                 <nav>
                     <ul class="tabs">
@@ -88,7 +88,7 @@
                                 </div>
                                 <div class="table-body-cell cell-14">
                                     <span class="small-display">Food :</span>
-                                    <span class="data">Burger bacon snacks</span>
+                                    <span class="data clickable" onclick="viewFoodItems()">Burger bacon snacks</span>
                                 </div>
                                 <div class="table-body-cell cell-15">
                                     <span class="waiting">Waiting..</span>
@@ -184,11 +184,11 @@
                         <div class="table-row">
                             <div class="order-cell">
                                 <span class="order-display">Name :</span>
-                                <span class="order-data">John Doe</span>
+                                <span class="order-data" id="user-name">John Doe</span>
                             </div>
                             <div class="order-cell">
                                 <span class="order-display">Phone :</span>
-                                <span class="order-data">08012345678</span>
+                                <span class="order-data" id="user-phone">08012345678</span>
                             </div>
                         </div>
                     </div>
@@ -203,6 +203,44 @@
                     <input type="button" value="PLACE ORDER" onclick="sendOrder()">
                 </span><br/><br/>
             </form>
+        </div>
+    </div>
+    <!--View food Modal-->
+    <div id="view-food" class="food-modal">
+        <div class="modal-content">
+            <span onclick="document.getElementById('view-food').style.display='none'" class="close">&times;</span>
+            <h1>Food Items</h1>
+            <div class="item-body">
+                <div class="item-head">
+                    <div class="item-name">Food</div>
+                    <div class="item-price right">Price</div>
+                    <div class="item-qty right">Qty</div>
+                    <div class="item-sub right"><i class="fa fa-shopping-cart"></i></div>
+                </div>
+                <br/>
+                <span id="cart-items">
+                    <div class="item-row">
+                        <div class="item-name">burger</div>
+                        <div class="item-price right">₦ 200</div>
+                        <div class="item-qty right">2</div>
+                        <div class="item-sub right">₦ 400</div>
+                    </div>
+                    <div class="item-row">
+                        <div class="item-name">burger</div>
+                        <div class="item-price right">₦ 200</div>
+                        <div class="item-qty right">2</div>
+                        <div class="item-sub right">₦ 400</div>
+                    </div>
+                    <div class="item-row">
+                        <div class="item-name">burger</div>
+                        <div class="item-price right">₦ 200</div>
+                        <div class="item-qty right">2</div>
+                        <div class="item-sub right">₦ 400</div>
+                    </div>
+                </span>
+                <hr class="line">
+                <pre><div class="total right">Total:   ₦ <span id="total-price">1200</span></div></pre>
+            </div>
         </div>
     </div>
     <div id="alert" class="popup">

@@ -1,4 +1,4 @@
-.modal, .popup {
+.modal, .popup, .food-modal {
     display: none;
     position: fixed;
     z-index: 1;
