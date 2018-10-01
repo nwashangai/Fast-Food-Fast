@@ -20,6 +20,12 @@ class userModel {
         return query(queryString, payload);
     }
 
+    getUser(id) {
+        const queryString = `SELECT * FROM users WHERE id=$1`;
+        const payload = [id];
+        return query(queryString, payload);
+    }
+
     login(email) {
       const queryString = `SELECT * FROM users WHERE email=$1`;
       const payload = [email];

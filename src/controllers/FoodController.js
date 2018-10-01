@@ -1,4 +1,4 @@
-import FoodModel from '../models//FoodModel';
+import FoodModel from '../models/FoodModel';
 class FoodController {
     addFood(request, response) {
         FoodModel.addFood(request.body).then((result) => {
