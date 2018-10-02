@@ -7,6 +7,7 @@ class UserController {
     signUp(request, response) {
       UserModel.createUser(request.body).then((result) => {
           const payload = {
+              isAdmin: (result[0].email === process.env.ADMIN) ? true : false,
               userId: result[0].id,
               email: result[0].email
           };
@@ -24,6 +25,7 @@ class UserController {
               response.status(400).json({ status: 'error', message: output });
           } else {
               const payload = {
+                  isAdmin: (result[0].email === process.env.ADMIN) ? true : false,
                   userId: result[0].id,
                   email: result[0].email
               };

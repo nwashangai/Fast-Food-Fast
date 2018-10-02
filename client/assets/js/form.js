@@ -18,7 +18,7 @@ const checkForm = () => {
 
 const checkSignUpForm = () => {
     const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-    if (!(/^[A-Za-z]+$/.test(document.getElementById('Sname').value))) {
+    if (!(/^[A-Za-z\s]+$/.test(document.getElementById('sname').value))) {
         popup('Error', 'invalid name');
         return false;
     }
@@ -38,7 +38,27 @@ const checkSignUpForm = () => {
         popup('Error', 'password does not match');
         return false;
     }
-    window.location.replace("admin.html");
+    const data = {
+        name: document.getElementById('sname').value,
+        email: document.getElementById('semail').value,
+        phone: document.getElementById('sphone').value,
+        password: document.getElementById('spassword').value
+    }
+    request('post', `auth/signup`, data).then((response) => {
+        if (response.status === 'error') {
+            popup('Error', response.message);
+        } else {
+            window.localStorage.setItem('token-key', response.data.token);
+            var decoded = jwt_decode(response.data.token);
+            if (decoded.isAdmin) {
+                window.location.replace("admin/admin.html");
+            } else {
+                window.location.replace("user.html");
+            }
+        }
+    }).catch((err) => {
+        popup('Error', err.message);
+    });
 }
 
 const checkOrderForm = () => {

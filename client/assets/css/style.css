@@ -247,6 +247,7 @@
             background: url('../images/burrito-chicken.jpg');
             width: 100%;
             margin-left: 0%;
+            height: 100vh;
         }
 
         #overlay {

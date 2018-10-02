@@ -37,7 +37,3 @@ Array.prototype.forEach.call(inputs, (input) => {
             label.innerHTML = labelVal;
     });
 });
-
-const logout = () => {
-    window.location.replace("index.html");
-}
