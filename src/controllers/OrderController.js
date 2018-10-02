@@ -28,12 +28,13 @@ export class OrderController {
               item.name = done[0].name || 'Deleted';
               item.price = done[0].price || 'Deleted';
               item.subTotal = parseFloat(done[0].price * item.quantity).toFixed(2) || 'Deleted';
-              total = parseFloat(total + item.subTotal).toFixed(2);
+              total = parseFloat(parseInt(total) + parseInt(item.subTotal)).toFixed(2);
               if (arr.length - 1 === index && obj.length - 1 === ind) {
-                arr[index].totalPrice = total;
+                element.totalPrice = total;
                 response.status(200).json({ status: 'success', data: result });
               }
             });
+            element.totalPrice = total;
           });
         });
       });
@@ -53,12 +54,13 @@ export class OrderController {
             item.name = done[0].name || 'Deleted';
             item.price = done[0].price || 'Deleted';
             item.subTotal = parseFloat(done[0].price * item.quantity).toFixed(2) || 'Deleted';
-            total = parseFloat(total + item.subTotal).toFixed(2);
+            total = parseFloat(parseInt(total) + parseInt(item.subTotal)).toFixed(2);
             if (arr.length - 1 === index && obj.length - 1 === ind) {
-              arr[index].totalPrice = total;
+              element.totalPrice = total;
               response.status(200).json({ status: 'success', data: result });
             }
           });
+          element.totalPrice = total;
         });
       });
     });
@@ -92,7 +94,7 @@ export class OrderController {
               item.name = done[0].name || 'Deleted';
               item.price = done[0].price || 'Deleted';
               item.subTotal = parseFloat(done[0].price * item.quantity).toFixed(2) || 'Deleted';
-              total = parseFloat(total + item.subTotal).toFixed(2);
+              total = parseFloat(parseInt(total) + parseInt(item.subTotal)).toFixed(2);
               if (obj.length - 1 === ind) {
                 result[0].totalPrice = total;
                 response.status(200).json({
