@@ -1,0 +1,726 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Welcome to the Fast Food Fast API documentation",
+    "version": "1.0.0",
+    "title": "Fast Food Fast",
+    "termsOfService": "#",
+    "contact": {
+      "email": "nwashangai@gmail.com"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "host": "my-fast-food.herokuapp.com",
+  "basePath": "/api/v1",
+  "tags": [
+    {
+      "name": "food",
+      "description": "Access to food items"
+    },
+    {
+      "name": "orders",
+      "description": "Access to user orders"
+    },
+    {
+      "name": "user",
+      "description": "Operations about user"
+    }
+  ],
+  "schemes": [
+    "https",
+    "http"
+  ],
+  "paths": {
+    "/auth/signup": {
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Create new user account",
+        "description": "",
+        "operationId": "createUser",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Returns users token after successful registration",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/signup"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/token"
+            }
+          },
+          "409": {
+            "description": "Duplicate email"
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Logs user into the system",
+        "description": "",
+        "operationId": "loginUser",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "email",
+            "description": "The email for login",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/login"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/token"
+            }
+          },
+          "409": {
+            "description": "Duplicate email"
+          }
+        }
+      }
+    },
+    "/user": {
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Get a user profile data",
+        "description": "",
+        "operationId": "getUser",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "201": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "409": {
+            "description": "Authorization failed"
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
+    "/menu": {
+      "post": {
+        "tags": [
+          "food"
+        ],
+        "summary": "Create a food item menu",
+        "description": "",
+        "operationId": "createFood",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Returns users token after successful registration",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/menu"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "items": {
+                "$ref": "#/definitions/menu"
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication failed"
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      },
+      "get": {
+        "tags": [
+          "food"
+        ],
+        "summary": "Get list of food menu",
+        "description": "",
+        "operationId": "getAllFood",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/menuResponse"
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication failed"
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
+    "/menu/{menuId}": {
+      "put": {
+        "tags": [
+          "food"
+        ],
+        "summary": "Update a single food menu item",
+        "description": "",
+        "operationId": "updateMenuById",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "menuId",
+            "in": "path",
+            "description": "ID of item to update",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/menu"
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "food"
+        ],
+        "summary": "Delete a food menu item",
+        "description": "",
+        "operationId": "deleteFood",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "menuId",
+            "in": "path",
+            "description": "ID of food item that needs to be deleted",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/menuResponse"
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
+    "/orders": {
+      "post": {
+        "tags": [
+          "orders"
+        ],
+        "summary": "Place an order for a food",
+        "description": "",
+        "operationId": "placeOrder",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "order placed for purchasing the pet",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Order"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/OrderReturn"
+            }
+          },
+          "400": {
+            "description": "Invalid Order"
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      },
+      "get": {
+        "tags": [
+          "orders"
+        ],
+        "summary": "gets all food menu",
+        "description": "",
+        "operationId": "getOrders",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/OrderResponse"
+            }
+          },
+          "409": {
+            "description": "Authorization failed"
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
+    "/orders/{orderId}": {
+      "get": {
+        "tags": [
+          "orders"
+        ],
+        "summary": "Get a specific order",
+        "description": "",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "orderId",
+            "in": "path",
+            "description": "ID of order that needs to be fetched",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/OrderReturn"
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "orders"
+        ],
+        "summary": "Update a specific order status",
+        "description": "",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "orderId",
+            "in": "path",
+            "description": "ID of order status that needs to be updated",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "user status",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "status"
+              ],
+              "properties": {
+                "email": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/OrderReturn"
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
+    "/users/{userId}/orders": {
+      "get": {
+        "tags": [
+          "orders"
+        ],
+        "summary": "Get a specific user orders",
+        "description": "",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "ID of user who's orders needs to be fetched",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/OrderResponse"
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    }
+  },
+  "securityDefinitions": {
+    "JWT": {
+      "description": "Protected endpoints require a token",
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header"
+    }
+  },
+  "definitions": {
+    "Order": {
+      "type": "object",
+      "properties": {
+        "address": {
+          "type": "string"
+        },
+        "foodItem": {
+          "type": "object",
+          "properties": {
+            "foodId": {
+              "type": "string"
+            },
+            "quantity": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        }
+      }
+    },
+    "OrderReturn": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string"
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "userId": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "address": {
+              "type": "string"
+            },
+            "total": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "foodItem": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "foodId": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "price": {
+                    "type": "string"
+                  },
+                  "quantity": {
+                    "type": "integer",
+                    "format": "int64"
+                  },
+                  "subTotal": {
+                    "type": "integer",
+                    "format": "int64"
+                  }
+                }
+              }
+            },
+            "status": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "OrderResponse": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "userId": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "address": {
+                "type": "string"
+              },
+              "total": {
+                "type": "integer",
+                "format": "int64"
+              },
+              "foodItem": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "foodId": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "price": {
+                      "type": "string"
+                    },
+                    "quantity": {
+                      "type": "integer",
+                      "format": "int64"
+                    },
+                    "subTotal": {
+                      "type": "integer",
+                      "format": "int64"
+                    }
+                  }
+                }
+              },
+              "status": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "signup": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    },
+    "login": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    },
+    "menu": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "category": {
+          "type": "string"
+        },
+        "image": {
+          "type": "string"
+        },
+        "price": {
+          "type": "string"
+        }
+      }
+    },
+    "menuResponse": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "category": {
+          "type": "string"
+        },
+        "image": {
+          "type": "string"
+        },
+        "price": {
+          "type": "string"
+        }
+      }
+    },
+    "token": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string"
+        },
+        "token": {
+          "type": "string"
+        }
+      }
+    },
+    "User": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
