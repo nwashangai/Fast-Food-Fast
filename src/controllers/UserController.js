@@ -18,9 +18,9 @@ class UserController {
 
     login(request, response) {
       UserModel.login(request.body.email).then((result) => {
-          const output = (result.length < 1) ? 'email address does not exist' :
+          const output = (result.length < 1) ? 'Invalid email or password' :
           (bcrypt.compareSync(request.body.password, result[0].password)) ? 'verified' :
-          'wrong password';
+          'Invalid email or password';
           if (output !== 'verified') {
               response.status(400).json({ status: 'error', message: output });
           } else {

@@ -13,7 +13,28 @@ const checkForm = () => {
         popup('Error', 'password should not be empty');
         return false;
     }
-    window.location.replace("user.html");
+    document.getElementById("loader").style.display = "block";
+    const data = {
+        email: document.getElementById('lemail').value,
+        password: document.getElementById('lpassword').value
+    }
+    request('post', `auth/login`, data).then((response) => {
+        document.getElementById("loader").style.display = "none";
+        if (response.status === 'error') {
+            popup('Error', response.message);
+        } else {
+            window.localStorage.setItem('token-key', response.token);
+            var decoded = jwt_decode(response.token);
+            if (decoded.payload.isAdmin) {
+                window.location.replace("admin/admin.html");
+            } else {
+                window.location.replace("user.html");
+            }
+        }
+    }).catch((err) => {
+        document.getElementById("loader").style.display = "none";
+        popup('Error', err.message);
+    });
 }
 
 const checkSignUpForm = () => {
@@ -38,6 +59,7 @@ const checkSignUpForm = () => {
         popup('Error', 'password does not match');
         return false;
     }
+    document.getElementById("loader").style.display = "block";
     const data = {
         name: document.getElementById('sname').value,
         email: document.getElementById('semail').value,
@@ -45,18 +67,20 @@ const checkSignUpForm = () => {
         password: document.getElementById('spassword').value
     }
     request('post', `auth/signup`, data).then((response) => {
+        document.getElementById("loader").style.display = "none";
         if (response.status === 'error') {
             popup('Error', response.message);
         } else {
             window.localStorage.setItem('token-key', response.data.token);
             var decoded = jwt_decode(response.data.token);
-            if (decoded.isAdmin) {
+            if (decoded.payload.isAdmin) {
                 window.location.replace("admin/admin.html");
             } else {
                 window.location.replace("user.html");
             }
         }
     }).catch((err) => {
+        document.getElementById("loader").style.display = "none";
         popup('Error', err.message);
     });
 }
