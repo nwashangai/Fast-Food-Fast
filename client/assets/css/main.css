@@ -10,7 +10,7 @@ body {
 .container {
     width: 95%;
     margin: auto;
-    overflow: hidden;
+    overflow: -webkit-paged-x;
     min-height: 90%;
     margin-bottom: 10px;
 }

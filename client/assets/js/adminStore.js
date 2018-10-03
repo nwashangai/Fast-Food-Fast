@@ -254,7 +254,7 @@ const addFood = () => {
         popup('Error', 'please provide correct input values');
         return false;
     }
-    if (!imageRegex.test(document.getElementById("food-image").src)) {
+    if (document.getElementById("food-image").src && !imageRegex.test(document.getElementById("food-image").src)) {
         popup('Error', 'invalid image url');
         return false;
     }
