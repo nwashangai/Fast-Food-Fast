@@ -1,5 +1,9 @@
+const logout = () => {
+    window.location.replace("index.html");
+}
+
 let user = {};
-const foods = [{
+let foods = [{
     id: '1',
     name: 'Burger bacon snacks',
     image: '../assets/images/burger-bacon-snack-fast-food-47320.jpeg',
@@ -97,14 +101,64 @@ const orders = [
       ]
     }
 ];
+
+const getFoods = (foodCategory = (foods[0].category || 'vegetables')) => {
+  let items = '';
+  const foodFiltered = foods.filter(item => item.category === foodCategory);
+  if (foodFiltered.length < 1) {
+      document.getElementById('food').innerHTML = '<div id="no-data">No entry to show</div>';
+  } else {
+      foodFiltered.forEach((item) => {
+        items += `<li>
+                <span class="my-food">
+                    <img src="${item.image}" onerror="if (this.src != '../assets/images/imahe.png') this.src = '../assets/images/image.png';">
+                </span>
+                <span class="in-text"><h3>${item.name}</h3>
+                <p>${item.description}</p>
+                <p class="price"><span class="big">Price:</span> ₦ ${item.price} <span>
+                <input type="button" class="delete" onclick="deleteItem('${item.id}', '${item.category}')" value="Delete">
+                <input type="button" onclick="edit('${item.id}')" value="Edit"></span></p>
+                </span></li>`
+      });
+      document.getElementById('food').innerHTML = items;
+      document.getElementById("category-selected").value = foodCategory;
+  }
+}
+
+const distintOptions = () => {
+    const check = {};
+    let result = '';
+    for (let item, index = 0; item = foods[index++];) {
+        let distint = item.category;
+
+        if (!(distint in check)) {
+            check[distint] = 1;
+            result += `<option value="${distint}">${distint}</option>`
+        }
+    }
+    document.getElementById('category-selected').innerHTML = result;
+}
+
 const getUser = () => {
     const access = window.localStorage.getItem('token-key');
     if (access) {
+        document.getElementById("loader").style.display = "block";
         request('get', `user`).then((response) => {
             if (response.status === 'error') {
             popup('Error', 'please login again');
             logout();
         } else {
+            request('get', `menu`).then((menu) => {
+                if (menu.status === 'error') {
+                    popup('Error', 'please login again');
+                    logout();
+                } else {
+                    foods = menu.data;
+                    document.getElementById("loader").style.display = "none";
+                    distintOptions();
+                    getFoods();
+                }
+            });
             user = response.data;
             document.getElementById('user-name').innerHTML = user.name;
             document.getElementById('user-email').innerHTML = user.email;
@@ -118,25 +172,6 @@ const getUser = () => {
 
 getUser();
 
-const getFoods = (foodCategory = 'vegetables') => {
-  let items = '';
-  const foodFiltered = foods.filter(item => item.category === foodCategory);
-  if (foodFiltered.length < 1) {
-      document.getElementById('food').innerHTML = '<div id="no-data">No entry to show</div>';
-  } else {
-      foodFiltered.forEach((item) => {
-        items += `<li><span class="my-food"><img src="${item.image}" alt="${item.category}"></span>`
-                +`<span class="in-text"><h3>${item.name}</h3>`
-                +`<p>${item.description}</p>`
-                +`<p class="price"><span class="big">Price:</span> ₦ ${item.price} <span>`
-                +`<input type="button" class="delete" onclick="deleteItem('${item.id}', '${item.category}')" value="Delete">`
-                +`<input type="button" onclick="edit('${item.id}')" value="Edit"></span></p>`
-                +`</span></li>`
-      });
-      document.getElementById('food').innerHTML = items;
-      document.getElementById("category-selected").value = foodCategory;
-  }
-}
 
 const readFile = _ => {
         const file = document.getElementById("image").files;
@@ -241,20 +276,6 @@ const edit = (id) => {
     document.getElementById('add-food').style.display = 'block'
 }
 
-const distintOptions = () => {
-    const check = {};
-    let result = '';
-    for (let item, index = 0; item = foods[index++];) {
-        let distint = item.category;
-
-        if (!(distint in check)) {
-            check[distint] = 1;
-            result += `<option value="${distint}">${distint}</option>`
-        }
-    }
-    document.getElementById('category-selected').innerHTML = result;
-}
-
 const accepted = (evt) => {
     evt.currentTarget.parentElement.innerHTML = '<input type="button" value="Deliver" onclick="deliver(event)" class="status deliver">';
 }
@@ -278,7 +299,3 @@ const deleteItem = (id, fdCategory) => {
 
 getFoods();
 distintOptions();
-
-const logout = () => {
-    window.location.replace("../index.html");
-}
