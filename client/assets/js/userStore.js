@@ -4,7 +4,7 @@ const logout = () => {
 
 let user = {};
 let cart = [];
-const foods = [
+let foods = [
     {
         id: '1',
         name: 'Burger bacon snacks',
@@ -105,14 +105,63 @@ const orders = [
     }
 ];
 
+const getFoods = (foodCategory = 'sweet') => {
+  let items = '';
+  const foodFiltered = foods.filter(item => item.category === foodCategory);
+  if (foodFiltered.length < 1) {
+      document.getElementById('food').innerHTML = '<div id="no-data">No entry to show</div>';
+  } else {
+      foodFiltered.forEach((item) => {
+        items += `<li>
+                    <span class="my-food">
+                      <img src = "${item.image}" onerror="if (this.src != './assets/images/imahe.png') this.src = './assets/images/image.png';" alt="${item.category}">
+                    </span>
+                    <span class="in-text"><h3>${item.name}</h3>
+                    <p>${item.description}</p>
+                    <p class="price"><span class="big">Price:</span> ₦ ${item.price} <span>
+                    <input type="button" class="order animate" onclick="pushOrder('${item.id}')" value="Add"></span></p>
+                    </span>
+                </li>`
+      });
+      document.getElementById('food').innerHTML = items;
+      document.getElementById("category-selected").value = foodCategory;
+  }
+}
+
+const distintOptions = () => {
+    const check = {};
+    let result = '';
+    for (let item, index = 0; item = foods[index++];) {
+        let distint = item.category;
+
+        if (!(distint in check)) {
+            check[distint] = 1;
+            result += `<option value="${distint}">${distint}</option>`
+        }
+    }
+    document.getElementById('category-selected').innerHTML = result;
+}
+
 const getUser = () => {
     const access = window.localStorage.getItem('token-key');
     if (access) {
+        document.getElementById("loader").style.display = "block";
         request('get', `user`).then((response) => {
             if (response.status === 'error') {
             popup('Error', 'please login again');
             logout();
         } else {
+            request('get', `menu`).then((menu) => {
+                if (menu.status === 'error') {
+                    popup('Error', 'please login again');
+                    logout();
+                } else {
+                    foods = menu.data;
+                    document.getElementById("loader").style.display = "none";
+                    distintOptions();
+                    getFoods();
+                }
+            });
             user = response.data;
             document.getElementById('user-name').innerHTML = user.name;
             document.getElementById('user-first-name').innerHTML = user.name.split(" ")[0];
@@ -125,25 +174,6 @@ const getUser = () => {
 }
 
 getUser();
-
-const getFoods = (foodCategory = 'vegetables') => {
-  let items = '';
-  const foodFiltered = foods.filter(item => item.category === foodCategory);
-  if (foodFiltered.length < 1) {
-      document.getElementById('food').innerHTML = '<div id="no-data">No entry to show</div>';
-  } else {
-      foodFiltered.forEach((item) => {
-        items += `<li><span class="my-food"><img src="${item.image}" alt="${item.category}"></span>`
-                +`<span class="in-text"><h3>${item.name}</h3>`
-                +`<p>${item.description}</p>`
-                +`<p class="price"><span class="big">Price:</span> ₦ ${item.price} <span>`
-                +`<input type="button" class="order animate" onclick="pushOrder('${item.id}')" value="Add"></span></p>`
-                +`</span></li>`
-      });
-      document.getElementById('food').innerHTML = items;
-      document.getElementById("category-selected").value = foodCategory;
-  }
-}
 
 
 const orderList = () => {
@@ -268,23 +298,8 @@ const clearCart = () => {
     refreshCart();
 };
 
-const distintOptions = () => {
-    const check = {};
-    let result = '';
-    for (let item, index = 0; item = foods[index++];) {
-        let distint = item.category;
-
-        if (!(distint in check)) {
-            check[distint] = 1;
-            result += `<option value="${distint}">${distint}</option>`
-        }
-    }
-    document.getElementById('category-selected').innerHTML = result;
-}
-
 const filterCategory = () => {
     getFoods(document.getElementById("category-selected").value);
 }
 
-getFoods();
-distintOptions();
+
