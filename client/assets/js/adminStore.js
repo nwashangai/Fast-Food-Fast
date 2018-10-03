@@ -1,5 +1,5 @@
 const logout = () => {
-    window.location.replace("index.html");
+    window.location.replace("../index.html");
 }
 
 let user = {};
@@ -102,7 +102,7 @@ const orders = [
     }
 ];
 
-const getFoods = (foodCategory = 'sweets') => {
+const getFoods = (foodCategory = (foods[0].category || 'vegetables')) => {
   let items = '';
   const foodFiltered = foods.filter(item => item.category === foodCategory);
   if (foodFiltered.length < 1) {
@@ -249,16 +249,50 @@ const updateFood = () => {
 }
 
 const addFood = () => {
+    const imageRegex = /data:image\/([a-zA-Z]*);base64,([^\"]*)/g;
     if (!document.getElementById('food-data').checkValidity()) {
         popup('Error', 'please provide correct input values');
         return false;
     }
-    document.getElementById('add-food').style.display = 'none';
-    popup('success', 'food added successfully');
+    if (document.getElementById("food-image").src && !imageRegex.test(document.getElementById("food-image").src)) {
+        popup('Error', 'invalid image url');
+        return false;
+    }
+    const data = {
+        name: document.getElementById('foodName').value,
+        description: document.getElementById('desc').value,
+        price: parseInt(document.getElementById('foodPrice').value),
+        category: document.getElementById('foodCategory').value,
+        image: document.getElementById("food-image").src || null
+    }
+    document.getElementById("loader").style.display = "block";
+    request('post', `menu`, data).then((response) => {
+        if (response.status === 'error') {
+            document.getElementById('loader').style.display = 'none';
+            popup('Error', response.message);
+            return false;
+        } else {
+            request('get', `menu`).then((menu) => {
+                if (menu.status === 'error') {
+                    document.getElementById('loader').style.display = 'none';
+                    popup('Error', 'please login again');
+                } else {
+                    foods = menu.data;
+                    document.getElementById("loader").style.display = "none";
+                    distintOptions();
+                    getFoods();
+                    document.getElementById('loader').style.display = 'none';
+                    popup('success', 'food added successfully');
+                    document.getElementById('add-food').style.display = 'none';
+                }
+            });
+        }
+    });
 }
 
 const newItem = () => {
     document.getElementById("food-data").reset();
+    document.getElementById("food-image").removeAttribute("src");
     document.getElementById('my-title').innerHTML = 'Add Food';
     document.getElementById('my-submit').innerHTML = '<input type="button" value="ADD FOOD" onclick="addFood()">';
     document.getElementById('add-food').style.display = 'block';
@@ -296,6 +330,3 @@ const deleteItem = (id, fdCategory) => {
     foods.splice(index, 1);
     getFoods(fdCategory);
 }
-
-getFoods();
-distintOptions();

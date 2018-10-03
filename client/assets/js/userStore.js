@@ -105,7 +105,7 @@ const orders = [
     }
 ];
 
-const getFoods = (foodCategory = 'sweet') => {
+const getFoods = (foodCategory = (foods[0].category || 'vegetables')) => {
   let items = '';
   const foodFiltered = foods.filter(item => item.category === foodCategory);
   if (foodFiltered.length < 1) {
