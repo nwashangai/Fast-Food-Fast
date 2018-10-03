@@ -1,8 +1,4 @@
-const user = {
-    name: 'John Doe',
-    email: 'johndoe@gmail.com',
-    phone: '08012345676'
-};
+let user = {};
 const foods = [{
     id: '1',
     name: 'Burger bacon snacks',
@@ -101,10 +97,26 @@ const orders = [
       ]
     }
 ];
+const getUser = () => {
+    const access = window.localStorage.getItem('token-key');
+    if (access) {
+        request('get', `user`).then((response) => {
+            if (response.status === 'error') {
+            popup('Error', 'please login again');
+            logout();
+        } else {
+            user = response.data;
+            document.getElementById('user-name').innerHTML = user.name;
+            document.getElementById('user-email').innerHTML = user.email;
+            document.getElementById('user-phone').innerHTML = user.phone;
+        }
+        });
+    } else {
+        logout();
+    }
+}
 
-document.getElementById('user-name').innerHTML = user.name;
-document.getElementById('user-email').innerHTML = user.email;
-document.getElementById('user-phone').innerHTML = user.phone;
+getUser();
 
 const getFoods = (foodCategory = 'vegetables') => {
   let items = '';
