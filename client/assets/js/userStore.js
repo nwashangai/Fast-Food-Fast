@@ -228,8 +228,22 @@ const sendOrder = () => {
     if (document.getElementById('address').value.trim() === '') {
         popup('Error', 'please provide your address');
     } else {
-        document.getElementById('order-food').style.display = 'none';
-        popup('Success', 'Order sent successfully');
+        const myOrder = {
+            address: document.getElementById('address').value,
+            foodItems: cart
+        }
+        document.getElementById("loader").style.display = "block";
+        request('post', `orders`, myOrder).then((response) => {
+            if (response.status === 'error') {
+                document.getElementById("loader").style.display = "none";
+                popup('Error', response.message);
+            } else {
+                document.getElementById("loader").style.display = "none";
+                clearCart();
+                popup('Success', 'Order sent successfully');
+                document.getElementById('order-food').style.display = 'none';
+            }
+        });
     }
 }
 
@@ -246,9 +260,9 @@ const refreshCart = () => {
                 <span class="cart-currency">  ₦</span>
                 <span class="digit">${item.subTotal}</span></span>
                 <span class="qty">
-                <span class="ctr"  onclick="minus('${item.id}')">- </span>
-                ${item.qty}
-                <span class="ctr"  onclick="plus('${item.id}')"> +</span>
+                <span class="ctr"  onclick="minus('${item.foodId}')">- </span>
+                ${item.quantity}
+                <span class="ctr"  onclick="plus('${item.foodId}')"> +</span>
                 </span></p>`
     });
     document.getElementById('cart-content').innerHTML = cartItems;
@@ -258,36 +272,43 @@ const refreshCart = () => {
 const pushOrder = (id) => {
     let track = 0;
     cart.forEach((item) => {
-        if (item.id === id) {
-            item.qty += 1;
-            item.subTotal = item.price * item.qty;
+        if (item.foodId === id) {
+            const food = findItem(id);
+            item.quantity += 1;
+            item.subTotal = parseFloat(food.price) * parseInt(item.quantity);
             track = 1;
         }
     });
     if (track === 0) {
-        const newCart = findItem(id);
-        newCart.qty = 1;
-        newCart.subTotal = newCart.price * newCart.qty;
+        const food = findItem(id);
+        const newCart = {
+            foodId: food.id,
+            quantity: 1,
+            name: food.name,
+            subTotal: parseFloat(food.price)
+        };
         cart.push(newCart);
     }
     refreshCart();
 }
 
 const minus = id => {
+    const food = findItem(id);
     cart.forEach((item) => {
-        if (item.id === id && item.qty > 0) {
-            item.qty -= 1;
-            item.subTotal = item.price * item.qty;
+        if (item.foodId === id && item.quantity > 0) {
+            item.quantity -= 1;
+            item.subTotal = food.price * item.quantity;
         }
     });
     refreshCart();
 }
 
 const plus = id => {
+    const food = findItem(id);
     cart.forEach((item) => {
-        if (item.id === id && item.qty < 30) {
-            item.qty += 1;
-            item.subTotal = item.price * item.qty;
+        if (item.foodId === id && item.quantity < 30) {
+            item.quantity += 1;
+            item.subTotal = food.price * item.quantity;
         }
     });
     refreshCart();
