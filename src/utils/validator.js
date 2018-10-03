@@ -36,6 +36,3 @@ export const isValidMenuItem = (data) => {
 }
 
 export default isUUID;
-
-const str = ''
-console.log(/^([a-zA-Z0-9\s\,\''\-]){5,100}$/.test(str))

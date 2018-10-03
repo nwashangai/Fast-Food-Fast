@@ -157,7 +157,6 @@ const getUser = () => {
                     logout();
                 } else {
                     foods = menu.data;
-                    console.log(foods)
                     document.getElementById("loader").style.display = "none";
                     distintOptions();
                     getFoods();
