@@ -20,7 +20,7 @@ export const isPhoneNumber = (phone) => {
 }
 
 export const isValidMenuItem = (data) => {
-    const imageRegex = /^\s*data:image(\/[a-z]+(;[a-z\-]+\=[a-z\-]+)?)?(;base64)?,[a-z0-9\!\$\&\'\,\(\)\*\+\,\;\=\-\.\_\~\:\@\/\?\%\s]*\s*$/i;
+    const imageRegex = /data:image\/([a-zA-Z]*);base64,([^\"]*)/g;
     if (!data.name) return 'you must provide name for the item';
     if (!data.name.trim() === '') return 'invalid name for the item';
     if (!data.category) return 'you must provide category for the item';
