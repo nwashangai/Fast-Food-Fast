@@ -158,15 +158,6 @@ const findOrder = (id) => {
     return orders.find(item => item.id === id);
 }
 
-const updateFood = () => {
-    if (!document.getElementById('food-data').checkValidity()) {
-        popup('Error', 'please provide correct input values');
-        return false;
-    }
-    document.getElementById('add-food').style.display = 'none';
-    popup('success', 'update successful');
-}
-
 const addFood = () => {
     const imageRegex = /data:image\/([a-zA-Z]*);base64,([^\"]*)/g;
     if (!document.getElementById('food-data').checkValidity()) {
@@ -209,6 +200,48 @@ const addFood = () => {
     });
 }
 
+const updateFood = (id) => {
+    const imageRegex = /data:image\/([a-zA-Z]*);base64,([^\"]*)/g;
+    if (!document.getElementById('food-data').checkValidity()) {
+        popup('Error', 'please provide correct input values');
+        return false;
+    }
+    if (document.getElementById("food-image").src && !imageRegex.test(document.getElementById("food-image").src)) {
+        popup('Error', 'invalid image url');
+        return false;
+    }
+    const data = {
+        name: document.getElementById('foodName').value,
+        description: document.getElementById('desc').value,
+        price: parseInt(document.getElementById('foodPrice').value),
+        category: document.getElementById('foodCategory').value,
+        image: document.getElementById("food-image").src || null
+    }
+    document.getElementById("loader").style.display = "block";
+    request('put', `menu/${id}`, data).then((response) => {
+        if (response.status === 'error') {
+            document.getElementById('loader').style.display = 'none';
+            popup('Error', response.message);
+            return false;
+        } else {
+            request('get', `menu`).then((menu) => {
+                if (menu.status === 'error') {
+                    document.getElementById('loader').style.display = 'none';
+                    popup('Error', 'please login again');
+                } else {
+                    foods = menu.data;
+                    document.getElementById("loader").style.display = "none";
+                    distintOptions();
+                    getFoods();
+                    document.getElementById('loader').style.display = 'none';
+                    popup('success', 'update successful');
+                    document.getElementById('add-food').style.display = 'none';
+                }
+            });
+        }
+    });
+}
+
 const newItem = () => {
     document.getElementById("food-data").reset();
     document.getElementById("food-image").removeAttribute("src");
@@ -218,14 +251,18 @@ const newItem = () => {
 }
 
 const edit = (id) => {
+    document.getElementById("food-image").removeAttribute("src");
+    const imageRegex = /data:image\/([a-zA-Z]*);base64,([^\"]*)/g;
     editItem = findItem(id);
-    document.getElementById('hidden').value = editItem.id;
+    if (imageRegex.test(editItem.image)) {
+        document.getElementById("food-image").src = editItem.image;
+    }
     document.getElementById('foodName').value = editItem.name;
     document.getElementById('foodCategory').value = editItem.category;
     document.getElementById('desc').value = editItem.description;
     document.getElementById('foodPrice').value = editItem.price;
     document.getElementById('my-title').innerHTML = 'Edit Food';
-    document.getElementById('my-submit').innerHTML = '<input type="button" value="UPDATE FOOD" onclick="updateFood()">';
+    document.getElementById('my-submit').innerHTML = `<input type="button" value="UPDATE FOOD" onclick="updateFood('${editItem.id}')">`;
     document.getElementById('add-food').style.display = 'block'
 }
 
