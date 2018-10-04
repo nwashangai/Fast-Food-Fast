@@ -1,6 +1,9 @@
 const logout = () => {
+    window.localStorage.removeItem('token-key');
     window.location.replace("../index.html");
 }
+
+const loader = document.getElementById("loader");
 
 let user = {};
 let foods = [];
@@ -21,13 +24,41 @@ const getFoods = (foodCategory = (foods[0].category || 'vegetables')) => {
                 <span class="in-text"><h3>${item.name}</h3>
                 <p>${item.description}</p>
                 <p class="price"><span class="big">Price:</span> ₦ ${item.price} <span>
-                <input type="button" class="delete" onclick="deleteItem('${item.id}', '${item.category}')" value="Delete">
+                <input type="button" class="delete" onclick="confirmDelete('${item.id}', '${item.category}')" value="Delete">
                 <input type="button" onclick="edit('${item.id}')" value="Edit"></span></p>
                 </span></li>`
       });
       document.getElementById('food').innerHTML = items;
       document.getElementById("category-selected").value = foodCategory;
   }
+}
+
+const cancel = () => {
+    document.getElementById("confirm").style.display = 'none';
+}
+
+const confirmDelete = (id, fdCategory) => {
+    document.getElementById("del").innerHTML = `<input type="button" value="Yes" onclick="deleteItem('${id}', '${fdCategory}')" id="ok-btn" class="status confirm">
+                <input type="button" value="No" id="cancel-btn" onclick="cancel()" class="status confirm">`;
+    document.getElementById("confirm").style.display = "block";
+}
+
+const deleteItem = (id, fdCategory) => {
+    document.getElementById("confirm").style.display = "none";
+    document.getElementById("loader").style.display = "block";
+    request('delete', `menu/${id}`).then((response) => {
+        if (response.status === 'error') {
+            document.getElementById("loader").style.display = 'none';
+            popup('Error', response.message);
+            return false;
+        } else {
+            document.getElementById("loader").style.display = 'none';
+            popup('Success', 'Item successfully deleted');
+            const index = foods.findIndex(item => item.id === id);
+            foods.splice(index, 1);
+            getFoods(fdCategory);
+        }
+    });
 }
 
 const distintOptions = () => {
@@ -232,7 +263,7 @@ const updateFood = (id) => {
                     foods = menu.data;
                     document.getElementById("loader").style.display = "none";
                     distintOptions();
-                    getFoods();
+                    getFoods(data.category);
                     document.getElementById('loader').style.display = 'none';
                     popup('success', 'update successful');
                     document.getElementById('add-food').style.display = 'none';
@@ -313,8 +344,3 @@ const filterCategory = () => {
     getFoods(document.getElementById("category-selected").value);
 }
 
-const deleteItem = (id, fdCategory) => {
-    const index = foods.findIndex(item => item.id === id);
-    foods.splice(index, 1);
-    getFoods(fdCategory);
-}

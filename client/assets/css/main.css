@@ -488,6 +488,22 @@ ul#food .price {
      width: 48% !important;
  }
 
+ .confirm {
+     width: 38% !important;
+ }
+
+ #del {
+     padding-left: 10%
+ }
+
+ #confirm .popup-content {
+     padding-top: 2%;
+ }
+
+ #ok-btn {
+     margin-right: 5%;
+ }
+
  .accept {
      background: #a33131 !important;
  }

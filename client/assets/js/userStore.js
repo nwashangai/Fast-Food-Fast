@@ -1,4 +1,5 @@
 const logout = () => {
+    window.localStorage.removeItem('token-key');
     window.location.replace("index.html");
 }
 
