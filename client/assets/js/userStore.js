@@ -99,7 +99,7 @@ const orderList = () => {
                 '<span class="waiting">Proccessing..</span>':
                 (element.status === 'new') ?
                 `<span class="waiting">Waiting..</span>`:
-                (element.status === 'declined') ?
+                (element.status === 'cancelled') ?
                 `<span class="declined">Declined</span>`:
                 `<span class="completed">Completed</span>`;
             item += `

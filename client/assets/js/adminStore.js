@@ -112,12 +112,12 @@ const orderList = () => {
         document.getElementById('table-body').innerHTML = '<div id="no-data">No entry to show</div>';
     } else {
         orders.forEach(element => {
-            let statusBtn = (element.status === 'proccessing') ?
-                '<input type="button" value="Deliver" onclick="deliver(event)" class="status deliver">':
+            let statusBtn = (element.status === 'processing') ?
+                `<input type="button" value="Deliver" onclick="deliver(event, '${element.id}')" class="status deliver">`:
                 (element.status === 'new') ?
-                `<input type="button" value="Accept" onclick="accepted(event)" class="status accept">
-                <input type="button" value="Decline" onclick="decline(event)" class="status decline">`:
-                (element.status === 'declined') ?
+                `<input type="button" value="Accept" onclick="accepted(event, '${element.id}')" class="status accept">
+                <input type="button" value="Decline" onclick="decline(event, '${element.id}')" class="status decline">`:
+                (element.status === 'cancelled') ?
                 `<span class="declined">Declined</span>`:
                 `<span class="completed">Completed</span>`;
             item += `
@@ -152,6 +152,10 @@ orderList();
 
 const findItem = (id) => {
     return foods.find(item => item.id === id);
+}
+
+const findOrder = (id) => {
+    return orders.find(item => item.id === id);
 }
 
 const updateFood = () => {
@@ -225,16 +229,48 @@ const edit = (id) => {
     document.getElementById('add-food').style.display = 'block'
 }
 
-const accepted = (evt) => {
-    evt.currentTarget.parentElement.innerHTML = '<input type="button" value="Deliver" onclick="deliver(event)" class="status deliver">';
+const accepted = (evt, id) => {
+    evt.currentTarget.parentElement.innerHTML = `<i id="${id}" class="fa fa-refresh fa-spin"></i>Loading`;
+    request('put', `orders/${id}`, { status: 'processing'}).then((response) => {
+        if (response.status === 'error') {
+            document.getElementById(id).parentElement.innerHTML = `<input type="button" value="Accept" onclick="accepted(event, '${id}')" class="status accept">
+                    <input type="button" value="Decline" onclick="decline(event, '${id}')" class="status decline">`
+            popup('Error', response.message);
+        } else {
+            const foundIndex = orders.findIndex(x => x.id == id);
+            orders[foundIndex].status = 'processing';
+            document.getElementById(id).parentElement.innerHTML = `<input type="button" value="Deliver" onclick="deliver(event, '${id}')" class="status deliver">`;
+        }
+    });
 }
 
-const decline = (evt) => {
-    evt.currentTarget.parentElement.innerHTML = '<span class="declined">Declined</span>';
+const decline = (evt, id) => {
+    evt.currentTarget.parentElement.innerHTML = `<i id="${id}" class="fa fa-refresh fa-spin"></i>Loading`;
+    request('put', `orders/${id}`, { status: 'cancelled'}).then((response) => {
+        if (response.status === 'error') {
+            document.getElementById(id).parentElement.innerHTML = `<input type="button" value="Accept" onclick="accepted(event, '${id}')" class="status accept">
+                    <input type="button" value="Decline" onclick="decline(event, '${id}')" class="status decline">`
+            popup('Error', response.message);
+        } else {
+            const foundIndex = orders.findIndex(x => x.id == id);
+            orders[foundIndex].status = 'cancelled';
+            document.getElementById(id).parentElement.innerHTML = `<span class="declined">Declined</span>`;
+        }
+    });
 }
 
-const deliver = (evt) => {
-    evt.currentTarget.parentElement.innerHTML = '<span class="completed">Completed</span>';
+const deliver = (evt, id) => {
+    evt.currentTarget.parentElement.innerHTML = `<i id="${id}" class="fa fa-refresh fa-spin"></i>Loading`;
+    request('put', `orders/${id}`, { status: 'completed'}).then((response) => {
+        if (response.status === 'error') {
+            document.getElementById(id).parentElement.innerHTML = `<input type="button" value="Deliver" onclick="deliver(event, '${id}')" class="status deliver">`
+            popup('Error', response.message);
+        } else {
+            const foundIndex = orders.findIndex(x => x.id == id);
+            orders[foundIndex].status = 'completed';
+            document.getElementById(id).parentElement.innerHTML = `<span class="completed">Completed</span>`;
+        }
+    });
 }
 const filterCategory = () => {
     getFoods(document.getElementById("category-selected").value);

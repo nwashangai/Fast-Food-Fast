@@ -505,7 +505,7 @@ ul#food .price {
       font-style: italic;
   }
   .declined {
-      color: #333;
+      color: rgb(226, 21, 21);
   }
 
   .data-display {
