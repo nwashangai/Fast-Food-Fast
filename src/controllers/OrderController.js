@@ -23,6 +23,7 @@ export class OrderController {
           let total = 0;
           let user = await UserModel.getUser(element.userid);
           element.name = (user[0]) ? user[0].name : 'No name';
+          element.phone = (user[0]) ? user[0].phone : 'No phone';
           element.fooditems.forEach(async (item, ind, obj) => {
             await FoodModel.getFood(item.foodId).then(done => {
               item.name = done[0].name || 'Deleted';
@@ -49,6 +50,7 @@ export class OrderController {
         let total = 0;
         let user = await UserModel.getUser(element.userid);
         element.name = (user[0]) ? user[0].name : 'No name';
+        element.phone = (user[0]) ? user[0].phone : 'No phone';
         element.fooditems.forEach(async (item, ind, obj) => {
           await FoodModel.getFood(item.foodId).then(done => {
             item.name = done[0].name || 'Deleted';
@@ -89,6 +91,7 @@ export class OrderController {
         let total = 0;
         UserModel.getUser(result[0].userid).then(user => {
           result[0].name = (user[0]) ? user[0].name : 'No name';
+          result[0].phone = (user[0]) ? user[0].phone : 'No phone';
           result[0].fooditems.forEach(async (item, ind, obj) => {
             await FoodModel.getFood(item.foodId).then(done => {
               item.name = done[0].name || 'Deleted';

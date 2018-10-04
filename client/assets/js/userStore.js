@@ -4,32 +4,9 @@ const logout = () => {
 
 let user = {};
 let cart = [];
-let foods = [
-    {
-        id: '1',
-        name: 'Burger bacon snacks',
-        image: './assets/images/burger-bacon-snack-fast-food-47320.jpeg',
-        category: 'vegetables',
-        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus mi augue, viverra sit amet ultricies at, vulputate id lorem. Nulla facilisi.',
-        price: 1000,
-    }, {
-        id: '2',
-        name: 'Toasted bread & potato chips',
-        image: './assets/images/toasted.jpeg',
-        category: 'vegetables',
-        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus mi augue, viverra sit amet ultricies at, vulputate id lorem. Nulla facilisi.',
-        price: 1200,
-    }, {
-        id: '3',
-        name: 'Fried plantain',
-        image: './assets/images/fried plantain.jpeg',
-        category: 'poultry',
-        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus mi augue, viverra sit amet ultricies at, vulputate id lorem. Nulla facilisi.',
-        price: 950,
-    }
-];
+let foods = [];
 
-const orders = [
+let orders = [
     {
       id: '1234567',
       userid: 'egfwegfj',
@@ -151,6 +128,17 @@ const getUser = () => {
             popup('Error', 'please login again');
             logout();
         } else {
+            decoded = jwt_decode(window.localStorage.getItem('token-key'));
+            request('get', `users/${decoded.payload.userId}/orders`).then((userOrders) => {
+                if (userOrders.status === 'error') {
+                    popup('Error', 'please login again');
+                    logout();
+                } else {
+                    orders = userOrders.data;
+                    console.log(orders)
+                    orderList();
+                }
+            });
             request('get', `menu`).then((menu) => {
                 if (menu.status === 'error') {
                     popup('Error', 'please login again');
@@ -195,13 +183,13 @@ const orderList = () => {
                         <span class="small-display">#id :</span> <span class="data">${i}</span>
                     </div>
                     <div class="table-body-cell cell-12">
-                        <span class="small-display">Name :</span><span class="data">${element.date}</span>
+                        <span class = "small-display" > Name: </span><span class="data">${new Date(element.date).toLocaleString()}</span >
                     </div>
                     <div class="table-body-cell cell-13">
                         <span class = "small-display" > Address: </span><span class="data">${element.address}</span >
                     </div>
                     <div class="table-body-cell cell-14">
-                        <span class = "small-display" > Food: </span><span class="data clickable" onclick="viewFoodItems(${element.id})">View items</span >
+                        <span class = "small-display" > Food: </span><span class="data clickable" onclick="viewFoodItems('${element.id}')">View items</span >
                     </div>
                     <div class="table-body-cell cell-15">
                         ${statusBtn}
@@ -213,8 +201,6 @@ const orderList = () => {
         document.getElementById('table-body').innerHTML = item;
     }
 }
-
-orderList();
 
 const makeOrder = () => {
     if (cart.length > 0) {

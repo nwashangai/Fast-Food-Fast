@@ -72,7 +72,7 @@ const checkSignUpForm = () => {
             popup('Error', response.message);
         } else {
             window.localStorage.setItem('token-key', response.data.token);
-            var decoded = jwt_decode(response.data.token);
+            const decoded = jwt_decode(response.data.token);
             if (decoded.payload.isAdmin) {
                 window.location.replace("admin/admin.html");
             } else {
