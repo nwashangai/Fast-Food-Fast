@@ -6,81 +6,7 @@ let user = {};
 let cart = [];
 let foods = [];
 
-let orders = [
-    {
-      id: '1234567',
-      userid: 'egfwegfj',
-      name: 'john',
-      totalPrice: '700',
-      status: 'new',
-      phone: '08036829642',
-      address: '56 ikeja lagos',
-          date: '8/3/2018, 9:35:59 AM',
-      fooditems: [
-          {
-            foodId: '1',
-            name: 'Burger bacon snacks',
-            price: 100,
-            quantity: 2,
-            subTotal: "200"
-          }, {
-              foodId: '2',
-              name: 'Toasted bread & potato chips',
-              price: 300,
-              quantity: 1,
-              subTotal: "300"
-          }, {
-              foodId: '3',
-              name: 'Fried plantain',
-              price: 200,
-              quantity: 1,
-              subTotal: "200"
-          },
-      ]
-    }, {
-      id: '1297967',
-      userid: 'natgls',
-      name: 'Mike',
-      totalPrice: '500',
-      status: 'proccessing',
-      phone: '08036829642',
-      address: '56 ikeja lagos',
-      date: '8/3/2018, 9:35:59 AM',
-      fooditems: [
-          {
-            foodId: '1',
-            name: 'Burger bacon snacks',
-            price: 100,
-            quantity: 2,
-            subTotal: "200"
-          }, {
-              foodId: '2',
-              name: 'Toasted bread & potato chips',
-              price: 300,
-              quantity: 1,
-              subTotal: "300"
-          }
-      ]
-    }, {
-      id: '7258502',
-      userid: 'snjsv',
-      name: 'Fred',
-      totalPrice: '300',
-      status: 'completed',
-      phone: '08036829642',
-      address: '56 ikeja lagos',
-      date: '8/3/2018, 9:35:59 AM',
-      fooditems: [
-          {
-              foodId: '2',
-              name: 'Toasted bread & potato chips',
-              price: 300,
-              quantity: 1,
-              subTotal: "300"
-          }
-      ]
-    }
-];
+let orders = [];
 
 const getFoods = (foodCategory = (foods[0].category || 'vegetables')) => {
   let items = '';
@@ -135,7 +61,6 @@ const getUser = () => {
                     logout();
                 } else {
                     orders = userOrders.data;
-                    console.log(orders)
                     orderList();
                 }
             });

@@ -3,104 +3,9 @@ const logout = () => {
 }
 
 let user = {};
-let foods = [{
-    id: '1',
-    name: 'Burger bacon snacks',
-    image: '../assets/images/burger-bacon-snack-fast-food-47320.jpeg',
-    category: 'vegetables',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus mi augue, viverra sit amet ultricies at, vulputate id lorem. Nulla facilisi.',
-    price: 1000,
-}, {
-    id: '2',
-    name: 'Toasted bread & potato chips',
-    image: '../assets/images/toasted.jpeg',
-    category: 'vegetables',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus mi augue, viverra sit amet ultricies at, vulputate id lorem. Nulla facilisi.',
-    price: 1200,
-}, {
-    id: '3',
-    name: 'Fried plantain',
-    image: '../assets/images/fried plantain.jpeg',
-    category: 'poultry',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus mi augue, viverra sit amet ultricies at, vulputate id lorem. Nulla facilisi.',
-    price: 950,
-}];
+let foods = [];
 
-const orders = [
-    {
-      id: '1234567',
-      userid: 'egfwegfj',
-      name: 'john',
-      totalPrice: '700',
-      status: 'new',
-      phone: '08036829642',
-      address: '56 ikeja lagos',
-      date: '8/3/2018, 9:35:59 AM',
-      fooditems: [
-          {
-            foodId: '1',
-            name: 'Burger bacon snacks',
-            price: 100,
-            quantity: 2,
-            subTotal: "200"
-          }, {
-              foodId: '2',
-              name: 'Toasted bread & potato chips',
-              price: 300,
-              quantity: 1,
-              subTotal: "300"
-          }, {
-              foodId: '3',
-              name: 'Fried plantain',
-              price: 200,
-              quantity: 1,
-              subTotal: "200"
-          },
-      ]
-    }, {
-      id: '1297967',
-      userid: 'natgls',
-      name: 'Mike',
-      totalPrice: '500',
-      status: 'proccessing',
-      phone: '08036829642',
-      address: '56 ikeja lagos',
-      date: '8/3/2018, 9:35:59 AM',
-      fooditems: [
-          {
-            foodId: '1',
-            name: 'Burger bacon snacks',
-            price: 100,
-            quantity: 2,
-            subTotal: "200"
-          }, {
-              foodId: '2',
-              name: 'Toasted bread & potato chips',
-              price: 300,
-              quantity: 1,
-              subTotal: "300"
-          }
-      ]
-    }, {
-      id: '7258502',
-      userid: 'snjsv',
-      name: 'Fred',
-      totalPrice: '300',
-      status: 'completed',
-      phone: '08036829642',
-      address: '56 ikeja lagos',
-      date: '8/3/2018, 9:35:59 AM',
-      fooditems: [
-          {
-              foodId: '2',
-              name: 'Toasted bread & potato chips',
-              price: 300,
-              quantity: 1,
-              subTotal: "300"
-          }
-      ]
-    }
-];
+let orders = [];
 
 const getFoods = (foodCategory = (foods[0].category || 'vegetables')) => {
   let items = '';
@@ -148,6 +53,16 @@ const getUser = () => {
             popup('Error', 'please login again');
             logout();
         } else {
+            decoded = jwt_decode(window.localStorage.getItem('token-key'));
+            request('get', `orders`).then((userOrders) => {
+                if (userOrders.status === 'error') {
+                    popup('Error', 'please login again');
+                    logout();
+                } else {
+                    orders = userOrders.data;
+                    orderList();
+                }
+            });
             request('get', `menu`).then((menu) => {
                 if (menu.status === 'error') {
                     popup('Error', 'please login again');
@@ -217,7 +132,7 @@ const orderList = () => {
                         <span class = "small-display" > Address: </span><span class="data">${element.address}</span >
                     </div>
                     <div class="table-body-cell cell-4">
-                        <span class = "small-display" > Food: </span><span class="data clickable" onclick="viewFoodItems(${element.id})">View items</span >
+                        <span class = "small-display" > Food: </span><span class="data clickable" onclick="viewFoodItems('${element.id}')">View items</span >
                     </div>
                     <div class="table-body-cell cell-5">
                         <span class = "small-display" > Phone: </span><span class="data">${element.phone}</span >
