@@ -30,7 +30,8 @@ export default async () => {
         name VARCHAR(100) not null,
         category VARCHAR(100) not null,
         description TEXT not null,
-        image TEXT, price NUMERIC(20, 2) not null
+        image TEXT, price NUMERIC(20, 2) not null,
+        isActive BOOLEAN DEFAULT true
         )`
       ).catch(error => { throw error });
   await query(`CREATE TABLE IF NOT EXISTS orders(

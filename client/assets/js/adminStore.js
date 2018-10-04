@@ -1,12 +1,19 @@
 const logout = () => {
+    window.localStorage.removeItem('token-key');
     window.location.replace("../index.html");
 }
+
+const loader = document.getElementById("loader");
 
 let user = {};
 let foods = [];
 
 let orders = [];
 
+/**
+ * Gets food items and pupulate DOM
+ * @param {String} foodCategory 
+ */
 const getFoods = (foodCategory = (foods[0].category || 'vegetables')) => {
   let items = '';
   const foodFiltered = foods.filter(item => item.category === foodCategory);
@@ -21,7 +28,7 @@ const getFoods = (foodCategory = (foods[0].category || 'vegetables')) => {
                 <span class="in-text"><h3>${item.name}</h3>
                 <p>${item.description}</p>
                 <p class="price"><span class="big">Price:</span> ₦ ${item.price} <span>
-                <input type="button" class="delete" onclick="deleteItem('${item.id}', '${item.category}')" value="Delete">
+                <input type="button" class="delete" onclick="confirmDelete('${item.id}', '${item.category}')" value="Delete">
                 <input type="button" onclick="edit('${item.id}')" value="Edit"></span></p>
                 </span></li>`
       });
@@ -30,6 +37,50 @@ const getFoods = (foodCategory = (foods[0].category || 'vegetables')) => {
   }
 }
 
+/**
+ * Cancel delet operation
+ */
+const cancel = () => {
+    document.getElementById("confirm").style.display = 'none';
+}
+
+/**
+ * Confirm dialogue box 
+ * @param {String} id 
+ * @param {String} fdCategory 
+ */
+const confirmDelete = (id, fdCategory) => {
+    document.getElementById("del").innerHTML = `<input type="button" value="Yes" onclick="deleteItem('${id}', '${fdCategory}')" id="ok-btn" class="status confirm">
+                <input type="button" value="No" id="cancel-btn" onclick="cancel()" class="status confirm">`;
+    document.getElementById("confirm").style.display = "block";
+}
+
+/**
+ * Deletes food item
+ * @param {*} id 
+ * @param {*} fdCategory 
+ */
+const deleteItem = (id, fdCategory) => {
+    document.getElementById("confirm").style.display = "none";
+    document.getElementById("loader").style.display = "block";
+    request('delete', `menu/${id}`).then((response) => {
+        if (response.status === 'error') {
+            document.getElementById("loader").style.display = 'none';
+            popup('Error', response.message);
+            return false;
+        } else {
+            document.getElementById("loader").style.display = 'none';
+            popup('Success', 'Item successfully deleted');
+            const index = foods.findIndex(item => item.id === id);
+            foods.splice(index, 1);
+            getFoods(fdCategory);
+        }
+    });
+}
+
+/**
+ * populate dropdown option
+ */
 const distintOptions = () => {
     const check = {};
     let result = '';
@@ -44,6 +95,9 @@ const distintOptions = () => {
     document.getElementById('category-selected').innerHTML = result;
 }
 
+/**
+ * Get User data
+ */
 const getUser = () => {
     const access = window.localStorage.getItem('token-key');
     if (access) {
@@ -87,16 +141,18 @@ const getUser = () => {
 
 getUser();
 
-
-const readFile = _ => {
+/**
+ *Convert image file to base64encoded string
+ */
+const readFile = () => {
         const file = document.getElementById("image").files;
 
     if (file && file[0]) {
 
         var FR = new FileReader();
 
-        FR.addEventListener("load", e => {
-            document.getElementById("food-image").src = e.target.result;
+        FR.addEventListener("load", event => {
+            document.getElementById("food-image").src = event.target.result;
         });
 
         FR.readAsDataURL(file[0]);
@@ -106,11 +162,15 @@ const readFile = _ => {
 
 document.getElementById("image").addEventListener("change", readFile);
 
+/**
+ * Populates the DOM with Orders list
+ */
 const orderList = () => {
     let item = '', i = 1;
     if(orders.length < 1) {
-        document.getElementById('table-body').innerHTML = '<div id="no-data">No entry to show</div>';
+        document.getElementById('no-item').innerHTML = '<div id="no-data">No entry to show</div>';
     } else {
+        document.getElementById('no-item').innerHTML = '<div id="no-data"></div>';
         orders.forEach(element => {
             let statusBtn = (element.status === 'processing') ?
                 `<input type="button" value="Deliver" onclick="deliver(event, '${element.id}')" class="status deliver">`:
@@ -150,14 +210,25 @@ const orderList = () => {
 
 orderList();
 
+/**
+ * Find item in food array
+ * @param {String} id 
+ */
 const findItem = (id) => {
     return foods.find(item => item.id === id);
 }
 
+/**
+ * Find item in order array
+ * @param {String} id 
+ */
 const findOrder = (id) => {
     return orders.find(item => item.id === id);
 }
 
+/**
+ * Sends new food item to be added to the server
+ */
 const addFood = () => {
     const imageRegex = /data:image\/([a-zA-Z]*);base64,([^\"]*)/g;
     if (!document.getElementById('food-data').checkValidity()) {
@@ -200,6 +271,10 @@ const addFood = () => {
     });
 }
 
+/**
+ * Update a specific food item in the API
+ * @param {String} id 
+ */
 const updateFood = (id) => {
     const imageRegex = /data:image\/([a-zA-Z]*);base64,([^\"]*)/g;
     if (!document.getElementById('food-data').checkValidity()) {
@@ -232,7 +307,7 @@ const updateFood = (id) => {
                     foods = menu.data;
                     document.getElementById("loader").style.display = "none";
                     distintOptions();
-                    getFoods();
+                    getFoods(data.category);
                     document.getElementById('loader').style.display = 'none';
                     popup('success', 'update successful');
                     document.getElementById('add-food').style.display = 'none';
@@ -242,6 +317,9 @@ const updateFood = (id) => {
     });
 }
 
+/**
+ * Reset form to add new item
+ */
 const newItem = () => {
     document.getElementById("food-data").reset();
     document.getElementById("food-image").removeAttribute("src");
@@ -250,6 +328,10 @@ const newItem = () => {
     document.getElementById('add-food').style.display = 'block';
 }
 
+/**
+ * Populate form with data for edit
+ * @param {String} id 
+ */
 const edit = (id) => {
     document.getElementById("food-image").removeAttribute("src");
     const imageRegex = /data:image\/([a-zA-Z]*);base64,([^\"]*)/g;
@@ -266,6 +348,11 @@ const edit = (id) => {
     document.getElementById('add-food').style.display = 'block'
 }
 
+/**
+ * Update user status to proccessing
+ * @param {Event} evt
+ * @param {String} id 
+ */
 const accepted = (evt, id) => {
     evt.currentTarget.parentElement.innerHTML = `<i id="${id}" class="fa fa-refresh fa-spin"></i>Loading`;
     request('put', `orders/${id}`, { status: 'processing'}).then((response) => {
@@ -281,6 +368,11 @@ const accepted = (evt, id) => {
     });
 }
 
+/**
+ * Update user status to cancelled
+ * @param {Event} evt
+ * @param {String} id 
+ */
 const decline = (evt, id) => {
     evt.currentTarget.parentElement.innerHTML = `<i id="${id}" class="fa fa-refresh fa-spin"></i>Loading`;
     request('put', `orders/${id}`, { status: 'cancelled'}).then((response) => {
@@ -296,6 +388,11 @@ const decline = (evt, id) => {
     });
 }
 
+/**
+ * Update user status to completed
+ * @param {Event} evt
+ * @param {String} id 
+ */
 const deliver = (evt, id) => {
     evt.currentTarget.parentElement.innerHTML = `<i id="${id}" class="fa fa-refresh fa-spin"></i>Loading`;
     request('put', `orders/${id}`, { status: 'completed'}).then((response) => {
@@ -309,12 +406,11 @@ const deliver = (evt, id) => {
         }
     });
 }
+
+/**
+ * Filters category item
+ */
 const filterCategory = () => {
     getFoods(document.getElementById("category-selected").value);
 }
 
-const deleteItem = (id, fdCategory) => {
-    const index = foods.findIndex(item => item.id === id);
-    foods.splice(index, 1);
-    getFoods(fdCategory);
-}

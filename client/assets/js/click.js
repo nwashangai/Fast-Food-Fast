@@ -1,3 +1,7 @@
+/**
+ * handles close of all modals
+ * @param {Event} event 
+ */
 window.onclick = (event) => {
     if (event.target == document.getElementById('add-food')) {
         document.getElementById('add-food').style.display = 'none';
@@ -13,6 +17,10 @@ window.onclick = (event) => {
     }
 }
 
+/**
+ * Displays user order cart items on a modal
+ * @param {String} id 
+ */
 const viewFoodItems = id => {
     let item = '';
     const foodItem = orders.find(item => item.id == id);

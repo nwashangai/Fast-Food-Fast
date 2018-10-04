@@ -41,7 +41,7 @@
             <article id="main-col">
                 <div class="tab-contents" id="food-content">
                     <h1 class="page-title">
-                        <button class="add-btn big" onclick="newItem()"><span id="new">+ New</span></button>
+                        <button id="new-btn" class="add-btn big" onclick="newItem()"><span id="new">+ New</span></button>
                         <div class="food-category right">
                             <select id="category-selected" onchange="filterCategory()">
                             </select>
@@ -76,69 +76,10 @@
                             </div>
                         </div>
                         <div id="table-body">
-                            <div class="table-row">
-                                <div class="table-body-cell  cell-1">
-                                    <span class="small-display">#id :</span> <span class="data">1</span>
-                                </div>
-                                <div class="table-body-cell cell-2">
-                                    <span class="small-display">Name :</span><span class="data">John Doe</span>
-                                </div>
-                                <div class="table-body-cell cell-3">
-                                    <span class="small-display">Address :</span><span class="data">51 pedro road, Lagos</span>
-                                </div>
-                                <div class="table-body-cell cell-4">
-                                    <span class="small-display">Food :</span><span class="data clickable" onclick="viewFoodItems()">Burger bacon snacks</span>
-                                </div>
-                                <div class="table-body-cell cell-5">
-                                    <span class="small-display">Phone :</span><span class="data">08012345678</span>
-                                </div>
-                                <div class="table-body-cell cell-6">
-                                    <input type="button" value="Deliver" onclick="deliver(event)" class="status deliver">
-                                </div>
-                            </div>
-                            <div class="table-row">
-                                <div class="table-body-cell cell-1">
-                                    <span class="small-display">#id :</span> <span class="data">2</span>
-                                </div>
-                                <div class="table-body-cell cell-2">
-                                    <span class="small-display">Name :</span><span class="data">Mike williams</span>
-                                </div>
-                                <div class="table-body-cell cell-3">
-                                     <span class="small-display">Address :</span><span class="data">22 kingston avenue, Lagos</span>
-                                </div>
-                                <div class="table-body-cell cell-4">
-                                     <span class="small-display">Food :</span><span class="data">Fried plantain</span>
-                                </div>
-                                <div class="table-body-cell cell-5">
-                                    <span class="small-display">Phone :</span><span class="data">09098365417</span>
-                                </div>
-                                <div class="table-body-cell cell-6"  id="is-accepted">
-                                    <input type="button" value="Accept" onclick="accepted(event)" class="status accept">
-                                    <input type="button" value="Decline" onclick="decline(event)" class="status decline">
-                                </div>
-                            </div>
-                            <div class="table-row">
-                                <div class="table-body-cell cell-1">
-                                    <span class="small-display">#id :</span> <span class="data">3</span>
-                                </div>
-                                <div class="table-body-cell cell-2">
-                                    <span class="small-display">Name :</span><span class="data">Victor</span>
-                                </div>
-                                <div class="table-body-cell cell-3">
-                                    <span class="small-display">Address :</span><span class="data">6 adenkule street, ikeja Lagos</span>
-                                </div>
-                                <div class="table-body-cell cell-4">
-                                     <span class="small-display">Food :</span><span class="data">Fried plantain</span>
-                                </div>
-                                <div class="table-body-cell cell-5">
-                                    <span class="small-display">Phone :</span><span class="data">07036835614</span>
-                                </div>
-                                <div class="table-body-cell cell-6">
-                                    <span class="completed">Completed</span>
-                                </div>
-                            </div>
+                            
                         </div>
                     </div>
+                    <span id="no-item"></span>
                 </div>
             </article>
 
@@ -228,24 +169,7 @@
                 </div>
                 <br/>
                 <span id="cart-items">
-                    <div class="item-row">
-                        <div class="item-name">burger</div>
-                        <div class="item-price right">₦ 200</div>
-                        <div class="item-qty right">2</div>
-                        <div class="item-sub right">₦ 400</div>
-                    </div>
-                    <div class="item-row">
-                        <div class="item-name">burger</div>
-                        <div class="item-price right">₦ 200</div>
-                        <div class="item-qty right">2</div>
-                        <div class="item-sub right">₦ 400</div>
-                    </div>
-                    <div class="item-row">
-                        <div class="item-name">burger</div>
-                        <div class="item-price right">₦ 200</div>
-                        <div class="item-qty right">2</div>
-                        <div class="item-sub right">₦ 400</div>
-                    </div>
+                    
                 </span>
                 <hr class="line">
                 <pre><div class="total right">Total:   ₦ <span id="total-price">1200</span></div></pre>
@@ -262,11 +186,19 @@
             <span class="alert-btn"><input type="button" value="Ok" id="close-btn" class="status accept"></span>
         </div>
     </div>
+    <div id="confirm" class="popup">
+        <div class="popup-content">
+            <h2 id="title"></h2>
+            <div id="msg" class="content">Are you sure you want to delete this item ?</div>
+            <span id="del">
+            </span>
+        </div>
+    </div>
     <div class="footer">
         <h3>Andela Copyright@2018</h3>
     </div>
 </body>
-<script src="./assets/js/jwt-decode.min.js"></script>
+<script src="../assets/js/jwt-decode.min.js"></script>
 <script type="text/javascript" src="../assets/js/request.js"></script>
 <script type="text/javascript" src="../assets/js/script.js"></script>
 <script type="text/javascript" src="../assets/js/form.js"></script>

@@ -32,7 +32,7 @@
         position: absolute;
         left: 50%;
         top: 50%;
-        z-index: 1;
+        z-index: 10;
         width: 150px;
         height: 150px;
         margin: -75px 0 0 -75px;
@@ -310,6 +310,9 @@
         /* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other */
 
         @media screen and (max-width: 800px) {
+            .footer {
+                position: inherit;
+            }
             #food-content,
             #order-content {
                 min-height: 10vh;

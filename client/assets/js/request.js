@@ -1,5 +1,11 @@
 const BASE_URL = 'https://my-fast-food.herokuapp.com/api/v1/';
 
+/**
+ * Make fetch API request to the server
+ * @param {String} type request method
+ * @param {String} urlString URL path
+ * @param {Object} payload request body
+ */
 const request = (type, urlString, payload = {}) => {
   const url = `${BASE_URL}${urlString}`;
   if (type === 'get') {
@@ -72,10 +78,14 @@ const request = (type, urlString, payload = {}) => {
   return { status: 'error', message: 'specify a valid request method' };
 }
 
-const jwt_decode = (t) => {
+/**
+ * Decode user token
+ * @param {String} userToken 
+ */
+const jwt_decode = (userToken) => {
     let token = {};
-    token.raw = t;
-    token.header = JSON.parse(window.atob(t.split('.')[0]));
-    token.payload = JSON.parse(window.atob(t.split('.')[1]));
+    token.raw = userToken;
+    token.header = JSON.parse(window.atob(userToken.split('.')[0]));
+    token.payload = JSON.parse(window.atob(userToken.split('.')[1]));
     return (token)
 }

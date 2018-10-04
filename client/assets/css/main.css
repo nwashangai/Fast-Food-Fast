@@ -275,14 +275,18 @@ article#main-col {
 
 .add-btn {
     border-radius: 3px;
-    background-color: rgb(99, 219, 99);
+    background-color: rgb(223, 221, 221);
 }
 .add-btn:hover {
     cursor: pointer;
 }
 #new {
-    font-size: 30px;
+    font-size: 20px;
     color: #a33131;
+}
+
+#new-btn {
+    border-style: none;
 }
 
 .page-title > i:hover, .tablinks:hover {
@@ -486,6 +490,22 @@ ul#food .price {
  .accept,
  .decline {
      width: 48% !important;
+ }
+
+ .confirm {
+     width: 38% !important;
+ }
+
+ #del {
+     padding-left: 10%
+ }
+
+ #confirm .popup-content {
+     padding-top: 2%;
+ }
+
+ #ok-btn {
+     margin-right: 5%;
  }
 
  .accept {

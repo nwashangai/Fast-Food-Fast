@@ -26,8 +26,7 @@ export class OrderController {
           element.phone = (user[0]) ? user[0].phone : 'No phone';
           element.fooditems.forEach(async (item, ind, obj) => {
             await FoodModel.getFood(item.foodId).then(done => {
-              item.name = done[0].name || 'Deleted';
-              item.price = done[0].price || 'Deleted';
+              item.name = done[0].name || 'Deleted', item.price = done[0].price || 'Deleted';
               item.subTotal = parseFloat(done[0].price * item.quantity).toFixed(2) || 'Deleted';
               total = parseFloat(parseInt(total) + parseInt(item.subTotal)).toFixed(2);
               if (arr.length - 1 === index && obj.length - 1 === ind) {
@@ -53,8 +52,7 @@ export class OrderController {
         element.phone = (user[0]) ? user[0].phone : 'No phone';
         element.fooditems.forEach(async (item, ind, obj) => {
           await FoodModel.getFood(item.foodId).then(done => {
-            item.name = done[0].name || 'Deleted';
-            item.price = done[0].price || 'Deleted';
+            item.name = done[0].name || 'Deleted', item.price = done[0].price || 'Deleted';
             item.subTotal = parseFloat(done[0].price * item.quantity).toFixed(2) || 'Deleted';
             total = parseFloat(parseInt(total) + parseInt(item.subTotal)).toFixed(2);
             if (arr.length - 1 === index && obj.length - 1 === ind) {
@@ -94,8 +92,7 @@ export class OrderController {
           result[0].phone = (user[0]) ? user[0].phone : 'No phone';
           result[0].fooditems.forEach(async (item, ind, obj) => {
             await FoodModel.getFood(item.foodId).then(done => {
-              item.name = done[0].name || 'Deleted';
-              item.price = done[0].price || 'Deleted';
+              item.name = done[0].name || 'Deleted', item.price = done[0].price || 'Deleted';
               item.subTotal = parseFloat(done[0].price * item.quantity).toFixed(2) || 'Deleted';
               total = parseFloat(parseInt(total) + parseInt(item.subTotal)).toFixed(2);
               if (obj.length - 1 === ind) {
