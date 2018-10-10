@@ -46,10 +46,10 @@ export class OrderController {
       result.forEach(async (element, index, arr) => {
         let total = 0;
         let user = await UserModel.getUser(element.userid);
-        element.name = (user[0]) ? user[0].name : 'Not available';
-        element.phone = (user[0]) ? user[0].phone : 'Not available';
+        element.name = (user[0]) ? user[0].name : 'No name';
+        element.phone = (user[0]) ? user[0].phone : 'No phone';
         element.fooditems.forEach((item, ind, obj) => {
-          FoodModel.getFood(item.foodId).then(done => {
+          FoodModel.getFood(item.foodId).then((done) => {
             item.price = done[0].price;
             item.name = done[0].name;
             item.subTotal = parseFloat(done[0].price * item.quantity).toFixed(2);
@@ -87,8 +87,8 @@ export class OrderController {
       if (result.length === 1) {
         let total = 0;
         UserModel.getUser(result[0].userid).then(user => {
-          result[0].name = (user[0]) ? user[0].name : 'Not applicable';
-          result[0].phone = (user[0]) ? user[0].phone : 'Not applicable';
+          result[0].name = (user[0]) ? user[0].name : 'No name';
+          result[0].phone = (user[0]) ? user[0].phone : 'No phone';
           result[0].fooditems.forEach((item, ind, obj) => {
             FoodModel.getFood(item.foodId).then(done => {
               item.name = done[0].name, item.price = done[0].price;

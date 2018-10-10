@@ -28,7 +28,7 @@ const viewFoodItems = id => {
         item += `
         <div class="item-row">
             <div class="item-name">${element.name}</div>
-            <div class="item-price right">₦ ${element.price}</div>
+            <div class="item-price right"></div>
             <div class="item-qty right">${element.quantity}</div>
             <div class="item-sub right">₦ ${element.subTotal}</div>
         </div>
