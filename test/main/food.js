@@ -171,10 +171,10 @@ describe('Fast-Food-Fast orders test', () => {
         .delete(`/api/v1/menu/${menuId}`)
         .set('x-access-token', token)
         .end((err, res) => {
-          res.should.have.status(400);
+          res.should.have.status(200);
           res.type.should.equal('application/json');
-          res.body.should.have.property('status', 'error');
-          res.body.should.have.property('message', 'Invalid menu ID');
+          res.body.should.have.property('status', 'success');
+          res.body.should.have.property('deleted');
           done();
         });
     });

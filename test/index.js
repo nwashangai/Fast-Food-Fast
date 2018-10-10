@@ -12,7 +12,7 @@ describe('Fast-Food-Fast', () => {
   describe('Default route', () => {
     it('it should Reject the default route when user enters default route', (done) => {
       chai.request(app)
-        .get('/')
+        .get('/api/v1/')
         .end(async (err, res) => {
           res.should.have.status(404);
           res.type.should.equal('application/json');

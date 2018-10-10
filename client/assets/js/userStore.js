@@ -1,4 +1,5 @@
 const logout = () => {
+    window.localStorage.removeItem('token-key');
     window.location.replace("index.html");
 }
 
@@ -8,6 +9,10 @@ let foods = [];
 
 let orders = [];
 
+/**
+ * Gets food items and pupulate DOM
+ * @param {String} foodCategory 
+ */
 const getFoods = (foodCategory = (foods[0].category || 'vegetables')) => {
   let items = '';
   const foodFiltered = foods.filter(item => item.category === foodCategory);
@@ -31,6 +36,9 @@ const getFoods = (foodCategory = (foods[0].category || 'vegetables')) => {
   }
 }
 
+/**
+ * populate dropdown option
+ */
 const distintOptions = () => {
     const check = {};
     let result = '';
@@ -45,6 +53,9 @@ const distintOptions = () => {
     document.getElementById('category-selected').innerHTML = result;
 }
 
+/**
+ * Get User data
+ */
 const getUser = () => {
     const access = window.localStorage.getItem('token-key');
     if (access) {
@@ -88,12 +99,15 @@ const getUser = () => {
 
 getUser();
 
-
+/**
+ * Populates the DOM with Orders list
+ */
 const orderList = () => {
     let item = '', i = 1;
     if(orders.length < 1) {
-        document.getElementById('table-body').innerHTML = '<div id="no-data">No entry to show</div>';
+        document.getElementById('no-item').innerHTML = '<div id="no-data">No entry to show</div>';
     } else {
+        document.getElementById('no-item').innerHTML = '<div id="no-data"></div>';
         orders.forEach(element => {
             let statusBtn = (element.status === 'proccessing') ?
                 '<span class="waiting">Proccessing..</span>':
@@ -127,6 +141,9 @@ const orderList = () => {
     }
 }
 
+/**
+ * Displays modal to add address and place order
+ */
 const makeOrder = () => {
     if (cart.length > 0) {
         document.getElementById('order-food').style.display = 'block';
@@ -135,6 +152,9 @@ const makeOrder = () => {
     }
 }
 
+/**
+ * Send Order to the API
+ */
 const sendOrder = () => {
     if (document.getElementById('address').value.trim() === '') {
         popup('Error', 'please provide your address');
@@ -158,10 +178,17 @@ const sendOrder = () => {
     }
 }
 
+/**
+ * Find item in food array
+ * @param {String} id 
+ */
 const findItem = (id) => {
     return foods.find(item => item.id === id);
 }
 
+/**
+ * Refresh Cart UI
+ */
 const refreshCart = () => {
     let cartItems = '', total = 0;
     cart.forEach((item) => {
@@ -180,6 +207,9 @@ const refreshCart = () => {
     document.getElementById('total').innerHTML = total;
 };
 
+/**
+ * Add item to the cart
+ */
 const pushOrder = (id) => {
     let track = 0;
     cart.forEach((item) => {
@@ -203,10 +233,13 @@ const pushOrder = (id) => {
     refreshCart();
 }
 
+/**
+ * Decrease quantity of item by one 
+ */
 const minus = id => {
     const food = findItem(id);
     cart.forEach((item) => {
-        if (item.foodId === id && item.quantity > 0) {
+        if (item.foodId === id && item.quantity > 1) {
             item.quantity -= 1;
             item.subTotal = food.price * item.quantity;
         }
@@ -214,6 +247,9 @@ const minus = id => {
     refreshCart();
 }
 
+/**
+ * Increase quantity of item by one 
+ */
 const plus = id => {
     const food = findItem(id);
     cart.forEach((item) => {
@@ -225,11 +261,17 @@ const plus = id => {
     refreshCart();
 }
 
+/**
+ * Clears the cart
+ */
 const clearCart = () => {
     cart = [];
     refreshCart();
 };
 
+/**
+ * Filters category item
+ */
 const filterCategory = () => {
     getFoods(document.getElementById("category-selected").value);
 }

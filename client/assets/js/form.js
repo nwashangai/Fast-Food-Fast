@@ -1,9 +1,18 @@
+/**
+ * Displays popup
+ * @param {String} title 
+ * @param {String} msg 
+ */
 const popup = (title='No title', msg) => {
     document.getElementById('title').innerHTML = title;
     document.getElementById('msg').innerHTML = msg;
     document.getElementById('alert').style.display = 'block';
 }
 
+
+/**
+ * Login user
+ */
 const checkForm = () => {
     if (!document.getElementById('login-form').checkValidity()) {
         popup('Error', 'please provide a valid email');
@@ -37,6 +46,9 @@ const checkForm = () => {
     });
 }
 
+/**
+ * Signup user
+ */
 const checkSignUpForm = () => {
     const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
     if (!(/^[A-Za-z\s]+$/.test(document.getElementById('sname').value))) {
@@ -85,6 +97,9 @@ const checkSignUpForm = () => {
     });
 }
 
+/**
+ * Checks food data
+ */
 const checkOrderForm = () => {
     if (!document.getElementById('food-data').checkValidity()) {
         return false;

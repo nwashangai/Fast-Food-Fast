@@ -2,13 +2,13 @@ import query from './';
 
 class userModel {
     getFood(id) {
-        const queryString = `SELECT * FROM foods WHERE id=$1`;
+        const queryString = `SELECT name, price FROM foods WHERE id=$1`;
         const payload = [id];
         return query(queryString, payload);
     }
 
     deleteFood(id) {
-        const queryString = `DELETE FROM foods WHERE id=$1 RETURNING *`;
+        const queryString = `UPDATE foods SET isActive=false WHERE id=$1 RETURNING *`;
         const payload = [id];
         return query(queryString, payload);
     }
@@ -21,7 +21,7 @@ class userModel {
     }
 
     getFoodMenu() {
-        const queryString = `SELECT * FROM foods`;
+        const queryString = `SELECT * FROM foods WHERE isActive=true`;
         return query(queryString);
     }
 
