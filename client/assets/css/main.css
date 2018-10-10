@@ -133,6 +133,7 @@ header a:hover {
 /* Sidebar */
 
 aside#sidebar {
+    position: fixed;
     float: left;
     width: 30%;
     margin-top: 10px;
@@ -585,6 +586,9 @@ ul#food .price {
 /* Media Queries */
 
 @media(max-width: 768px) {
+    aside#sidebar {
+        position: relative;
+    }
     article#main-col {
     }
     header #branding,

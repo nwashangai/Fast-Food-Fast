@@ -132,6 +132,7 @@ const getUser = () => {
             document.getElementById('user-name').innerHTML = user.name;
             document.getElementById('user-email').innerHTML = user.email;
             document.getElementById('user-phone').innerHTML = user.phone;
+            document.getElementById('user-first-name').innerHTML = user.name.split(" ")[0];
         }
         });
     } else {
