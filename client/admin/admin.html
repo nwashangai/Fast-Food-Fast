@@ -113,7 +113,7 @@
         <div class="modal-content">
             <span onclick="document.getElementById('add-food').style.display='none'" class="close">&times;</span>
             <h1 id="my-title">Add Food</h1>
-            <form id="food-data">
+            <form id="food-data"  autocomplete="off">
                 <input type="hidden" id="hidden" name="hidden">
                 <span>
                     <label for="foodName">
@@ -125,7 +125,9 @@
                     <label for="foodName">
                         <b>Food Category</b>
                     </label>
-                    <input type="text" placeholder="Enter Category" id="foodCategory" name="foodCategory" required>
+                    <div class="autocomplete">
+                        <input type="text" placeholder="Enter Category" id="foodCategory" name="foodCategory" required>
+                    </div>
                 </span><br/><br/>
                 <span>
                     <label for="desc">
