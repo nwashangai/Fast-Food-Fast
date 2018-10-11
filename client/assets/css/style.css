@@ -324,6 +324,12 @@
                 width: 100%;
                 padding: 0;
             }
+            .topnav .login {
+                padding-right: 15%;
+            }
+            #signup {
+                text-align: center;
+            }
             .my-login {
                 height: 30px;
             }
@@ -358,6 +364,10 @@
             .topnav a {
                 float: none;
                 width: 100%;
+            }
+
+            .topnav .login {
+                padding-right: 6%;
             }
 
             .main-card {

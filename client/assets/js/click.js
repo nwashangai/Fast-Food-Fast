@@ -24,6 +24,7 @@ window.onclick = (event) => {
 const viewFoodItems = id => {
     let item = '';
     const foodItem = orders.find(item => item.id == id);
+    let total = 0;
     foodItem.fooditems.forEach(element => {
         item += `
         <div class="item-row">
@@ -33,8 +34,9 @@ const viewFoodItems = id => {
             <div class="item-sub right">₦ ${element.subTotal}</div>
         </div>
         `;
+        total += parseInt(element.subTotal);
     });
     document.getElementById('cart-items').innerHTML = item;
-    document.getElementById('total-price').innerHTML = foodItem.totalPrice;
+    document.getElementById('total-price').innerHTML = total;
     document.getElementById('view-food').style.display = 'block';
 }

@@ -9,6 +9,7 @@ let user = {};
 let foods = [];
 
 let orders = [];
+let category = [];
 
 /**
  * Gets food items and pupulate DOM
@@ -16,7 +17,7 @@ let orders = [];
  */
 const getFoods = (foodCategory = (foods[0].category || 'vegetables')) => {
   let items = '';
-  const foodFiltered = foods.filter(item => item.category === foodCategory);
+  const foodFiltered = foods.filter(item => item.category.toUpperCase() === foodCategory.toUpperCase());
   if (foodFiltered.length < 1) {
       document.getElementById('food').innerHTML = '<div id="no-data">No entry to show</div>';
   } else {
@@ -33,7 +34,7 @@ const getFoods = (foodCategory = (foods[0].category || 'vegetables')) => {
                 </span></li>`
       });
       document.getElementById('food').innerHTML = items;
-      document.getElementById("category-selected").value = foodCategory;
+      document.getElementById("category-selected").value = foodCategory.toUpperCase();
   }
 }
 
@@ -87,9 +88,10 @@ const distintOptions = () => {
     for (let item, index = 0; item = foods[index++];) {
         let distint = item.category;
 
-        if (!(distint in check)) {
-            check[distint] = 1;
-            result += `<option value="${distint}">${distint}</option>`
+        if (!(distint.toUpperCase() in check)) {
+            check[distint.toUpperCase()] = 1;
+            category.push(distint.toUpperCase());
+            result += `<option value="${distint.toUpperCase()}">${distint.toUpperCase()}</option>`
         }
     }
     document.getElementById('category-selected').innerHTML = result;
@@ -132,6 +134,7 @@ const getUser = () => {
             document.getElementById('user-name').innerHTML = user.name;
             document.getElementById('user-email').innerHTML = user.email;
             document.getElementById('user-phone').innerHTML = user.phone;
+            document.getElementById('user-first-name').innerHTML = user.name.split(" ")[0];
         }
         });
     } else {
@@ -414,3 +417,80 @@ const filterCategory = () => {
     getFoods(document.getElementById("category-selected").value);
 }
 
+/**
+ * Input auto-complete for food category
+ * @param {String} inp 
+ * @param {Array} arr 
+ */
+const autocomplete = (inp, arr) => {
+    let currentFocus;
+    inp.addEventListener("input", function (event) {
+        let a, b, i, val = this.value;
+        closeAllLists();
+        if (!val) {
+            return false;
+        }
+        currentFocus = -1;
+        a = document.createElement("DIV");
+        a.setAttribute("id", this.id + "autocomplete-list");
+        a.setAttribute("class", "autocomplete-items");
+        this.parentNode.appendChild(a);
+        for (i = 0; i < arr.length; i++) {
+            if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+                b = document.createElement("DIV");
+                b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
+                b.innerHTML += arr[i].substr(val.length);
+                b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+                b.addEventListener("click", function (event) {
+                    inp.value = this.getElementsByTagName("input")[0].value;
+                    closeAllLists();
+                });
+                a.appendChild(b);
+            }
+        }
+    });
+    inp.addEventListener("keydown", function (event) {
+        let x = document.getElementById(this.id + "autocomplete-list");
+        if (x) x = x.getElementsByTagName("div");
+        if (event.keyCode == 40) {
+            currentFocus++;
+            addActive(x);
+        } else if (event.keyCode == 38) {
+            currentFocus--;
+            addActive(x);
+        } else if (event.keyCode == 13) {
+            event.preventDefault();
+            if (currentFocus > -1) {
+                if (x) x[currentFocus].click();
+            }
+        }
+    });
+
+    const addActive = (x) => {
+        if (!x) return false;
+        removeActive(x);
+        if (currentFocus >= x.length) currentFocus = 0;
+        if (currentFocus < 0) currentFocus = (x.length - 1);
+        x[currentFocus].classList.add("autocomplete-active");
+    }
+
+    const removeActive = (x) => {
+        for (let i = 0; i < x.length; i++) {
+            x[i].classList.remove("autocomplete-active");
+        }
+    }
+
+    const closeAllLists = (elmnt) => {
+        const x = document.getElementsByClassName("autocomplete-items");
+        for (let i = 0; i < x.length; i++) {
+            if (elmnt != x[i] && elmnt != inp) {
+                x[i].parentNode.removeChild(x[i]);
+            }
+        }
+    }
+    document.addEventListener("click", (event) => {
+        closeAllLists(event.target);
+    });
+}
+
+autocomplete(document.getElementById("foodCategory"), category);

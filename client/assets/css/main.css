@@ -133,6 +133,7 @@ header a:hover {
 /* Sidebar */
 
 aside#sidebar {
+    position: fixed;
     float: left;
     width: 30%;
     margin-top: 10px;
@@ -582,9 +583,47 @@ ul#food .price {
  #upload {
      color: wheat;
  }
+
+ .autocomplete {
+     width: 96%;
+     position: relative;
+ }
+
+ #foodCategory {
+     width: 100%;
+ }
+
+ .autocomplete-items {
+     position: absolute;
+     border: 1px solid #d4d4d4;
+     border-bottom: none;
+     border-top: none;
+     z-index: 99;
+     top: 100%;
+     left: 0;
+     right: 0;
+ }
+ .autocomplete-items div {
+     padding: 10px;
+     cursor: pointer;
+     background-color: #fff;
+     border-bottom: 1px solid #d4d4d4;
+ }
+
+ .autocomplete-items div:hover {
+     background-color: #fad4d4;
+ }
+
+ .autocomplete-active {
+     background-color: #a33131 !important;
+     color: #ffffff;
+ }
 /* Media Queries */
 
 @media(max-width: 768px) {
+    aside#sidebar {
+        position: relative;
+    }
     article#main-col {
     }
     header #branding,
