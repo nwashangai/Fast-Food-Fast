@@ -3,7 +3,7 @@ export const isUUID = (uuid) => {
 }
 
 export const isAddress = (address) => {
-    return /^([a-zA-Z0-9\s\,\''\-]){5,100}$/.test(address);
+    return /^([a-zA-Z0-9\s\,\''\-\.;]){5,100}$/.test(address);
 }
 
 export const isEmail = (email) => {
