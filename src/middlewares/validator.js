@@ -45,9 +45,9 @@ class ValidatorController {
         let isValid = 1;
         isValid = (!isEmail(request.body.email) || !request.body.email) ?
             'Invalid email id' : (!isName(request.body.name) || !request.body.name) ?
-            'Invalid name' : (!request.body.phone || !isPhoneNumber(request.body.phone)) ?
-            'Invalid phone number' : (!request.body.password || !((request.body.password.length || '') > 4)) ?
-            'password should not be less than 4 characters' : isValid;
+            'Name should be alphabets only with no space' : (!request.body.phone || !isPhoneNumber(request.body.phone)) ?
+            'Phone number should be 11 digits' : (!request.body.password || !((request.body.password.length || '') > 4)) ?
+            'Password should not be less than 4 characters' : isValid;
         userModel.getEmail(request.body.email).then((result) => {
             if (result.length > 0) {
                 return (response.status(409).json({

@@ -76,7 +76,7 @@ describe('Fast-Food-Fast user test', () => {
           res.should.have.status(400);
           res.type.should.equal('application/json');
           res.body.should.have.property('status', 'error');
-          res.body.should.have.property('message', 'Invalid name');
+          res.body.should.have.property('message', 'Name should be alphabets only with no space');
           done();
         });
     });
